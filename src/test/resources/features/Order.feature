@@ -5,7 +5,6 @@
       When User fills input username field with "orkhan.gahramanli"
       And User fills input password field with "test123"
       And User clicks on submit button
-      Then User should navigate to Home Page
 
 
     Scenario Outline: User want to create new order ("<Sale Type>")
@@ -120,7 +119,6 @@
         | Nağd Satış   | samsung | Orxan    | IR-000002 |            |
         | Kredit Satış | samsung | Orxan    | IR-000002 | 06/18/1993 |
 
-    @Case
       Scenario: Set work status of creditor
         Given User is in "Home Page"
         When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
@@ -128,3 +126,23 @@
         And User directs to Creditors page
         And User change work status of creditor
         Then Work status should be changed
+
+    @Case
+    Scenario Outline: Check "<infoButton>" buttons in "Məhsullar üzrə məlumat" page
+      Given User is in "Home Page"
+      When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
+      And User clicks order menu
+      And User clicks "productsInfo" link
+      And User selects "SAMSUNG" product brand
+      And User clicks "search" button
+      And User clicks "<infoButton>" of a product
+      Then Relative "<info>" should be displayed in new window
+
+      Examples:
+        | infoButton     | info                            |
+        | Parametrlər    | Məlumatlar                      |
+        | Qiymət Cədvəli | Məhsul Qiymət Cədvəli           |
+        | Ətraflı        | Məhsul haqqında ətraflı məlumat |
+        | Barkodlar      | Məhsul barkodları               |
+        | Digər Anbarlar | Məhsullar                       |
+        | Bonus          | Məlumatlar                      |

@@ -1,9 +1,12 @@
 package StepDefinitions;
 
+import POM.GeneralPOM;
 import POM.OrderPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -23,9 +26,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static POM.ElementsMap.elementsMap;
+
 public class OrderSteps extends BaseMethods {
 
     OrderPOM orderPOM = OrderPOM.getInstance();
+    GeneralPOM generalPOM = GeneralPOM.getInstance();
 
     String orderNum;
     String saleTypeValue;
@@ -33,7 +39,7 @@ public class OrderSteps extends BaseMethods {
 
     @When("User selects {string} store")
     public void userSelectsStore(String storeName) {
-        WebElement store = driver.findElement(orderPOM.getStoreSelect());
+        WebElement store = driver.findElement(generalPOM.getStoreSelect());
         Select select = new Select(store);
         select.selectByVisibleText(storeName);
     }
@@ -51,29 +57,29 @@ public class OrderSteps extends BaseMethods {
 
     @And("User add {string} code")
     public void userSelectsSeller(String sellerCode) {
-        waitVisibilityLocator(orderPOM.getSellerSearchField(), 5);
-        driver.findElement(orderPOM.getSellerSearchField()).sendKeys(sellerCode);
-        if (!sellerCode.isEmpty()) driver.findElement(orderPOM.getSellerSearchBtn()).click();
+        waitVisibilityLocator(generalPOM.getSellerSearchField(), 5);
+        driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
+        if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
     }
 
     @And("User add {string} product")
     public void userAddProduct(String product) {
-        driver.findElement(orderPOM.getProductAreaExpand()).click();
-        driver.findElement(orderPOM.getProductNameField()).sendKeys(product);
+        driver.findElement(generalPOM.getProductAreaExpand()).click();
+        driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
-            driver.findElement(orderPOM.getProductSearchBtn()).click();
+            driver.findElement(generalPOM.getProductSearchBtn()).click();
             int productInStockIndex = 0;
             for (int i = 1; i < 11; i++) {
-                String[] priceSplit = driver.findElement(orderPOM.getProductPrice(i)).getText().split("\\.");
+                String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
                 int price = Integer.parseInt(priceSplit[0]);
                 if (price > 0
-                        && Integer.parseInt(driver.findElement(orderPOM.getProductCount(i)).getText()) > 0) {
+                        && Integer.parseInt(driver.findElement(generalPOM.getProductCount(i)).getText()) > 0) {
                     productInStockIndex = i;
                     break;
                 }
 
             }
-            driver.findElement(orderPOM.getAddProductBtn(productInStockIndex)).click();
+            driver.findElement(generalPOM.getAddProductBtn(productInStockIndex)).click();
         }
     }
 
@@ -225,22 +231,22 @@ public class OrderSteps extends BaseMethods {
 
     @And("User add {string} product from different store")
     public void userAddProductFromDifferentStore(String product) {
-        driver.findElement(orderPOM.getProductAreaExpand()).click();
-        driver.findElement(orderPOM.getProductNameField()).sendKeys(product);
+        driver.findElement(generalPOM.getProductAreaExpand()).click();
+        driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
-            driver.findElement(orderPOM.getProductSearchBtn()).click();
+            driver.findElement(generalPOM.getProductSearchBtn()).click();
             int otherStoreIndex = 0;
             for (int i = 1; i < 11; i++) {
-                String[] priceSplit = driver.findElement(orderPOM.getProductPrice(i)).getText().split("\\.");
+                String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
                 int price = Integer.parseInt(priceSplit[0]);
                 if (price > 0
-                        && Integer.parseInt(driver.findElement(orderPOM.getProductCountInOtherStore(i)).getText()) > 1) {
+                        && Integer.parseInt(driver.findElement(generalPOM.getProductCountInOtherStore(i)).getText()) > 1) {
                     otherStoreIndex = i;
                     break;
                 }
 
             }
-            driver.findElement(orderPOM.getOtherStoresBtn(otherStoreIndex)).click();
+            driver.findElement(generalPOM.getOtherStoresBtn(otherStoreIndex)).click();
             driver.findElement(orderPOM.getAddProductOtherStoreBtn()).click();
             driver.findElement(orderPOM.getOtherStoreProductsWindowCloseBtn()).click();
         }
@@ -269,5 +275,36 @@ public class OrderSteps extends BaseMethods {
     @Then("Work status should be changed")
     public void workStatusShouldBeChanged() {
         Assert.assertNotEquals(creditorWorkStatus[0], creditorWorkStatus[1]);
+    }
+
+    @And("User clicks {string} link")
+    public void userClicksPage(String element) {
+        driver.findElement(elementsMap.get(element)).click();
+    }
+
+    @And("User selects {string} product brand")
+    public void userSelectsProductBrand(String text) {
+        driver.findElement(generalPOM.getProductBrandNameField()).sendKeys(text);
+        driver.findElement(generalPOM.productBrandSelect(text)).click();
+    }
+
+    @And("User clicks {string} button")
+    public void userClicksButton(String arg0) {
+        driver.findElement(generalPOM.getProductSearchBtn()).click();
+    }
+
+    @And("User clicks {string} of a product")
+    public void userClicksOfAProduct(String text) {
+        driver.findElement(orderPOM.productsInfoBtn(text)).click();
+    }
+
+    @Then("Relative {string} should be displayed in new window")
+    public void relativeInfoShouldBeDisplayedInNewWindow(String text) {
+        List<WebElement> productInfo = driver.findElements(orderPOM.getProductInfoResult());
+        for (WebElement element : productInfo){
+            if (element.getText().equals(text)){
+                Assert.assertEquals(element.getText(), text);
+            }
+        }
     }
 }
