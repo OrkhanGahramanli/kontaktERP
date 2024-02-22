@@ -1,6 +1,7 @@
 package StepDefinitions;
 
-import DriverSession.CreateDriverSession;
+import DriverSession.CucumberHook;
+import DriverSession.CucumberHook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,15 +13,7 @@ import java.time.Duration;
 
 public class BaseMethods {
 
-//    static {
-//        try {
-//            Class<?> clazz = Class.forName("POM.GeneralPOM");
-//            Object o = clazz.getDeclaredConstructor().newInstance();
-//        }catch (Exception ignored){
-//
-//        }
-//    }
-    public WebDriver driver = CreateDriverSession.driver.get();
+    public WebDriver driver = CucumberHook.driver.get();
 
     public BaseMethods(){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));

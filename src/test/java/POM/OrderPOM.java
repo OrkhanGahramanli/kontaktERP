@@ -8,8 +8,7 @@ import static POM.ElementsMap.elementsMap;
 @Data
 public class OrderPOM {
 
-    private OrderPOM(){
-
+    public OrderPOM(){
     }
 
     private static OrderPOM INSTANCE;
@@ -22,9 +21,6 @@ public class OrderPOM {
         return INSTANCE;
     }
 
-
-    private final By orderMenu = By.id("sifaris_menu");
-    private final By newOrderLink = By.id("order_link");
     private final By customerNameField = By.id("sif_musteri_adi");
     private final By orderSubmitBtn = By.cssSelector("button[class='btn btn-primary float-right']");
     private final By newOrderCreateMessage = By.id("swal2-title");
@@ -58,7 +54,6 @@ public class OrderPOM {
     private final By otherStoreProductsWindowCloseBtn = By.cssSelector("div[class='row mt-3 mb-3'] div[class='modal-footer'] button[type='button']");
     private final By productDeliveryType = By.id("teslimnovu_0");
     private final By createdOrderType = By.xpath("//tr[1]/td[3][@aria-selected='false'][@role='gridcell'][@aria-describedby='dx-col-69']");
-    private final By creditorsMenuLink = By.id("creditorView_link");
     private final By creditorWorkStatusBtn = By.xpath("//tr[1]/td/button[@class='btn btn-success']");
     private final By creditorWorkStatus = By.xpath("//tbody/tr[1]/td[3]");
     public By productsInfoBtn(String value){
@@ -67,8 +62,11 @@ public class OrderPOM {
     private final By productInfoResult = By.id("exampleModalLabel");
 
 
-    {
+    static {
+        elementsMap.put("orderModule", By.id("sifaris_menu"));
+        elementsMap.put("newOrder", By.id("order_link"));
         elementsMap.put("productsInfo", By.id("stockinfo_link"));
+        elementsMap.put("creditors", By.id("creditorView_link"));
     }
 
 

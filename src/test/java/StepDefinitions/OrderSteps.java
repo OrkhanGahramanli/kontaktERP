@@ -37,50 +37,11 @@ public class OrderSteps extends BaseMethods {
     String saleTypeValue;
     String[] creditorWorkStatus = new String[2];
 
-    @When("User selects {string} store")
-    public void userSelectsStore(String storeName) {
-        WebElement store = driver.findElement(generalPOM.getStoreSelect());
-        Select select = new Select(store);
-        select.selectByVisibleText(storeName);
-    }
-
-    @And("User clicks order menu")
-    public void UserClicksOrderMenu() {
-        waitVisibilityLocator(orderPOM.getOrderMenu(),10);
-        driver.findElement(orderPOM.getOrderMenu()).click();
-    }
-
-    @And("User clicks new order link")
-    public void userClicksNewOrderLink() {
-        driver.findElement(orderPOM.getNewOrderLink()).click();
-    }
-
     @And("User add {string} code")
     public void userSelectsSeller(String sellerCode) {
         waitVisibilityLocator(generalPOM.getSellerSearchField(), 5);
         driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
         if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
-    }
-
-    @And("User add {string} product")
-    public void userAddProduct(String product) {
-        driver.findElement(generalPOM.getProductAreaExpand()).click();
-        driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
-        if (!product.isEmpty()) {
-            driver.findElement(generalPOM.getProductSearchBtn()).click();
-            int productInStockIndex = 0;
-            for (int i = 1; i < 11; i++) {
-                String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
-                int price = Integer.parseInt(priceSplit[0]);
-                if (price > 0
-                        && Integer.parseInt(driver.findElement(generalPOM.getProductCount(i)).getText()) > 0) {
-                    productInStockIndex = i;
-                    break;
-                }
-
-            }
-            driver.findElement(generalPOM.getAddProductBtn(productInStockIndex)).click();
-        }
     }
 
     @And("User fills {string} field")
@@ -231,7 +192,7 @@ public class OrderSteps extends BaseMethods {
 
     @And("User add {string} product from different store")
     public void userAddProductFromDifferentStore(String product) {
-        driver.findElement(generalPOM.getProductAreaExpand()).click();
+        driver.findElement(generalPOM.getProductAreaExpandBtn()).click();
         driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
             driver.findElement(generalPOM.getProductSearchBtn()).click();
@@ -259,11 +220,6 @@ public class OrderSteps extends BaseMethods {
         select.selectByVisibleText(deliveryType);
     }
 
-    @And("User directs to Creditors page")
-    public void userDirectsToCreditorsPage() {
-        driver.findElement(orderPOM.getCreditorsMenuLink()).click();
-    }
-
     @And("User change work status of creditor")
     public void userChangeWorkStatusOfCreditor() {
         creditorWorkStatus[0] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
@@ -277,20 +233,15 @@ public class OrderSteps extends BaseMethods {
         Assert.assertNotEquals(creditorWorkStatus[0], creditorWorkStatus[1]);
     }
 
-    @And("User clicks {string} link")
-    public void userClicksPage(String element) {
-        driver.findElement(elementsMap.get(element)).click();
-    }
-
     @And("User selects {string} product brand")
     public void userSelectsProductBrand(String text) {
         driver.findElement(generalPOM.getProductBrandNameField()).sendKeys(text);
-        driver.findElement(generalPOM.productBrandSelect(text)).click();
+        driver.findElement(generalPOM.selectFieldValue(text)).click();
     }
 
     @And("User clicks {string} button")
-    public void userClicksButton(String arg0) {
-        driver.findElement(generalPOM.getProductSearchBtn()).click();
+    public void userClicksButton(String element) {
+        driver.findElement(elementsMap.get(element)).click();
     }
 
     @And("User clicks {string} of a product")

@@ -1,17 +1,16 @@
-@Order
-  Feature: Order
+Feature: Order
 
     Background:
       When User fills input username field with "orkhan.gahramanli"
       And User fills input password field with "test123"
       And User clicks on submit button
-
-
-    Scenario Outline: User want to create new order ("<Sale Type>")
-      Given User is in "Home Page"
+      Then User is in "Home Page"
       When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-      And User clicks order menu
-      And User clicks new order link
+      And User clicks "orderModule" module link
+
+@NewOrder
+    Scenario Outline: User want to create new order ("<Sale Type>")
+      When User clicks "newOrder" page link
       And User add "<Seller>" code
       And User add "<Product>" product
       And User fills "<Customer>" field
@@ -29,10 +28,7 @@
 
 
   Scenario Outline: User want to create new order with incorrect inputs ("<Sale Type>") "<CaseName>"
-    Given User is in "Home Page"
-    When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-    And User clicks order menu
-    And User clicks new order link
+    When User clicks "newOrder" page link
     And User add "<Seller>" code
     And User add "<Product>" product
     And User fills "<Customer>" field
@@ -58,10 +54,7 @@
       | Incorrect Customer input       | Kredit Satış | samsung | Orxa     | IR-000002 | 06/18/1993 | Müştərinin adı min 5 simvol olmalıdır! |
 
     Scenario Outline: Check products, services in new order ("<Sale Type>")
-      Given User is in "Home Page"
-      When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-      And User clicks order menu
-      And User clicks new order link
+      When User clicks "newOrder" page link
       And User add "<Seller>" code
       And User add "<Product>" product
       And User fills "<Customer>" field
@@ -80,29 +73,20 @@
 
 
     Scenario: Check total amount after adding products, services in new order
-      Given User is in "Home Page"
-      When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-      And User clicks order menu
-      And User clicks new order link
+      When User clicks "newOrder" page link
       And User add "samsung" product
       And User add "PXK-009" service in order
       And User add Bundle in order
       Then Total amount should be sum of all prices
 
     Scenario: Check products in bundle
-      Given User is in "Home Page"
-      When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-      And User clicks order menu
-      And User clicks new order link
+      When User clicks "newOrder" page link
       And User clicks bundle select button
       And User clicks on button to see products in bundle
       Then Products should be displayed in bundle
 
     Scenario Outline: Create order with product from different store ("<Sale Type>")
-      Given User is in "Home Page"
-      When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-      And User clicks order menu
-      And User clicks new order link
+      When User clicks "newOrder" page link
       And User add "<Seller>" code
       And User add "<Product>" product from different store
       And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" delivery type of the product
@@ -119,22 +103,17 @@
         | Nağd Satış   | samsung | Orxan    | IR-000002 |            |
         | Kredit Satış | samsung | Orxan    | IR-000002 | 06/18/1993 |
 
+@Creditors
       Scenario: Set work status of creditor
-        Given User is in "Home Page"
-        When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-        And User clicks order menu
-        And User directs to Creditors page
+        When User clicks "creditors" page link
         And User change work status of creditor
         Then Work status should be changed
 
-    @Case
+    @ProductsInfo
     Scenario Outline: Check "<infoButton>" buttons in "Məhsullar üzrə məlumat" page
-      Given User is in "Home Page"
-      When User selects "KONTAKT HOME 47 (UKRAYNA DAIRESI)" store
-      And User clicks order menu
-      And User clicks "productsInfo" link
+      When User clicks "productsInfo" page link
       And User selects "SAMSUNG" product brand
-      And User clicks "search" button
+      And User clicks "productSearchBtn" button
       And User clicks "<infoButton>" of a product
       Then Relative "<info>" should be displayed in new window
 
