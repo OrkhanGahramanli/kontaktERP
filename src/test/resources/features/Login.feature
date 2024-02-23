@@ -1,5 +1,6 @@
-@Login
 Feature: Login
+
+  @Login
   Scenario Outline: User should login with correct credentials
     Given User is in "Login Page"
     When User fills input username field with "<username>"
@@ -15,7 +16,7 @@ Feature: Login
       | orkhan.gahramanli | test123  | en       |
       | orkhan.gahramanli | test123  | ru       |
       | orkhan.gahramanli | test123  | ka       |
-
+@InvalidLogin
   Scenario Outline: User should login with "<name>"
     Given User is in "Login Page"
     When User fills input username field with "<username>"
