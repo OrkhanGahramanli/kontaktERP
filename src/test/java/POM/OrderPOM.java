@@ -8,7 +8,7 @@ import static POM.ElementsMap.elementsMap;
 @Data
 public class OrderPOM {
 
-    public OrderPOM(){
+    private OrderPOM(){
     }
 
     private static OrderPOM INSTANCE;
