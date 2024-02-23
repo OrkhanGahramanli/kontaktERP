@@ -36,6 +36,8 @@ public class OrderSteps extends BaseMethods {
     String orderNum;
     String saleTypeValue;
     String[] creditorWorkStatus = new String[2];
+    List<String> actualProducts;
+    List<String> expectedProducts;
 
     @And("User add {string} code")
     public void userSelectsSeller(String sellerCode) {
@@ -60,6 +62,11 @@ public class OrderSteps extends BaseMethods {
     @And("User clicks submit order button")
     public void userClicksSubmitOrderButton() {
         driver.findElement(orderPOM.getOrderSubmitBtn()).click();
+        List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
+        expectedProducts = new ArrayList<>();
+        for (WebElement element : productsBeforeCreateOrder){
+            expectedProducts.add(element.getText());
+        }
     }
 
     @Then("New order should be create")
@@ -72,10 +79,6 @@ public class OrderSteps extends BaseMethods {
 
     @Then("New created order should be in Web Orders list")
     public void newCreatedOrderShouldBeOrdersList() throws InterruptedException {
-        waitVisibilityLocator(orderPOM.getNewCreatedOrderConfirmBtn(), 10);
-        driver.findElement(orderPOM.getNewCreatedOrderConfirmBtn()).click();
-        driver.findElement(orderPOM.getOnlineOrderMenu()).click();
-        driver.findElement(orderPOM.getWebOrdersLink()).click();
         driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
         Thread.sleep(2000);
         WebElement webOrderNum = driver.findElement(orderPOM.getWebOrderNum());
@@ -128,21 +131,12 @@ public class OrderSteps extends BaseMethods {
 
     @Then("Products and services should be visible in new order")
     public void productsAndServicesShouldBeVisibleInNewOrder() throws InterruptedException {
-        List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
-        List<String> expectedProducts = new ArrayList<>();
-        for (WebElement element : productsBeforeCreateOrder){
-            expectedProducts.add(element.getText());
-        }
-        waitVisibilityLocator(orderPOM.getNewCreatedOrderConfirmBtn(), 10);
-        driver.findElement(orderPOM.getNewCreatedOrderConfirmBtn()).click();
-        driver.findElement(orderPOM.getOnlineOrderMenu()).click();
-        driver.findElement(orderPOM.getWebOrdersLink()).click();
         driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
         Thread.sleep(2000);
         driver.findElement(orderPOM.getCreatedOrderDetailsBtn()).click();
         waitVisibilityLocator(orderPOM.getProductsCodeAfterCreate(),10);
         List<WebElement> productsAfterCreateOrder = driver.findElements(orderPOM.getProductsCodeAfterCreate());
-        List<String> actualProducts = new ArrayList<>();
+        actualProducts = new ArrayList<>();
         for (WebElement element : productsAfterCreateOrder){
             actualProducts.add(element.getAttribute("value"));
         }

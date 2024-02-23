@@ -24,11 +24,8 @@ public class OrderPOM {
     private final By customerNameField = By.id("sif_musteri_adi");
     private final By orderSubmitBtn = By.cssSelector("button[class='btn btn-primary float-right']");
     private final By newOrderCreateMessage = By.id("swal2-title");
-    private final By newCreatedOrderConfirmBtn = By.cssSelector("button[class='swal2-confirm swal2-styled']");
     private final By saleType = By.id("sif_satis_novu");
     private final By customerBirthDate = By.id("customerBirthDate");
-    private final By onlineOrderMenu = By.id("websifaris_menu");
-    private final By webOrdersLink = By.id("allweborders_link");
     private final By webOrderNumSearchField = By.xpath("(//input[@aria-label='Filter cell'])[1]");
     private final By webOrderNum = By.xpath("//tr[1]/td[1][@aria-selected='false'][@role='gridcell'][@aria-describedby='dx-col-67-fixed']");
     private final By errorMessage = By.xpath("//h6");
@@ -67,6 +64,8 @@ public class OrderPOM {
         elementsMap.put("newOrder", By.id("order_link"));
         elementsMap.put("productsInfo", By.id("stockinfo_link"));
         elementsMap.put("creditors", By.id("creditorView_link"));
+        elementsMap.put("onlineOrder", By.id("websifaris_menu"));
+        elementsMap.put("webOrdersLink", By.id("allweborders_link"));
     }
 
 

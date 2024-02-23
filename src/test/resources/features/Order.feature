@@ -18,6 +18,9 @@ Feature: Order
       And User fills customer "<Birthdate>" field "Kredit Satış"
       And User clicks submit order button
       Then New order should be create
+      And User clicks "confirmBtn" button
+      And User clicks "onlineOrder" module link
+      And User clicks "webOrdersLink" page link
       Then New created order should be in Web Orders list
       Then Type of new created order should be as "<Sale Type>"
 
@@ -52,7 +55,7 @@ Feature: Order
       | Empty Customer field           | Kredit Satış | samsung |          | IR-000002 | 06/18/1993 | Müştərinin adı min 5 simvol olmalıdır! |
       | Incorrect Seller input         | Kredit Satış | samsung | Orxan    | IR-000001 | 06/18/1993 | Satıcı kodu seçilməyib !               |
       | Incorrect Customer input       | Kredit Satış | samsung | Orxa     | IR-000002 | 06/18/1993 | Müştərinin adı min 5 simvol olmalıdır! |
-
+  @CheckProductsAfterCreate
     Scenario Outline: Check products, services in new order ("<Sale Type>")
       When User clicks "newOrder" page link
       And User add "<Seller>" code
@@ -64,6 +67,9 @@ Feature: Order
       And User add Bundle in order
       And User clicks submit order button
       Then New order should be create
+      And User clicks "confirmBtn" button
+      And User clicks "onlineOrder" module link
+      And User clicks "webOrdersLink" page link
       Then Products and services should be visible in new order
 
       Examples:
@@ -84,7 +90,7 @@ Feature: Order
       And User clicks bundle select button
       And User clicks on button to see products in bundle
       Then Products should be displayed in bundle
-
+@NewOrderDifferentStore
     Scenario Outline: Create order with product from different store ("<Sale Type>")
       When User clicks "newOrder" page link
       And User add "<Seller>" code
@@ -95,6 +101,9 @@ Feature: Order
       And User fills customer "<Birthdate>" field "Kredit Satış"
       And User clicks submit order button
       Then New order should be create
+      And User clicks "confirmBtn" button
+      And User clicks "onlineOrder" module link
+      And User clicks "webOrdersLink" page link
       Then New created order should be in Web Orders list
       Then Type of new created order should be as "<Sale Type>"
 

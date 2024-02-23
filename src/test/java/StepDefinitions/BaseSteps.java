@@ -8,6 +8,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -32,8 +33,9 @@ public class BaseSteps extends BaseMethods{
     }
 
     @And("User clicks {string} page link")
-    public void userClicksPageLink(String element) {
-        driver.findElement(elementsMap.get(element)).click();
+    public void userClicksPageLink(String pageLink) {
+        WebElement element = driver.findElement(elementsMap.get(pageLink));
+        element.click();
     }
 
     @And("User add {string} product")
