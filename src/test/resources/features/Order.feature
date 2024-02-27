@@ -12,11 +12,12 @@ Feature: Order
     Scenario Outline: User want to create new order ("<Sale Type>")
       When User clicks "newOrder" page link
       And User add "<Seller>" code
+      And User clicks "productAreaExpandBtn" button
       And User add "<Product>" product
       And User fills "<Customer>" field
       And User selects "<Sale Type>"
       And User fills customer "<Birthdate>" field "Kredit Satış"
-      And User clicks submit order button
+      And User clicks "submitOrder" button
       Then New order should be create
       And User clicks "confirmBtn" button
       And User clicks "onlineOrder" module link
@@ -29,16 +30,17 @@ Feature: Order
         | Nağd Satış   | samsung | Orxan    | IR-000002 |            |
         | Kredit Satış | samsung | Orxan    | IR-000002 | 06/18/1993 |
 
-
+@InvalidCreateOrder
   Scenario Outline: User want to create new order with incorrect inputs ("<Sale Type>") "<CaseName>"
     When User clicks "newOrder" page link
     And User add "<Seller>" code
+    And User clicks "productAreaExpandBtn" button
     And User add "<Product>" product
     And User fills "<Customer>" field
     And User selects "<Sale Type>"
     And User fills customer "<Birthdate>" field "Kredit Satış"
-    And User clicks submit order button
-    Then User should get "<error>" message in new Order Page
+    And User clicks "submitOrder" button
+    Then User should get "<error>" message
 
     Examples:
       | CaseName                       | Sale Type    | Product | Customer | Seller    | Birthdate  | error                                  |
@@ -59,13 +61,14 @@ Feature: Order
     Scenario Outline: Check products, services in new order ("<Sale Type>")
       When User clicks "newOrder" page link
       And User add "<Seller>" code
+      And User clicks "productAreaExpandBtn" button
       And User add "<Product>" product
       And User fills "<Customer>" field
       And User selects "<Sale Type>"
       And User fills customer "<Birthdate>" field "Kredit Satış"
       And User add "<Service>" service in order
       And User add Bundle in order
-      And User clicks submit order button
+      And User clicks "submitOrder" button
       Then New order should be create
       And User clicks "confirmBtn" button
       And User clicks "onlineOrder" module link
@@ -80,6 +83,7 @@ Feature: Order
 
     Scenario: Check total amount after adding products, services in new order
       When User clicks "newOrder" page link
+      And User clicks "productAreaExpandBtn" button
       And User add "samsung" product
       And User add "PXK-009" service in order
       And User add Bundle in order
@@ -94,12 +98,13 @@ Feature: Order
     Scenario Outline: Create order with product from different store ("<Sale Type>")
       When User clicks "newOrder" page link
       And User add "<Seller>" code
+      And User clicks "productAreaExpandBtn" button
       And User add "<Product>" product from different store
       And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" delivery type of the product
       And User fills "<Customer>" field
       And User selects "<Sale Type>"
       And User fills customer "<Birthdate>" field "Kredit Satış"
-      And User clicks submit order button
+      And User clicks "submitOrder" button
       Then New order should be create
       And User clicks "confirmBtn" button
       And User clicks "onlineOrder" module link

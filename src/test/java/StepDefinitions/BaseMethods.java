@@ -21,7 +21,7 @@ public class BaseMethods {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    protected void waitVisibilityLocator(By locator, int time){
+    protected void waitVisibilityElement(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -31,9 +31,14 @@ public class BaseMethods {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    protected void waitClickableLocator(By locator, int time){
+    protected void waitClickableElement(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    protected void waitClickableElement(WebElement element, int time){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     protected void waitTextMessage(WebElement element, String message, int time){
@@ -58,6 +63,11 @@ public class BaseMethods {
 
     protected JavascriptExecutor getJsExecutor(){
         return (JavascriptExecutor) driver;
+    }
+
+    protected void moveToElement(WebElement element){
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
     }
 
 }

@@ -25,15 +25,18 @@ public class GeneralPOM {
     private final By storeSelect = By.id("user_magaza_kodu");
     private final By sellerSearchField = By.id("sif_satici_kodu_axtar");
     private final By sellerSearchBtn = By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm");
-    private final By productAreaExpandBtn = By.xpath("//*[@aria-expanded='false']");
     private final By productNameField = By.id("stokAdi");
     private final By productBrandNameField = By.id("stokMarka-selectized");
     private final By productSearchBtn = By.cssSelector("button[class='btn btn-primary']");
+    private final By successIcon = By.className("swal2-success-ring");
+    private final By errorMessage = By.className("noty_type__error");
+    private final By productEmptyErrorMessage = By.id("recipeitemAlert");
 
     static {
         elementsMap.put("productSearchBtn", By.cssSelector("button[class='btn btn-primary']"));
         elementsMap.put("customerCode", By.id("search_customervcode"));
         elementsMap.put("confirmBtn", By.className("swal2-confirm"));
+        elementsMap.put("productAreaExpandBtn", By.xpath("//*[@data-target='#mehsulaxtar-card']"));
     }
 
 

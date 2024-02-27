@@ -28,6 +28,7 @@ public class CucumberHook {
         }
         driver.set(new ChromeDriver());
         driver.get().get("https://test.abc-telecom.az:5067/");
+        driver.get().manage().window().maximize();
     }
 
     @After
