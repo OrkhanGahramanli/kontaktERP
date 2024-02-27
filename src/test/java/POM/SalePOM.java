@@ -36,10 +36,12 @@ public class SalePOM {
         elementsMap.put("sendSMSBtn", By.id("smsSendBtn"));
         elementsMap.put("SMSCode", By.id("smsCode"));
         elementsMap.put("completeSaleBtn", By.id("satisTamam"));
+        elementsMap.put("expandCustomerSectionBtn", By.xpath("//*[@data-target='#collapsumusteri']"));
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");
-    private final By customerAreaExpandBtn = By.xpath("//*[@data-target='#collapsumusteri']");
     private final By productBrandNameField = By.id("stokMarka-selectized");
-    private final By invoiceNumber = By.id("sifaris_seriya");
+    private final By invoiceNumber = By.xpath("//*[text()='Faktura Nömrəsi :']");
+    private final By productSellerBtn = By.xpath("//*[@class='far fa-user']");
+    private final By selectSellerBtn = By.xpath("//*[@id='tableSatici']//tr[1]/td[3]/button");
 }

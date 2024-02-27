@@ -41,7 +41,7 @@ public class OrderSteps extends BaseMethods {
 
     @And("User add {string} code")
     public void userSelectsSeller(String sellerCode) {
-        waitVisibilityLocator(generalPOM.getSellerSearchField(), 5);
+        waitVisibilityElement(generalPOM.getSellerSearchField(), 5);
         driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
         if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
     }
@@ -59,19 +59,9 @@ public class OrderSteps extends BaseMethods {
        saleTypeValue = select.getFirstSelectedOption().getText();
     }
 
-    @And("User clicks submit order button")
-    public void userClicksSubmitOrderButton() {
-        driver.findElement(orderPOM.getOrderSubmitBtn()).click();
-        List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
-        expectedProducts = new ArrayList<>();
-        for (WebElement element : productsBeforeCreateOrder){
-            expectedProducts.add(element.getText());
-        }
-    }
-
     @Then("New order should be create")
     public void newOrderShouldBeCreate() {
-        String orderCreated = driver.findElement(orderPOM.getNewOrderCreateMessage()).getText();
+        String orderCreated = driver.findElement(generalPOM.getSuccessIcon()).getText();
         Assert.assertFalse(orderCreated.isEmpty());
         String[] createdOrderNum = orderCreated.split(" ");
         orderNum = createdOrderNum[0];
@@ -97,21 +87,6 @@ public class OrderSteps extends BaseMethods {
         if (saleTypeValue.equals(saleType)) driver.findElement(orderPOM.getCustomerBirthDate()).sendKeys(customerBirthDate);
     }
 
-    @Then("User should get {string} message in new Order Page")
-    public void userShouldGetMessageInNewOrderPage(String expectedError) {
-        if (expectedError.equals("Məhsul seçilməyib.")){
-            List<WebElement> list = driver.findElements(orderPOM.getProductEmptyErrorMessage());
-            waitTextMessage(list.getLast(), expectedError, 5);
-            String actualError = list.getLast().getText();
-            Assert.assertEquals(actualError, expectedError);
-        }else {
-            List<WebElement> list = driver.findElements(orderPOM.getErrorMessage());
-            waitTextMessage(list.getLast(), expectedError, 5);
-            String actualError = list.getLast().getText();
-            Assert.assertEquals(actualError, expectedError);
-        }
-    }
-
     @And("User add {string} service in order")
     public void userAddServiceInOrder(String service) {
         driver.findElement(orderPOM.getSelectServiceBtn()).click();
@@ -123,7 +98,7 @@ public class OrderSteps extends BaseMethods {
     @And("User add Bundle in order")
     public void userAddBundleInOrder() {
         driver.findElement(orderPOM.getSelectBundleBtn()).click();
-        waitVisibilityLocator(orderPOM.getAddBundleBtn(), 10);
+        waitVisibilityElement(orderPOM.getAddBundleBtn(), 10);
         driver.findElement(orderPOM.getAddBundleBtn()).click();
         Actions actions = new Actions(driver);
         actions.click(driver.findElement(orderPOM.getBundlesWindowCloseBtn()));
@@ -134,7 +109,7 @@ public class OrderSteps extends BaseMethods {
         driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
         Thread.sleep(2000);
         driver.findElement(orderPOM.getCreatedOrderDetailsBtn()).click();
-        waitVisibilityLocator(orderPOM.getProductsCodeAfterCreate(),10);
+        waitVisibilityElement(orderPOM.getProductsCodeAfterCreate(),10);
         List<WebElement> productsAfterCreateOrder = driver.findElements(orderPOM.getProductsCodeAfterCreate());
         actualProducts = new ArrayList<>();
         for (WebElement element : productsAfterCreateOrder){
@@ -180,13 +155,12 @@ public class OrderSteps extends BaseMethods {
 
     @Then("Products should be displayed in bundle")
     public void productsShouldBeDisplayedInBundle() {
-        waitVisibilityLocator(orderPOM.getProductInBundle(), 10);
+        waitVisibilityElement(orderPOM.getProductInBundle(), 10);
         Assert.assertFalse(driver.findElement(orderPOM.getProductInBundle()).getText().isEmpty());
     }
 
     @And("User add {string} product from different store")
     public void userAddProductFromDifferentStore(String product) {
-        driver.findElement(generalPOM.getProductAreaExpandBtn()).click();
         driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
             driver.findElement(generalPOM.getProductSearchBtn()).click();
@@ -209,7 +183,7 @@ public class OrderSteps extends BaseMethods {
 
     @And("User selects {string} delivery type of the product")
     public void userSelectsDeliveryTypeOfTheProduct(String deliveryType) {
-        waitVisibilityLocator(orderPOM.getProductDeliveryType(), 10);
+        waitVisibilityElement(orderPOM.getProductDeliveryType(), 10);
         Select select = new Select(driver.findElement(orderPOM.getProductDeliveryType()));
         select.selectByVisibleText(deliveryType);
     }
@@ -231,11 +205,6 @@ public class OrderSteps extends BaseMethods {
     public void userSelectsProductBrand(String text) {
         driver.findElement(generalPOM.getProductBrandNameField()).sendKeys(text);
         driver.findElement(generalPOM.selectFieldValue(text)).click();
-    }
-
-    @And("User clicks {string} button")
-    public void userClicksButton(String element) {
-        driver.findElement(elementsMap.get(element)).click();
     }
 
     @And("User clicks {string} of a product")

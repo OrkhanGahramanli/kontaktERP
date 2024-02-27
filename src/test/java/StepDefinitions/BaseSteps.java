@@ -8,9 +8,13 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import static POM.ElementsMap.elementsMap;
@@ -28,7 +32,7 @@ public class BaseSteps extends BaseMethods{
     }
     @And("User clicks {string} module link")
     public void UserClicksMenu(String element) {
-        waitVisibilityLocator(elementsMap.get(element),10);
+        waitVisibilityElement(elementsMap.get(element),10);
         driver.findElement(elementsMap.get(element)).click();
     }
 
@@ -38,9 +42,18 @@ public class BaseSteps extends BaseMethods{
         element.click();
     }
 
+    @And("User clicks {string} button")
+    public void userClicksButton(String element) {
+        WebElement myElement = driver.findElement(elementsMap.get(element));
+        if (myElement.isDisplayed()) myElement.click();
+        else {
+            moveToElement(myElement);
+            myElement.click();
+        }
+    }
+
     @And("User add {string} product")
     public void userAddProduct(String product) {
-        driver.findElement(generalPOM.getProductAreaExpandBtn()).click();
         driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
             driver.findElement(generalPOM.getProductSearchBtn()).click();
@@ -56,6 +69,19 @@ public class BaseSteps extends BaseMethods{
 
             }
             driver.findElement(generalPOM.getAddProductBtn(productInStockIndex)).click();
+        }
+    }
+
+    @Then("User should get {string} message")
+    public void userShouldGetMessageInNewOrderPage(String expectedError) {
+        if (expectedError.equals("Məhsul seçilməyib.")){
+            WebElement productErrorMessage = driver.findElement(generalPOM.getProductEmptyErrorMessage());
+            waitVisibilityElement(productErrorMessage, 5);
+            Assert.assertEquals(productErrorMessage.getText(), expectedError);
+        }else {
+            WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
+            waitVisibilityElement(errorMessage, 5);
+            Assert.assertEquals(errorMessage.getText(), expectedError);
         }
     }
 }
