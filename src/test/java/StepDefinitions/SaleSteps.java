@@ -21,9 +21,12 @@ public class SaleSteps extends BaseMethods{
 
     @When("User fills {string} in {string} input field")
     public void userFillsInputField(String text, String element){
-        driver.findElement(elementsMap.get(element)).click();
-        driver.findElement(elementsMap.get(element)).clear();
-        driver.findElement(elementsMap.get(element)).sendKeys(text);
+        if (!text.isEmpty()) {
+            waitVisibilityElement(elementsMap.get(element), 5);
+            driver.findElement(elementsMap.get(element)).click();
+            driver.findElement(elementsMap.get(element)).clear();
+            driver.findElement(elementsMap.get(element)).sendKeys(text);
+        }
     }
 
     @And("User selects {string} customer")
@@ -34,6 +37,7 @@ public class SaleSteps extends BaseMethods{
     @And("User selects {string} option from {string}")
     public void userSelectsOptionFrom(String text, String element) {
         if (!text.isEmpty()) {
+            waitVisibilityElement(elementsMap.get(element), 10);
             try {
                 selectVisibleText(driver.findElement(elementsMap.get(element)), text);
             } catch (UnexpectedTagNameException u) {

@@ -130,3 +130,21 @@ Feature: Sale
       | caseName        | smsCode |
       | Empty smsCode   |         |
       | Invalid smsCode | 12345   |
+@TotalAmountCreditSale
+  Scenario: Check total amount after adding products, services in new credit sale
+    When User clicks "newCreditSale" page link
+    And User clicks "productAreaExpandBtn" button
+    And User add "samsung" product
+    And User clicks "serviceBtn" button
+    And User add "PXK-009" service
+    And User clicks "windowCloseBtn" button
+    And User clicks "bundleBtn" button
+    And User add Bundle
+    Then Total amount should be sum of all prices
+
+  @CheckProductsInBundleSale
+  Scenario: Check products in bundle
+    When User clicks "newCreditSale" page link
+    And User clicks "bundleBtn" button
+    And User clicks "bundleDetailsBtn" button
+    Then Products should be displayed in bundle

@@ -34,7 +34,6 @@ public class OrderSteps extends BaseMethods {
     GeneralPOM generalPOM = GeneralPOM.getInstance();
 
     String orderNum;
-    String saleTypeValue;
     String[] creditorWorkStatus = new String[2];
     List<String> actualProducts;
     List<String> expectedProducts;
@@ -46,24 +45,12 @@ public class OrderSteps extends BaseMethods {
         if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
     }
 
-    @And("User fills {string} field")
-    public void userFillsCustomerNameField(String customer) {
-        if (!customer.isEmpty()) driver.findElement(orderPOM.getCustomerNameField()).sendKeys(customer);
-    }
-
-    @And("User selects {string}")
-    public void userSelectsSaleType(String saleType) {
-        WebElement saleTypeElement = driver.findElement(orderPOM.getSaleType());
-        Select select = new Select(saleTypeElement);
-        select.selectByVisibleText(saleType);
-       saleTypeValue = select.getFirstSelectedOption().getText();
-    }
-
     @Then("New order should be create")
     public void newOrderShouldBeCreate() {
-        String orderCreated = driver.findElement(generalPOM.getSuccessIcon()).getText();
-        Assert.assertFalse(orderCreated.isEmpty());
-        String[] createdOrderNum = orderCreated.split(" ");
+        WebElement orderCreated = driver.findElement(generalPOM.getSuccessIcon());
+        Assert.assertTrue(orderCreated.isDisplayed());
+        String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
+        String[] createdOrderNum = createdOrderMessage.split(" ");
         orderNum = createdOrderNum[0];
     }
 
@@ -82,28 +69,6 @@ public class OrderSteps extends BaseMethods {
         Assert.assertEquals(driver.findElement(orderPOM.getCreatedOrderType()).getText(), saleType);
     }
 
-    @And("User fills customer {string} field {string}")
-    public void userFillsCustomerBirthDaterField(String customerBirthDate, String saleType) {
-        if (saleTypeValue.equals(saleType)) driver.findElement(orderPOM.getCustomerBirthDate()).sendKeys(customerBirthDate);
-    }
-
-    @And("User add {string} service in order")
-    public void userAddServiceInOrder(String service) {
-        driver.findElement(orderPOM.getSelectServiceBtn()).click();
-        driver.findElement(orderPOM.getServiceSearchField()).sendKeys(service);
-        driver.findElement(orderPOM.getAddServiceBtn()).click();
-        driver.findElement(orderPOM.getServicesWindowCloseBtn()).click();
-    }
-
-    @And("User add Bundle in order")
-    public void userAddBundleInOrder() {
-        driver.findElement(orderPOM.getSelectBundleBtn()).click();
-        waitVisibilityElement(orderPOM.getAddBundleBtn(), 10);
-        driver.findElement(orderPOM.getAddBundleBtn()).click();
-        Actions actions = new Actions(driver);
-        actions.click(driver.findElement(orderPOM.getBundlesWindowCloseBtn()));
-    }
-
     @Then("Products and services should be visible in new order")
     public void productsAndServicesShouldBeVisibleInNewOrder() throws InterruptedException {
         driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
@@ -120,49 +85,10 @@ public class OrderSteps extends BaseMethods {
         Assert.assertEquals(actualProducts, expectedProducts);
     }
 
-    @Then("Total amount should be sum of all prices")
-    public void totalAmountShouldBeSumOfAllPrices() {
-    List<WebElement> productsPrices = driver.findElements(orderPOM.getAddedProductsPrices());
-    List<WebElement> productsDiscounts = driver.findElements(orderPOM.getAddedProductsDiscounts());
-
-    double productsPricesSum = 0.00d;
-    for (WebElement element : productsPrices){
-        productsPricesSum += Double.parseDouble(element.getAttribute("value"));
-    }
-    double productsDiscountsSum = 0.00d;
-    for (WebElement element : productsDiscounts){
-        if (!element.getAttribute("value").isEmpty()) productsDiscountsSum += Double.parseDouble(element.getAttribute("value"));
-        }
-
-    WebElement productsAmount = driver.findElement(orderPOM.getProductsAmount());
-    WebElement productsDiscount = driver.findElement(orderPOM.getProductsDiscount());
-    WebElement productsTotalAmount = driver.findElement(orderPOM.getProductsTotalAmount());
-
-    Assert.assertEquals(Double.parseDouble(productsAmount.getText()), Math.round(productsPricesSum*100.0)/100.0);
-    Assert.assertEquals(Double.parseDouble(productsDiscount.getText()), Math.round(productsDiscountsSum*100.0)/100.0);
-    Assert.assertEquals(Double.parseDouble(productsTotalAmount.getText()), Math.round((productsPricesSum-productsDiscountsSum)*100.0)/100.0);
-    }
-
-    @And("User clicks bundle select button")
-    public void userClicksBundleSelectButton() {
-        driver.findElement(orderPOM.getSelectBundleBtn()).click();
-    }
-
-    @And("User clicks on button to see products in bundle")
-    public void userClicksOnButtonToSeeProductsInBundle() {
-        driver.findElement(orderPOM.getBundleDetailsBtn()).click();
-    }
-
-    @Then("Products should be displayed in bundle")
-    public void productsShouldBeDisplayedInBundle() {
-        waitVisibilityElement(orderPOM.getProductInBundle(), 10);
-        Assert.assertFalse(driver.findElement(orderPOM.getProductInBundle()).getText().isEmpty());
-    }
-
     @And("User add {string} product from different store")
     public void userAddProductFromDifferentStore(String product) {
-        driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
+            driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
             driver.findElement(generalPOM.getProductSearchBtn()).click();
             int otherStoreIndex = 0;
             for (int i = 1; i < 11; i++) {
@@ -181,13 +107,6 @@ public class OrderSteps extends BaseMethods {
         }
     }
 
-    @And("User selects {string} delivery type of the product")
-    public void userSelectsDeliveryTypeOfTheProduct(String deliveryType) {
-        waitVisibilityElement(orderPOM.getProductDeliveryType(), 10);
-        Select select = new Select(driver.findElement(orderPOM.getProductDeliveryType()));
-        select.selectByVisibleText(deliveryType);
-    }
-
     @And("User change work status of creditor")
     public void userChangeWorkStatusOfCreditor() {
         creditorWorkStatus[0] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
@@ -199,12 +118,6 @@ public class OrderSteps extends BaseMethods {
     @Then("Work status should be changed")
     public void workStatusShouldBeChanged() {
         Assert.assertNotEquals(creditorWorkStatus[0], creditorWorkStatus[1]);
-    }
-
-    @And("User selects {string} product brand")
-    public void userSelectsProductBrand(String text) {
-        driver.findElement(generalPOM.getProductBrandNameField()).sendKeys(text);
-        driver.findElement(generalPOM.selectFieldValue(text)).click();
     }
 
     @And("User clicks {string} of a product")

@@ -14,9 +14,9 @@ Feature: Order
       And User add "<Seller>" code
       And User clicks "productAreaExpandBtn" button
       And User add "<Product>" product
-      And User fills "<Customer>" field
-      And User selects "<Sale Type>"
-      And User fills customer "<Birthdate>" field "Kredit Satış"
+      And User fills "<Customer>" in "customerName" input field
+      And User selects "<Sale Type>" option from "saleType"
+      And User fills "<Birthdate>" in "customerBirthDate" input field
       And User clicks "submitOrder" button
       Then New order should be create
       And User clicks "confirmBtn" button
@@ -36,9 +36,9 @@ Feature: Order
     And User add "<Seller>" code
     And User clicks "productAreaExpandBtn" button
     And User add "<Product>" product
-    And User fills "<Customer>" field
-    And User selects "<Sale Type>"
-    And User fills customer "<Birthdate>" field "Kredit Satış"
+    And User fills "<Customer>" in "customerName" input field
+    And User selects "<Sale Type>" option from "saleType"
+    And User fills "<Birthdate>" in "customerBirthDate" input field
     And User clicks "submitOrder" button
     Then User should get "<error>" message
 
@@ -63,11 +63,15 @@ Feature: Order
       And User add "<Seller>" code
       And User clicks "productAreaExpandBtn" button
       And User add "<Product>" product
-      And User fills "<Customer>" field
-      And User selects "<Sale Type>"
-      And User fills customer "<Birthdate>" field "Kredit Satış"
-      And User add "<Service>" service in order
-      And User add Bundle in order
+      And User fills "<Customer>" in "customerName" input field
+      And User selects "<Sale Type>" option from "saleType"
+      And User fills "<Birthdate>" in "customerBirthDate" input field
+      And User clicks "serviceBtn" button
+      And User add "<Service>" service
+      And User clicks "windowCloseBtn" button
+      And User clicks "bundleBtn" button
+      And User add Bundle
+      And User clicks "windowCloseBtn" button
       And User clicks "submitOrder" button
       Then New order should be create
       And User clicks "confirmBtn" button
@@ -80,19 +84,22 @@ Feature: Order
         | Nağd Satış   | samsung | Orxan    | IR-000002 |            | PXK-009 |
         | Kredit Satış | samsung | Orxan    | IR-000002 | 06/18/1993 | PXK-009 |
 
-
+  @CheckTotalAmountOrder
     Scenario: Check total amount after adding products, services in new order
       When User clicks "newOrder" page link
       And User clicks "productAreaExpandBtn" button
       And User add "samsung" product
-      And User add "PXK-009" service in order
-      And User add Bundle in order
+      And User clicks "serviceBtn" button
+      And User add "PXK-009" service
+      And User clicks "windowCloseBtn" button
+      And User clicks "bundleBtn" button
+      And User add Bundle
       Then Total amount should be sum of all prices
-
+@CheckProductsInBundleOrder
     Scenario: Check products in bundle
       When User clicks "newOrder" page link
-      And User clicks bundle select button
-      And User clicks on button to see products in bundle
+      And User clicks "bundleBtn" button
+      And User clicks "bundleDetailsBtn" button
       Then Products should be displayed in bundle
 @NewOrderDifferentStore
     Scenario Outline: Create order with product from different store ("<Sale Type>")
@@ -100,10 +107,10 @@ Feature: Order
       And User add "<Seller>" code
       And User clicks "productAreaExpandBtn" button
       And User add "<Product>" product from different store
-      And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" delivery type of the product
-      And User fills "<Customer>" field
-      And User selects "<Sale Type>"
-      And User fills customer "<Birthdate>" field "Kredit Satış"
+      And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "productDeliveryType"
+      And User fills "<Customer>" in "customerName" input field
+      And User selects "<Sale Type>" option from "saleType"
+      And User fills "<Birthdate>" in "customerBirthDate" input field
       And User clicks "submitOrder" button
       Then New order should be create
       And User clicks "confirmBtn" button
@@ -126,7 +133,7 @@ Feature: Order
     @ProductsInfo
     Scenario Outline: Check "<infoButton>" buttons in "Məhsullar üzrə məlumat" page
       When User clicks "productsInfo" page link
-      And User selects "SAMSUNG" product brand
+      And User selects "SAMSUNG" option from "productBrand"
       And User clicks "productSearchBtn" button
       And User clicks "<infoButton>" of a product
       Then Relative "<info>" should be displayed in new window

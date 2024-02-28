@@ -17,6 +17,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.List;
+
 import static POM.ElementsMap.elementsMap;
 
 public class BaseSteps extends BaseMethods{
@@ -45,17 +47,33 @@ public class BaseSteps extends BaseMethods{
     @And("User clicks {string} button")
     public void userClicksButton(String element) {
         WebElement myElement = driver.findElement(elementsMap.get(element));
-        if (myElement.isDisplayed()) myElement.click();
-        else {
-            moveToElement(myElement);
-            myElement.click();
+        try {
+            if (myElement.isDisplayed()) myElement.click();
+            else {
+                moveToElement(myElement);
+                myElement.click();
+            }
+        }catch (ElementNotInteractableException e){
+            try {
+                if (myElement.isDisplayed()) clickWithAction(myElement);
+                else {
+                    moveToElement(myElement);
+                    clickWithAction(myElement);
+                }
+            }catch (ElementNotInteractableException e2){
+                if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
+                else {
+                    moveToElement(myElement);
+                    getJsExecutor().executeScript("arguments[0].click();", myElement);
+                }
+            }
         }
     }
 
     @And("User add {string} product")
     public void userAddProduct(String product) {
-        driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
         if (!product.isEmpty()) {
+            driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
             driver.findElement(generalPOM.getProductSearchBtn()).click();
             int productInStockIndex = 0;
             for (int i = 1; i < 11; i++) {
@@ -83,5 +101,47 @@ public class BaseSteps extends BaseMethods{
             waitVisibilityElement(errorMessage, 5);
             Assert.assertEquals(errorMessage.getText(), expectedError);
         }
+    }
+
+    @And("User add {string} service")
+    public void userAddService(String service) {
+        driver.findElement(generalPOM.getServiceSearchField()).sendKeys(service);
+        driver.findElement(generalPOM.getAddServiceBtn()).click();
+    }
+
+    @And("User add Bundle")
+    public void userAddBundle() {
+        waitVisibilityElement(generalPOM.getAddBundleBtn(), 10);
+        driver.findElement(generalPOM.getAddBundleBtn()).click();
+    }
+
+    @Then("Total amount should be sum of all prices")
+    public void totalAmountShouldBeSumOfAllPrices() {
+        waitVisibilityElement(driver.findElements(generalPOM.getAddedProductsPrices()), 5);
+        List<WebElement> productsPrices = driver.findElements(generalPOM.getAddedProductsPrices());
+        List<WebElement> productsDiscounts = driver.findElements(generalPOM.getAddedProductsDiscounts());
+
+        double productsPricesSum = 0.00d;
+        for (WebElement element : productsPrices){
+            productsPricesSum += Double.parseDouble(element.getAttribute("value"));
+        }
+        double productsDiscountsSum = 0.00d;
+        for (WebElement element : productsDiscounts){
+            if (!element.getAttribute("value").isEmpty()) productsDiscountsSum += Double.parseDouble(element.getAttribute("value"));
+        }
+
+        WebElement productsAmount = driver.findElement(generalPOM.getProductsAmount());
+        WebElement productsDiscount = driver.findElement(generalPOM.getProductsDiscount());
+        WebElement productsTotalAmount = driver.findElement(generalPOM.getProductsTotalAmount());
+
+        Assert.assertEquals(Double.parseDouble(productsAmount.getText()), Math.round(productsPricesSum*100.0)/100.0);
+        Assert.assertEquals(Double.parseDouble(productsDiscount.getText()), Math.round(productsDiscountsSum*100.0)/100.0);
+        Assert.assertEquals(Double.parseDouble(productsTotalAmount.getText()), Math.round((productsPricesSum-productsDiscountsSum)*100.0)/100.0);
+    }
+
+    @Then("Products should be displayed in bundle")
+    public void productsShouldBeDisplayedInBundle() {
+        waitVisibilityElement(generalPOM.getProductInBundle(), 10);
+        Assert.assertFalse(driver.findElement(generalPOM.getProductInBundle()).getText().isEmpty());
     }
 }
