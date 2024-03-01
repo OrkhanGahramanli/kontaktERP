@@ -25,14 +25,11 @@ public class GeneralPOM {
     private final By storeSelect = By.id("user_magaza_kodu");
     private final By sellerSearchField = By.id("sif_satici_kodu_axtar");
     private final By sellerSearchBtn = By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm");
-    private final By productNameField = By.id("stokAdi");
-    private final By productSearchBtn = By.cssSelector("button[class='btn btn-primary']");
     private final By successIcon = By.className("swal2-success-ring");
     private final By errorMessage = By.className("noty_type__error");
     private final By productEmptyErrorMessage = By.id("recipeitemAlert");
     private final By serviceSearchField = By.xpath("//input[@aria-controls='tableHizmet']");
     private final By addServiceBtn = By.xpath("//*[@id='tableHizmet_wrapper']//*[@type='button']");
-    private final By addBundleBtn = By.xpath("//*[@id='tableBundle_wrapper']//*[@type='button']");
     private final By addedProductsPrices = By.xpath("//*[@id='tableProd']/tr/td[4]/input");
     private final By addedProductsDiscounts = By.xpath("//*[@id='tableProd']/tr/td[6]/input");
     private final By productsAmount = By.id("toplamMebleg");
@@ -51,6 +48,7 @@ public class GeneralPOM {
         elementsMap.put("windowCloseBtn", By.xpath("//*[@aria-modal='true']//*[@class='btn btn-secondary']"));
         elementsMap.put("bundleDetailsBtn", By.cssSelector(".btn.btn-info.btn-sm.float-right.mr-2"));
         elementsMap.put("productBrand", By.id("stokMarka-selectized"));
+        elementsMap.put("bundleAddBtn", By.xpath("//*[@id='tableBundle_wrapper']//*[@type='button']"));
     }
 
 

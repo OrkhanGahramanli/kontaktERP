@@ -35,7 +35,9 @@ Feature: Sale
   Scenario: Successful create credit sale without order number
     When User clicks "newCreditSale" page link
     And User clicks "productAreaExpandBtn" button
-    And User add "samsung" product
+    And User selects "SAMSUNG" option from "productBrand"
+    And User clicks "productSearchBtn" button
+    And User add any product
     And User add seller to the product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "1000517597" in "customerCode" input field
@@ -59,7 +61,9 @@ Feature: Sale
   Scenario Outline: Unsuccessful credit calculate/Scenario Name: "<caseName>"
     When User clicks "newCreditSale" page link
     And User clicks "productAreaExpandBtn" button
-    And User add "<product>" product
+    And User selects "<product>" option from "productBrand"
+    And User clicks "productSearchBtn" button
+    And User add any product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "<customerCode>" in "customerCode" input field
     And User clicks "customerSearchBtn" button
@@ -73,16 +77,18 @@ Feature: Sale
   Examples:
     | caseName                | product | customerCode | regionCode | customerGroupCode | creditMonths | errorMessage                             |
     | Empty product           |         | 1000517597   | BAKI       | Emeqdaş           | 12           | Məhsul seçilməyib.                       |
-    | Empty customerCode      | samsung |              | BAKI       | Emeqdaş           | 12           | Müştəri seçilməyib.                      |
-    | Empty regionCode        | samsung | 1000517597   |            | Emeqdaş           | 12           | Bölgə kodu seçilməyib.                   |
-    | Empty customerGroupCode | samsung | 1000517597   | BAKI       |                   | 12           | Qrup kodu seçilməyib.                    |
-    | Empty creditMonths      | samsung | 1000517597   | BAKI       | Emeqdaş           |              | Zəhmət olmasa, kredit sayını daxil edin. |
+    | Empty customerCode      | SAMSUNG |              | BAKI       | Emeqdaş           | 12           | Müştəri seçilməyib.                      |
+    | Empty regionCode        | SAMSUNG | 1000517597   |            | Emeqdaş           | 12           | Bölgə kodu seçilməyib.                   |
+    | Empty customerGroupCode | SAMSUNG | 1000517597   | BAKI       |                   | 12           | Qrup kodu seçilməyib.                    |
+    | Empty creditMonths      | SAMSUNG | 1000517597   | BAKI       | Emeqdaş           |              | Zəhmət olmasa, kredit sayını daxil edin. |
 
   @InvalidCreateCreditSale
   Scenario Outline: Unsuccessful credit sale create/Scenario Name: "<caseName>"
     When User clicks "newCreditSale" page link
     And User clicks "productAreaExpandBtn" button
-    And User add "samsung" product
+    And User selects "SAMSUNG" option from "productBrand"
+    And User clicks "productSearchBtn" button
+    And User add any product
     And User add seller to the product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "1000517597" in "customerCode" input field
@@ -109,7 +115,9 @@ Feature: Sale
   Scenario Outline: Unsuccessful create sale credit with wrong sms code/Scenario Name: "<caseName>"
     When User clicks "newCreditSale" page link
     And User clicks "productAreaExpandBtn" button
-    And User add "samsung" product
+    And User selects "SAMSUNG" option from "productBrand"
+    And User clicks "productSearchBtn" button
+    And User add any product
     And User add seller to the product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "1000517597" in "customerCode" input field
@@ -134,12 +142,14 @@ Feature: Sale
   Scenario: Check total amount after adding products, services in new credit sale
     When User clicks "newCreditSale" page link
     And User clicks "productAreaExpandBtn" button
-    And User add "samsung" product
+    And User selects "SAMSUNG" option from "productBrand"
+    And User clicks "productSearchBtn" button
+    And User add any product
     And User clicks "serviceBtn" button
     And User add "PXK-009" service
     And User clicks "windowCloseBtn" button
     And User clicks "bundleBtn" button
-    And User add Bundle
+    And User clicks "bundleAddBtn" button
     Then Total amount should be sum of all prices
 
   @CheckProductsInBundleSale
@@ -148,3 +158,31 @@ Feature: Sale
     And User clicks "bundleBtn" button
     And User clicks "bundleDetailsBtn" button
     Then Products should be displayed in bundle
+
+  @NewSaleDifferentStore
+  Scenario: Create credit sale with product from different store
+    When User clicks "newCreditSale" page link
+    And User clicks "productAreaExpandBtn" button
+    And User selects "SAMSUNG" option from "productBrand"
+    And User clicks "productSearchBtn" button
+    And User add any product from different store
+    And User clicks "windowCloseBtn" button
+    And User add seller to the product
+    And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "productDeliveryType"
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "1000517597" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User selects "1000517597" customer
+    And User selects "BAKI" option from "regionCode"
+    And User selects "Emeqdaş" option from "customerGroupCode"
+    And User fills "12" in "creditMonths" input field
+    And User clicks "calculateCreditBtn" button
+    And User selects "Xeyr" option from "Akb"
+    And User selects "Xeyr" option from "asanFinance"
+    And User clicks "sendSMSBtn" button
+    And User clicks "confirmBtn" button
+    And User fills "123456" in "SMSCode" input field
+    And User clicks "completeSaleBtn" button
+    Then New sale should be created
+    And User clicks "confirmBtn" button
+    Then Invoice number should be displayed

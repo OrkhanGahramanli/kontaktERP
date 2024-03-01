@@ -19,32 +19,9 @@ public class SaleSteps extends BaseMethods{
     GeneralPOM generalPOM = GeneralPOM.getInstance();
     SalePOM salePOM = SalePOM.getInstance();
 
-    @When("User fills {string} in {string} input field")
-    public void userFillsInputField(String text, String element){
-        if (!text.isEmpty()) {
-            waitVisibilityElement(elementsMap.get(element), 5);
-            driver.findElement(elementsMap.get(element)).click();
-            driver.findElement(elementsMap.get(element)).clear();
-            driver.findElement(elementsMap.get(element)).sendKeys(text);
-        }
-    }
-
     @And("User selects {string} customer")
     public void userSelectsCustomer(String customerCode) {
        if (!customerCode.isEmpty()) driver.findElement(salePOM.getCustomerSelectBtn()).click();
-    }
-
-    @And("User selects {string} option from {string}")
-    public void userSelectsOptionFrom(String text, String element) {
-        if (!text.isEmpty()) {
-            waitVisibilityElement(elementsMap.get(element), 10);
-            try {
-                selectVisibleText(driver.findElement(elementsMap.get(element)), text);
-            } catch (UnexpectedTagNameException u) {
-                driver.findElement(elementsMap.get(element)).sendKeys(text);
-                driver.findElement(generalPOM.selectFieldValue(text)).click();
-            }
-        }
     }
 
     @Then("Invoice number should be displayed")

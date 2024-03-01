@@ -85,11 +85,8 @@ public class OrderSteps extends BaseMethods {
         Assert.assertEquals(actualProducts, expectedProducts);
     }
 
-    @And("User add {string} product from different store")
-    public void userAddProductFromDifferentStore(String product) {
-        if (!product.isEmpty()) {
-            driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
-            driver.findElement(generalPOM.getProductSearchBtn()).click();
+    @And("User add any product from different store")
+    public void userAddAnyProductFromDifferentStore() {
             int otherStoreIndex = 0;
             for (int i = 1; i < 11; i++) {
                 String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
@@ -103,8 +100,6 @@ public class OrderSteps extends BaseMethods {
             }
             driver.findElement(generalPOM.getOtherStoresBtn(otherStoreIndex)).click();
             driver.findElement(orderPOM.getAddProductOtherStoreBtn()).click();
-            driver.findElement(orderPOM.getOtherStoreProductsWindowCloseBtn()).click();
-        }
     }
 
     @And("User change work status of creditor")

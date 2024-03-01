@@ -27,7 +27,6 @@ public class OrderPOM {
     private final By productsCodeBeforeCreate = By.xpath("//*[@id='tableProd']/tr/td[2]");
     private final By productsCodeAfterCreate = By.xpath("//*[@id='sifaris_mehsullar_table']/tbody/tr/td[2]/input");
     private final By createdOrderDetailsBtn = By.xpath("(//a[@title='Bax'])[2]");
-    private final By otherStoreProductsWindowCloseBtn = By.cssSelector("div[class='row mt-3 mb-3'] div[class='modal-footer'] button[type='button']");
     private final By createdOrderType = By.xpath("//tr[1]/td[3][@aria-selected='false'][@role='gridcell'][@aria-describedby='dx-col-69']");
     private final By creditorWorkStatusBtn = By.xpath("//tr[1]/td/button[@class='btn btn-success']");
     private final By creditorWorkStatus = By.xpath("//tbody/tr[1]/td[3]");

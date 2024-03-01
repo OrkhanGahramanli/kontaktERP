@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -23,6 +24,8 @@ import static POM.ElementsMap.elementsMap;
 
 public class BaseSteps extends BaseMethods{
     GeneralPOM generalPOM = GeneralPOM.getInstance();
+
+    String selectedText;
     @Given("User is in {string}")
     public void UserIsIn(String arg0){
     }
@@ -53,14 +56,14 @@ public class BaseSteps extends BaseMethods{
                 moveToElement(myElement);
                 myElement.click();
             }
-        }catch (ElementNotInteractableException e){
+        }catch (Exception e){
             try {
                 if (myElement.isDisplayed()) clickWithAction(myElement);
                 else {
                     moveToElement(myElement);
                     clickWithAction(myElement);
                 }
-            }catch (ElementNotInteractableException e2){
+            }catch (Exception e2){
                 if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
                 else {
                     moveToElement(myElement);
@@ -70,11 +73,33 @@ public class BaseSteps extends BaseMethods{
         }
     }
 
-    @And("User add {string} product")
-    public void userAddProduct(String product) {
-        if (!product.isEmpty()) {
-            driver.findElement(generalPOM.getProductNameField()).sendKeys(product);
-            driver.findElement(generalPOM.getProductSearchBtn()).click();
+    @And("User selects {string} option from {string}")
+    public void userSelectsOptionFrom(String text, String element) {
+        this.selectedText = text;
+        if (!text.isEmpty()) {
+            waitVisibilityElement(elementsMap.get(element), 10);
+            try {
+                selectVisibleText(driver.findElement(elementsMap.get(element)), text);
+            } catch (UnexpectedTagNameException u) {
+                driver.findElement(elementsMap.get(element)).sendKeys(text);
+                driver.findElement(generalPOM.selectFieldValue(text)).click();
+            }
+        }
+    }
+
+    @When("User fills {string} in {string} input field")
+    public void userFillsInputField(String text, String element){
+        if (!text.isEmpty()) {
+            waitVisibilityElement(elementsMap.get(element), 5);
+            driver.findElement(elementsMap.get(element)).click();
+            driver.findElement(elementsMap.get(element)).clear();
+            driver.findElement(elementsMap.get(element)).sendKeys(text);
+        }
+    }
+
+    @And("User add any product")
+    public void userAddAnyProduct() {
+        if (!selectedText.isEmpty()) {
             int productInStockIndex = 0;
             for (int i = 1; i < 11; i++) {
                 String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
@@ -107,12 +132,6 @@ public class BaseSteps extends BaseMethods{
     public void userAddService(String service) {
         driver.findElement(generalPOM.getServiceSearchField()).sendKeys(service);
         driver.findElement(generalPOM.getAddServiceBtn()).click();
-    }
-
-    @And("User add Bundle")
-    public void userAddBundle() {
-        waitVisibilityElement(generalPOM.getAddBundleBtn(), 10);
-        driver.findElement(generalPOM.getAddBundleBtn()).click();
     }
 
     @Then("Total amount should be sum of all prices")
