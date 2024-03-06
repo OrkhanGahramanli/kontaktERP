@@ -1,7 +1,6 @@
-package StepDefinitions;
+package stepDefinitions;
 
-import DriverSession.CucumberHook;
-import DriverSession.CucumberHook;
+import driverSession.CucumberHook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BaseMethods {
 
@@ -29,6 +29,11 @@ public class BaseMethods {
     protected void waitVisibilityElement(WebElement element, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected void waitVisibilityElement(List<WebElement> elements, int time){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
     protected void waitClickableElement(By locator, int time){

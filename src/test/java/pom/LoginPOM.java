@@ -1,4 +1,4 @@
-package POM;
+package pom;
 
 import lombok.Data;
 import org.openqa.selenium.By;

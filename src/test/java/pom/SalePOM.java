@@ -1,10 +1,9 @@
-package POM;
+package pom;
 
-import io.cucumber.java.sl.In;
 import lombok.Data;
 import org.openqa.selenium.By;
 
-import static POM.ElementsMap.elementsMap;
+import static pom.ElementsMap.elementsMap;
 @Data
 public class SalePOM {
 
@@ -37,6 +36,10 @@ public class SalePOM {
         elementsMap.put("SMSCode", By.id("smsCode"));
         elementsMap.put("completeSaleBtn", By.id("satisTamam"));
         elementsMap.put("expandCustomerSectionBtn", By.xpath("//*[@data-target='#collapsumusteri']"));
+        elementsMap.put("cancelSubject", By.id("KreditImtinaAna"));
+        elementsMap.put("cancelReason", By.id("kreditImtinaSebeb"));
+        elementsMap.put("creditCancelBtn", By.id("BtnKreditImtina"));
+
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");

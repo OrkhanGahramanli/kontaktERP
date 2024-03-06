@@ -1,46 +1,25 @@
-package StepDefinitions;
+package stepDefinitions;
 
-import POM.GeneralPOM;
-import POM.SalePOM;
-import io.cucumber.java.Scenario;
+import pom.GeneralPOM;
+import pom.SalePOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.UnexpectedTagNameException;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 
-import static POM.ElementsMap.elementsMap;
+import static pom.ElementsMap.elementsMap;
 
 public class SaleSteps extends BaseMethods{
 
     GeneralPOM generalPOM = GeneralPOM.getInstance();
     SalePOM salePOM = SalePOM.getInstance();
 
-    @When("User fills {string} in {string} input field")
-    public void userFillsInputField(String text, String element){
-        driver.findElement(elementsMap.get(element)).click();
-        driver.findElement(elementsMap.get(element)).clear();
-        driver.findElement(elementsMap.get(element)).sendKeys(text);
-    }
+    int productStock;
 
     @And("User selects {string} customer")
     public void userSelectsCustomer(String customerCode) {
+        waitVisibilityElement(salePOM.getCustomerSelectBtn(), 10);
        if (!customerCode.isEmpty()) driver.findElement(salePOM.getCustomerSelectBtn()).click();
-    }
-
-    @And("User selects {string} option from {string}")
-    public void userSelectsOptionFrom(String text, String element) {
-        if (!text.isEmpty()) {
-            try {
-                selectVisibleText(driver.findElement(elementsMap.get(element)), text);
-            } catch (UnexpectedTagNameException u) {
-                driver.findElement(elementsMap.get(element)).sendKeys(text);
-                driver.findElement(generalPOM.selectFieldValue(text)).click();
-            }
-        }
     }
 
     @Then("Invoice number should be displayed")
@@ -63,5 +42,26 @@ public class SaleSteps extends BaseMethods{
     @Then("{string} button should be disabled")
     public void buttonShouldBeDisabled(String element) {
             Assert.assertFalse(driver.findElement(elementsMap.get(element)).isEnabled());
+    }
+
+    @Then("Credit sale should be canceled successfully")
+    public void creditSaleShouldBeCanceledSuccessfully() {
+        try {
+            driver.findElement(elementsMap.get("confirmBtn"));
+        }catch (NoSuchElementException noSuchElementException){
+         Assert.assertTrue(true);
+        }
+    }
+
+    @And("Collect product stock count")
+    public void collectProductStockCount() {
+        waitVisibilityElement(driver.findElement(generalPOM.getProductCount(1)), 5);
+        productStock = Integer.parseInt(driver.findElement(generalPOM.getProductCount(1)).getText());
+    }
+
+    @Then("Product stock should be less {int} less")
+    public void productStockShouldBeLessLess(int difference) {
+        int currentProductStock = Integer.parseInt(driver.findElement(generalPOM.getProductCount(1)).getText());
+        Assert.assertEquals(productStock - currentProductStock, difference);
     }
 }

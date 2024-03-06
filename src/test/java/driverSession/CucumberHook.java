@@ -1,4 +1,4 @@
-package DriverSession;
+package driverSession;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -9,8 +9,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
 
 public class CucumberHook {
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -21,7 +20,7 @@ public class CucumberHook {
     public static void beforeScenario(Scenario scenario){
         pomName.set(FilenameUtils.getBaseName(scenario.getUri().toString()));
         try {
-            Class<?> clazz = Class.forName("POM." + pomName.get() + "POM");
+            Class<?> clazz = Class.forName("pom." + pomName.get() + "POM");
             Object o = clazz.getDeclaredConstructor().newInstance();
         }catch (Exception ignored){
 
