@@ -1,29 +1,25 @@
-package StepDefinitions;
+package stepDefinitions;
 
-import POM.GeneralPOM;
-import POM.LoginPOM;
-import POM.OrderPOM;
-import POM.SalePOM;
+import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.util.List;
 
-import static POM.ElementsMap.elementsMap;
+import static pom.ElementsMap.elementsMap;
 
 public class BaseSteps extends BaseMethods{
-    GeneralPOM generalPOM = GeneralPOM.getInstance();
+    GeneralPOM generalPOM;
+
+    public BaseSteps(){
+        generalPOM = GeneralPOM.getInstance();
+    }
 
     String selectedText;
     @Given("User is in {string}")
@@ -90,28 +86,10 @@ public class BaseSteps extends BaseMethods{
     @When("User fills {string} in {string} input field")
     public void userFillsInputField(String text, String element){
         if (!text.isEmpty()) {
-            waitVisibilityElement(elementsMap.get(element), 5);
+            waitVisibilityElement(elementsMap.get(element), 10);
             driver.findElement(elementsMap.get(element)).click();
             driver.findElement(elementsMap.get(element)).clear();
             driver.findElement(elementsMap.get(element)).sendKeys(text);
-        }
-    }
-
-    @And("User add any product")
-    public void userAddAnyProduct() {
-        if (!selectedText.isEmpty()) {
-            int productInStockIndex = 0;
-            for (int i = 1; i < 11; i++) {
-                String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
-                int price = Integer.parseInt(priceSplit[0]);
-                if (price > 0
-                        && Integer.parseInt(driver.findElement(generalPOM.getProductCount(i)).getText()) > 0) {
-                    productInStockIndex = i;
-                    break;
-                }
-
-            }
-            driver.findElement(generalPOM.getAddProductBtn(productInStockIndex)).click();
         }
     }
 

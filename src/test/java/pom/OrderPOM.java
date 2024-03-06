@@ -1,9 +1,9 @@
-package POM;
+package pom;
 
 import lombok.Data;
 import org.openqa.selenium.By;
 
-import static POM.ElementsMap.elementsMap;
+import static pom.ElementsMap.elementsMap;
 
 @Data
 public class OrderPOM {
@@ -23,7 +23,6 @@ public class OrderPOM {
 
     private final By webOrderNumSearchField = By.xpath("(//input[@aria-label='Filter cell'])[1]");
     private final By webOrderNum = By.xpath("//tr[1]/td[1][@aria-selected='false'][@role='gridcell'][@aria-describedby='dx-col-67-fixed']");
-    private final By addProductOtherStoreBtn = By.xpath("//*[@id='tableOrderOtherProducts']//*[@type='button']");
     private final By productsCodeBeforeCreate = By.xpath("//*[@id='tableProd']/tr/td[2]");
     private final By productsCodeAfterCreate = By.xpath("//*[@id='sifaris_mehsullar_table']/tbody/tr/td[2]/input");
     private final By createdOrderDetailsBtn = By.xpath("(//a[@title='Bax'])[2]");

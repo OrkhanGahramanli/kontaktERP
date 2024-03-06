@@ -1,9 +1,9 @@
-package POM;
+package pom;
 
 import lombok.Data;
 import org.openqa.selenium.By;
 
-import static POM.ElementsMap.elementsMap;
+import static pom.ElementsMap.elementsMap;
 
 @Data
 public class GeneralPOM {
@@ -49,28 +49,19 @@ public class GeneralPOM {
         elementsMap.put("bundleDetailsBtn", By.cssSelector(".btn.btn-info.btn-sm.float-right.mr-2"));
         elementsMap.put("productBrand", By.id("stokMarka-selectized"));
         elementsMap.put("bundleAddBtn", By.xpath("//*[@id='tableBundle_wrapper']//*[@type='button']"));
+        elementsMap.put("productName", By.id("stokAdi"));
+        elementsMap.put("addProductBtn", By.xpath("//tr[1]/td[10]"));
+        elementsMap.put("otherStoresBtn", By.xpath("//tr[1]/td[11]"));
+        elementsMap.put("addProductOtherStoreBtn", By.xpath("//*[@id='tableOrderOtherProducts']//*[@type='button']"));
     }
 
-
-
-    public By getProductPrice(int index){
-        return By.xpath("//*[@id='tableSearchProducts']//tr["+index+"]/td[4]");
-    }
 
     public By getProductCount(int index){
-        return By.xpath("//tr["+index+"]/td[5]");
-    }
-
-    public By getAddProductBtn(int index){
-        return By.xpath("//tr["+index+"]/td[10]");
+        return By.xpath("//*[@id='tableSearchProducts']//tr["+index+"]/td[5]");
     }
 
     public By getProductCountInOtherStore(int index){
         return By.xpath("//tr["+index+"]/td[8]");
-    }
-
-    public By getOtherStoresBtn(int index){
-        return By.xpath("//tr["+index+"]/td[11]");
     }
 
     public By selectFieldValue(String value){

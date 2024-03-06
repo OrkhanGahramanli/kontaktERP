@@ -1,32 +1,15 @@
-package StepDefinitions;
+package stepDefinitions;
 
-import POM.GeneralPOM;
-import POM.OrderPOM;
+import pom.GeneralPOM;
+import pom.OrderPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.io.InputStream;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.IntStream;
-
-import static POM.ElementsMap.elementsMap;
 
 public class OrderSteps extends BaseMethods {
 
@@ -85,23 +68,6 @@ public class OrderSteps extends BaseMethods {
         Assert.assertEquals(actualProducts, expectedProducts);
     }
 
-    @And("User add any product from different store")
-    public void userAddAnyProductFromDifferentStore() {
-            int otherStoreIndex = 0;
-            for (int i = 1; i < 11; i++) {
-                String[] priceSplit = driver.findElement(generalPOM.getProductPrice(i)).getText().split("\\.");
-                int price = Integer.parseInt(priceSplit[0]);
-                if (price > 0
-                        && Integer.parseInt(driver.findElement(generalPOM.getProductCountInOtherStore(i)).getText()) > 1) {
-                    otherStoreIndex = i;
-                    break;
-                }
-
-            }
-            driver.findElement(generalPOM.getOtherStoresBtn(otherStoreIndex)).click();
-            driver.findElement(orderPOM.getAddProductOtherStoreBtn()).click();
-    }
-
     @And("User change work status of creditor")
     public void userChangeWorkStatusOfCreditor() {
         creditorWorkStatus[0] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
@@ -127,6 +93,16 @@ public class OrderSteps extends BaseMethods {
             if (element.getText().equals(text)){
                 Assert.assertEquals(element.getText(), text);
             }
+        }
+    }
+
+    @And("Collect product names for expected result")
+    public void collectProductNamesForExpectedResult() {
+        waitVisibilityElement(driver.findElements(orderPOM.getProductsCodeBeforeCreate()),10);
+        List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
+        expectedProducts = new ArrayList<>();
+        for (WebElement element : productsBeforeCreateOrder){
+            expectedProducts.add(element.getText());
         }
     }
 }

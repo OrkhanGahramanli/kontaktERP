@@ -1,7 +1,6 @@
-package StepDefinitions;
+package stepDefinitions;
 
-import DriverSession.CucumberHook;
-import DriverSession.CucumberHook;
+import driverSession.CucumberHook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
