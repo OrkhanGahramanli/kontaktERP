@@ -20,8 +20,6 @@ public class BaseSteps extends BaseMethods{
     public BaseSteps(){
         generalPOM = GeneralPOM.getInstance();
     }
-
-    String selectedText;
     @Given("User is in {string}")
     public void UserIsIn(String arg0){
     }
@@ -45,25 +43,27 @@ public class BaseSteps extends BaseMethods{
 
     @And("User clicks {string} button")
     public void userClicksButton(String element) {
-        WebElement myElement = driver.findElement(elementsMap.get(element));
-        try {
-            if (myElement.isDisplayed()) myElement.click();
-            else {
-                moveToElement(myElement);
-                myElement.click();
-            }
-        }catch (Exception e){
+        if (!element.isEmpty()){
+            WebElement myElement = driver.findElement(elementsMap.get(element));
             try {
-                if (myElement.isDisplayed()) clickWithAction(myElement);
+                if (myElement.isDisplayed()) myElement.click();
                 else {
                     moveToElement(myElement);
-                    clickWithAction(myElement);
+                    myElement.click();
                 }
-            }catch (Exception e2){
-                if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
-                else {
-                    moveToElement(myElement);
-                    getJsExecutor().executeScript("arguments[0].click();", myElement);
+            } catch (Exception e) {
+                try {
+                    if (myElement.isDisplayed()) clickWithAction(myElement);
+                    else {
+                        moveToElement(myElement);
+                        clickWithAction(myElement);
+                    }
+                } catch (Exception e2) {
+                    if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
+                    else {
+                        moveToElement(myElement);
+                        getJsExecutor().executeScript("arguments[0].click();", myElement);
+                    }
                 }
             }
         }
@@ -71,7 +71,6 @@ public class BaseSteps extends BaseMethods{
 
     @And("User selects {string} option from {string}")
     public void userSelectsOptionFrom(String text, String element) {
-        this.selectedText = text;
         if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
             try {
@@ -99,7 +98,11 @@ public class BaseSteps extends BaseMethods{
             WebElement productErrorMessage = driver.findElement(generalPOM.getProductEmptyErrorMessage());
             waitVisibilityElement(productErrorMessage, 5);
             Assert.assertEquals(productErrorMessage.getText(), expectedError);
-        }else {
+        } else if (expectedError.equals("satıcı kodu seçilməyib.")) {
+            WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
+            waitVisibilityElement(errorMessage, 5);
+            Assert.assertTrue(errorMessage.getText().contains(expectedError));
+        } else {
             WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
             waitVisibilityElement(errorMessage, 5);
             Assert.assertEquals(errorMessage.getText(), expectedError);
@@ -140,5 +143,14 @@ public class BaseSteps extends BaseMethods{
     public void productsShouldBeDisplayedInBundle() {
         waitVisibilityElement(generalPOM.getProductInBundle(), 10);
         Assert.assertFalse(driver.findElement(generalPOM.getProductInBundle()).getText().isEmpty());
+    }
+
+    @And("User search and add {string} product")
+    public void userSearchAndAddProduct(String product) {
+        if (!product.isEmpty()){
+            driver.findElement(elementsMap.get("productSearchBtn")).click();
+            driver.findElement(elementsMap.get("addProductBtn")).click();
+
+        }
     }
 }

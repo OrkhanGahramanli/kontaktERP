@@ -29,7 +29,6 @@ public class SaleSteps extends BaseMethods{
 
     @And("User add seller to the product")
     public void userAddSellerToTheProduct() {
-        driver.findElement(salePOM.getProductSellerBtn()).click();
         waitVisibilityElement(salePOM.getSelectSellerBtn(), 5);
         driver.findElement(salePOM.getSelectSellerBtn()).click();
     }
@@ -63,5 +62,14 @@ public class SaleSteps extends BaseMethods{
     public void productStockShouldBeLessLess(int difference) {
         int currentProductStock = Integer.parseInt(driver.findElement(generalPOM.getProductCount(1)).getText());
         Assert.assertEquals(productStock - currentProductStock, difference);
+    }
+
+    @And("User clicks {string} button and add any seller for the product")
+    public void userClicksButtonAndAddAnySellerForTheProduct(String element) {
+        if (!element.isEmpty()) {
+            driver.findElement(elementsMap.get(element)).click();
+            waitVisibilityElement(salePOM.getSelectSellerBtn(), 5);
+            driver.findElement(salePOM.getSelectSellerBtn()).click();
+        }
     }
 }

@@ -39,12 +39,19 @@ public class SalePOM {
         elementsMap.put("cancelSubject", By.id("KreditImtinaAna"));
         elementsMap.put("cancelReason", By.id("kreditImtinaSebeb"));
         elementsMap.put("creditCancelBtn", By.id("BtnKreditImtina"));
-
+        elementsMap.put("newCashSale", By.id("negdsatis_link"));
+        elementsMap.put("addPaymentBtn", By.xpath("//*[@onclick='odemeElaveEt()']"));
+        elementsMap.put("paymentTypeSelect", By.xpath("//*[@onchange='odemeNovuYukleNegd(this)']"));
+        elementsMap.put("paymentCodeSelect", By.xpath("//*[@onchange='taksitAylarYukle(this)']"));
+        elementsMap.put("completeCashSaleBtn", By.xpath("//*[@onclick='negdSatisTamamla()']"));
+        elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
+        elementsMap.put("paymentTaksitGroupSelect", By.xpath("//td[3]/select[@onchange='taksitAylarYukle(this)']"));
+        elementsMap.put("paymentTaksitMonthsSelect", By.xpath("//td[4]/select[@class='form-control']"));
+        elementsMap.put("productSellerBtn", By.xpath("//*[@class='far fa-user']"));
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");
     private final By productBrandNameField = By.id("stokMarka-selectized");
     private final By invoiceNumber = By.xpath("//*[text()='Faktura Nömrəsi :']");
-    private final By productSellerBtn = By.xpath("//*[@class='far fa-user']");
     private final By selectSellerBtn = By.xpath("//*[@id='tableSatici']//tr[1]/td[3]/button");
 }

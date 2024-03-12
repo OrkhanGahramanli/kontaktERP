@@ -38,8 +38,7 @@ Feature: Order
     And User add "<Seller>" code
     And User clicks "productAreaExpandBtn" button
     And User fills "<Product>" in "productName" input field
-    And User clicks "productSearchBtn" button
-    And User clicks "addProductBtn" button
+    And User search and add "<product>" product
     And User fills "<Customer>" in "customerName" input field
     And User selects "<Sale Type>" option from "saleType"
     And User fills "<Birthdate>" in "customerBirthDate" input field

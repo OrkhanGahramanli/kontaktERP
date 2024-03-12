@@ -31,6 +31,32 @@ Feature: Sale
       And User clicks "confirmBtn" button
       Then Invoice number should be displayed
 
+  @AddCashSale
+  Scenario Outline: Successful create cash sale using order number ("<paymentType>")
+    When User clicks "newCashSale" page link
+    And User fills "0017175" in "orderCode" input field
+    And User clicks "orderSearchBtn" button
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "1000517597" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User selects "1000517597" customer
+    And User clicks "addPaymentBtn" button
+    And User selects "<paymentType>" option from "paymentTypeSelect"
+    And User selects "<paymentCode>" option from "paymentCodeSelect"
+    And User selects "<taksitGroup>" option from "paymentTaksitGroupSelect"
+    And User selects "<taksitMonths>" option from "paymentTaksitMonthsSelect"
+    And User clicks "completeCashSaleBtn" button
+    And User clicks "printEdvBtn" button
+    Then New sale should be created
+    And User clicks "confirmBtn" button
+    Then Invoice number should be displayed
+
+    Examples:
+      | paymentType | paymentCode                    | taksitGroup | taksitMonths |
+      | Nəğd        |                                |             |              |
+      | Kart        | PAŞA BANK (NAĞD)               |             |              |
+      | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      |
+
   @AddCreditSale2
   Scenario: Successful create credit sale without order number
     When User clicks "newCreditSale" page link
@@ -38,6 +64,7 @@ Feature: Sale
     And User fills "OLMAYAN STOK" in "productName" input field
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
+    And User clicks "productSellerBtn" button
     And User add seller to the product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "1000517597" in "customerCode" input field
@@ -57,13 +84,42 @@ Feature: Sale
     And User clicks "confirmBtn" button
     Then Invoice number should be displayed
 
+  @AddCashSale2
+  Scenario Outline: Successful create cash sale without order number ("<paymentType>")
+    When User clicks "newCashSale" page link
+    And User clicks "productAreaExpandBtn" button
+    And User fills "14MTL73RU" in "productName" input field
+    And User clicks "productSearchBtn" button
+    And User clicks "addProductBtn" button
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "1000517597" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User selects "1000517597" customer
+    And User clicks "productSellerBtn" button
+    And User add seller to the product
+    And User clicks "addPaymentBtn" button
+    And User selects "<paymentType>" option from "paymentTypeSelect"
+    And User selects "<paymentCode>" option from "paymentCodeSelect"
+    And User selects "<taksitGroup>" option from "paymentTaksitGroupSelect"
+    And User selects "<taksitMonths>" option from "paymentTaksitMonthsSelect"
+    And User clicks "completeCashSaleBtn" button
+    And User clicks "printEdvBtn" button
+    Then New sale should be created
+    And User clicks "confirmBtn" button
+    Then Invoice number should be displayed
+
+    Examples:
+      | paymentType | paymentCode                    | taksitGroup | taksitMonths |
+      | Nəğd        |                                |             |              |
+      | Kart        | PAŞA BANK (NAĞD)               |             |              |
+      | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      |
+
 @InvalidCalculateCreditSale
   Scenario Outline: Unsuccessful credit calculate/Scenario Name: "<caseName>"
     When User clicks "newCreditSale" page link
     And User clicks "productAreaExpandBtn" button
     And User fills "<product>" in "productName" input field
-    And User clicks "productSearchBtn" button
-    And User clicks "addProductBtn" button
+    And User search and add "<product>" product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "<customerCode>" in "customerCode" input field
     And User clicks "customerSearchBtn" button
@@ -91,6 +147,7 @@ Feature: Sale
     And User fills "OLMAYAN STOK" in "productName" input field
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
+    And User clicks "productSellerBtn" button
     And User add seller to the product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "1000517597" in "customerCode" input field
@@ -113,6 +170,39 @@ Feature: Sale
       | Empty Akb         |      | Xeyr        | Akb seçilməyib          |
       | Empty asanFinance | Xeyr |             | Asan Finance seçilməyib |
 
+  @InvalidCreateCashSale
+  Scenario Outline: Unsuccessful create cash sale without order number ("<paymentType>")/Scenario name: "<CaseName>"
+    When User clicks "newCashSale" page link
+    And User clicks "productAreaExpandBtn" button
+    And User fills "<product>" in "productName" input field
+    And User search and add "<product>" product
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "<customerCode>" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User selects "<customerCode>" customer
+    And User clicks "<seller>" button and add any seller for the product
+    And User clicks "<paymentBtn>" button
+    And User selects "<paymentType>" option from "paymentTypeSelect"
+    And User selects "<paymentCode>" option from "paymentCodeSelect"
+    And User selects "<taksitGroup>" option from "paymentTaksitGroupSelect"
+    And User selects "<taksitMonths>" option from "paymentTaksitMonthsSelect"
+    And User clicks "completeCashSaleBtn" button
+    And User clicks "printEdvBtn" button
+    Then User should get "<errorMessage>" message
+
+    Examples:
+      | CaseName           | product   | customerCode | seller           | paymentType | paymentCode                    | taksitGroup | taksitMonths | paymentBtn    | errorMessage            |
+      | Empty product      |           | 1000517597   | productSellerBtn | Nəğd        |                                |             |              | addPaymentBtn | Məhsul seçilməyib.                         |
+      | Empty customer     | 14MTL3RU  |              | productSellerBtn | Nəğd        |                                |             |              | addPaymentBtn | Müştəri seçilməyib!                        |
+      | Empty product      |           | 1000517597   | productSellerBtn | Kart        | PAŞA BANK (NAĞD)               |             |              | addPaymentBtn | Məhsul seçilməyib.                         |
+      | Empty customer     | 14MTL73RU |              | productSellerBtn | Kart        | PAŞA BANK (NAĞD)               |             |              | addPaymentBtn | Müştəri seçilməyib!                        |
+      | Empty product      |           | 1000517597   | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      | addPaymentBtn | Məhsul seçilməyib.                         |
+      | Empty customer     | 14MTL73RU |              | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      | addPaymentBtn | Müştəri seçilməyib!                        |
+      | Empty payment      | 14MTL73RU | 1000517597   | productSellerBtn |             |                                |             |              |               | Ödənən məbləğ düzgün deyil !               |
+      | Empty paymentCode  | 14MTL73RU | 1000517597   | productSellerBtn | Kart        |                                |             |              | addPaymentBtn | Ödəniş kodu seçilməyib!                    |
+      | Empty taksitMonths | 14MTL73RU | 1000517597   | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK |             |              | addPaymentBtn | Taksit ayi seçilməyib.  |
+      | Empty seller       | 14MTL73RU | 1000517597   |                  | Nəğd        |                                |             |              | addPaymentBtn | satıcı kodu seçilməyib. |
+
   @InvalidSmsCode
   Scenario Outline: Unsuccessful create sale credit with wrong sms code/Scenario Name: "<caseName>"
     When User clicks "newCreditSale" page link
@@ -120,6 +210,7 @@ Feature: Sale
     And User fills "OLMAYAN STOK" in "productName" input field
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
+    And User clicks "productSellerBtn" button
     And User add seller to the product
     And User clicks "expandCustomerSectionBtn" button
     And User fills "1000517597" in "customerCode" input field
@@ -169,6 +260,7 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "otherStoresBtn" button
     And User clicks "windowCloseBtn" button
+    And User clicks "productSellerBtn" button
     And User add seller to the product
     And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "productDeliveryType"
     And User clicks "expandCustomerSectionBtn" button
@@ -196,6 +288,7 @@ Feature: Sale
       And User fills "OLMAYAN STOK" in "productName" input field
       And User clicks "productSearchBtn" button
       And User clicks "addProductBtn" button
+      And User clicks "productSellerBtn" button
       And User add seller to the product
       And User clicks "expandCustomerSectionBtn" button
       And User fills "1000517597" in "customerCode" input field
@@ -218,6 +311,7 @@ Feature: Sale
         And User clicks "productSearchBtn" button
         And User clicks "addProductBtn" button
         And Collect product stock count
+        And User clicks "productSellerBtn" button
         And User add seller to the product
         And User clicks "expandCustomerSectionBtn" button
         And User fills "1000517597" in "customerCode" input field
