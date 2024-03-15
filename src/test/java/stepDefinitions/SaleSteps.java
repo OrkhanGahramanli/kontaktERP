@@ -29,8 +29,8 @@ public class SaleSteps extends BaseMethods{
 
     @And("User add seller to the product")
     public void userAddSellerToTheProduct() {
-        waitVisibilityElement(salePOM.getSelectSellerBtn(), 5);
-        driver.findElement(salePOM.getSelectSellerBtn()).click();
+        waitVisibilityElement(salePOM.getSelectSellerBtn(), 10);
+        clickWithAction(driver.findElement(salePOM.getSelectSellerBtn()));
     }
 
     @Then("New sale should be created")
@@ -68,8 +68,8 @@ public class SaleSteps extends BaseMethods{
     public void userClicksButtonAndAddAnySellerForTheProduct(String element) {
         if (!element.isEmpty()) {
             driver.findElement(elementsMap.get(element)).click();
-            waitVisibilityElement(salePOM.getSelectSellerBtn(), 5);
-            driver.findElement(salePOM.getSelectSellerBtn()).click();
+            waitVisibilityElement(salePOM.getSelectSellerBtn(), 10);
+            clickWithAction(driver.findElement(salePOM.getSelectSellerBtn()));
         }
     }
 }

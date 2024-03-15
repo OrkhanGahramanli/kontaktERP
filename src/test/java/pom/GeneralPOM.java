@@ -48,11 +48,12 @@ public class GeneralPOM {
         elementsMap.put("windowCloseBtn", By.xpath("//*[@aria-modal='true']//*[@class='btn btn-secondary']"));
         elementsMap.put("bundleDetailsBtn", By.cssSelector(".btn.btn-info.btn-sm.float-right.mr-2"));
         elementsMap.put("productBrand", By.id("stokMarka-selectized"));
-        elementsMap.put("bundleAddBtn", By.xpath("//*[@id='tableBundle_wrapper']//*[@type='button']"));
+        elementsMap.put("bundleAddBtn", By.xpath("//*[@id='tableBundle_wrapper']//tr[1]/td/button[@type='button']"));
         elementsMap.put("productName", By.id("stokAdi"));
-        elementsMap.put("addProductBtn", By.xpath("//tr[1]/td[10]"));
-        elementsMap.put("otherStoresBtn", By.xpath("//tr[1]/td[11]"));
+        elementsMap.put("addProductBtn", By.xpath("//*[@id='tableSearchProducts']//tr[1]/td/button[text()='Əlavə Et']"));
+        elementsMap.put("otherStoresBtn", By.xpath("//*[@data-target='#stokDigerModal']"));
         elementsMap.put("addProductOtherStoreBtn", By.xpath("//*[@id='tableOrderOtherProducts']//*[@type='button']"));
+        elementsMap.put("productDeliveryType", By.id("teslimnovu_0"));
     }
 
 

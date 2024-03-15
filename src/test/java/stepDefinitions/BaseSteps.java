@@ -86,8 +86,10 @@ public class BaseSteps extends BaseMethods{
     public void userFillsInputField(String text, String element){
         if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
-            driver.findElement(elementsMap.get(element)).click();
-            driver.findElement(elementsMap.get(element)).clear();
+            if (driver.findElement(elementsMap.get(element)).getAttribute("class").contains("inputmask")){
+                driver.findElement(elementsMap.get(element)).click();
+                driver.findElement(elementsMap.get(element)).clear();
+            }
             driver.findElement(elementsMap.get(element)).sendKeys(text);
         }
     }
@@ -149,6 +151,7 @@ public class BaseSteps extends BaseMethods{
     public void userSearchAndAddProduct(String product) {
         if (!product.isEmpty()){
             driver.findElement(elementsMap.get("productSearchBtn")).click();
+            waitVisibilityElement(elementsMap.get("addProductBtn"), 10);
             driver.findElement(elementsMap.get("addProductBtn")).click();
 
         }

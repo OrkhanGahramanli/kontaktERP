@@ -72,7 +72,7 @@ public class OrderSteps extends BaseMethods {
     public void userChangeWorkStatusOfCreditor() {
         creditorWorkStatus[0] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
         driver.findElement(orderPOM.getCreditorWorkStatusBtn()).click();
-        waitTextUpdate(orderPOM.getCreditorWorkStatus(), creditorWorkStatus[0], 5);
+        waitTextUpdate(orderPOM.getCreditorWorkStatus(), creditorWorkStatus[0], 10);
         creditorWorkStatus[1] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
     }
 
