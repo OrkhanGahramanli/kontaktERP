@@ -75,4 +75,7 @@ public class BaseMethods {
         actions.moveToElement(element).perform();
     }
 
+    protected WebElement findElementByText(String text) {
+        return driver.findElement(By.xpath("//*[@class='selectize-dropdown-content']//*[text()='" + text + "']"));
+    }
 }

@@ -77,7 +77,7 @@ public class BaseSteps extends BaseMethods{
                 selectVisibleText(driver.findElement(elementsMap.get(element)), text);
             } catch (UnexpectedTagNameException u) {
                 driver.findElement(elementsMap.get(element)).sendKeys(text);
-                driver.findElement(generalPOM.selectFieldValue(text)).click();
+                findElementByText(text).click();
             }
         }
     }
@@ -155,5 +155,18 @@ public class BaseSteps extends BaseMethods{
             driver.findElement(elementsMap.get("addProductBtn")).click();
 
         }
+    }
+
+    @And("User clicks {string} button {int} times")
+    public void userClicksButtonTimes(String element, int num) {
+        for (int i=0; i<num; i++){
+            driver.findElement(elementsMap.get(element)).click();
+        }
+    }
+
+    @And("User's waiting visibility of {string} element for {int} seconds")
+    public void userSWaitingElementForSeconds(String element, int time) throws InterruptedException {
+//        waitVisibilityElement(elementsMap.get(element), time);
+        Thread.sleep(10000);
     }
 }

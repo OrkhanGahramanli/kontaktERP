@@ -2,6 +2,7 @@ package pom;
 
 import lombok.Data;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import static pom.ElementsMap.elementsMap;
 
@@ -65,7 +66,4 @@ public class GeneralPOM {
         return By.xpath("//tr["+index+"]/td[8]");
     }
 
-    public By selectFieldValue(String value){
-        return By.xpath("//*[@data-value='"+value+"']");
-    }
 }
