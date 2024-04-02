@@ -97,8 +97,8 @@ public class OrderSteps extends BaseMethods {
     }
 
     @And("Collect product names for expected result")
-    public void collectProductNamesForExpectedResult() {
-        waitVisibilityElement(driver.findElements(orderPOM.getProductsCodeBeforeCreate()),10);
+    public void collectProductNamesForExpectedResult() throws InterruptedException {
+        Thread.sleep(5000);
         List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
         expectedProducts = new ArrayList<>();
         for (WebElement element : productsBeforeCreateOrder){

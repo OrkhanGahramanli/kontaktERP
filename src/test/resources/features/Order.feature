@@ -74,6 +74,7 @@ Feature: Order
       And User add "<service>" service
       And User clicks "windowCloseBtn" button
       And User clicks "bundleBtn" button
+      And User's waiting visibility of "bundleAddBtn" element for 10 seconds
       And User clicks "bundleAddBtn" button
       And Collect product names for expected result
       And User clicks "submitOrder" button
@@ -99,14 +100,18 @@ Feature: Order
       And User add "PXK-009" service
       And User clicks "windowCloseBtn" button
       And User clicks "bundleBtn" button
+      And User's waiting visibility of "bundleAddBtn" element for 10 seconds
       And User clicks "bundleAddBtn" button
       Then Total amount should be sum of all prices
+
 @CheckProductsInBundleOrder
     Scenario: Check products in bundle
       When User clicks "newOrder" page link
       And User clicks "bundleBtn" button
+      And User's waiting visibility of "bundleDetailsBtn" element for 10 seconds
       And User clicks "bundleDetailsBtn" button
       Then Products should be displayed in bundle
+
 @NewOrderDifferentStore
     Scenario Outline: Create order with product from different store ("<sale type>")
       When User clicks "newOrder" page link
@@ -115,6 +120,7 @@ Feature: Order
       And User fills "<product>" in "productName" input field
       And User clicks "productSearchBtn" button
       And User clicks "otherStoresBtn" button
+      And User's waiting visibility of "addProductOtherStoreBtn" element for 10 seconds
       And User clicks "addProductOtherStoreBtn" button
       And User clicks "windowCloseBtn" button
       And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "productDeliveryType"
@@ -130,9 +136,9 @@ Feature: Order
       Then Type of new created order should be as "<sale type>"
 
       Examples:
-        | sale type    | product      | customer | seller    | birthdate  |
-        | Nağd Satış   | OLMAYAN STOK | Orxan    | IR-000002 |            |
-        | Kredit Satış | OLMAYAN STOK | Orxan    | IR-000002 | 06/18/1993 |
+        | sale type    | product   | customer | seller    | birthdate  |
+        | Nağd Satış   | 14MTL73RU | Orxan    | IR-000002 |            |
+        | Kredit Satış | 14MTL73RU | Orxan    | IR-000002 | 06/18/1993 |
 
   @Creditors
       Scenario: Set work status of creditor
@@ -143,7 +149,7 @@ Feature: Order
     @ProductsInfo
     Scenario Outline: Check "<infoButton>" buttons in "Məhsullar üzrə məlumat" page
       When User clicks "productsInfo" page link
-      And User selects "SAMSUNG" option from "productBrand"
+      And User selects "WOIKIN" option from "productBrand"
       And User clicks "productSearchBtn" button
       And User clicks "<infoButton>" of a product
       Then Relative "<info>" should be displayed in new window

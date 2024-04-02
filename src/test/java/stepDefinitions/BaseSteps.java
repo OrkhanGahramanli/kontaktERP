@@ -118,8 +118,8 @@ public class BaseSteps extends BaseMethods{
     }
 
     @Then("Total amount should be sum of all prices")
-    public void totalAmountShouldBeSumOfAllPrices() {
-        waitVisibilityElement(driver.findElements(generalPOM.getAddedProductsPrices()), 5);
+    public void totalAmountShouldBeSumOfAllPrices() throws InterruptedException {
+        Thread.sleep(1000);
         List<WebElement> productsPrices = driver.findElements(generalPOM.getAddedProductsPrices());
         List<WebElement> productsDiscounts = driver.findElements(generalPOM.getAddedProductsDiscounts());
 
@@ -165,8 +165,12 @@ public class BaseSteps extends BaseMethods{
     }
 
     @And("User's waiting visibility of {string} element for {int} seconds")
-    public void userSWaitingElementForSeconds(String element, int time) throws InterruptedException {
-//        waitVisibilityElement(elementsMap.get(element), time);
-        Thread.sleep(10000);
+    public void userSWaitingElementForSeconds(String element, int time) {
+       waitVisibilityElement(elementsMap.get(element), time);
+    }
+
+    @And("Waiting for an element using thread sleep")
+    public void waitingForAnElementUsingThreadSleep() throws InterruptedException {
+        Thread.sleep(1000);
     }
 }
