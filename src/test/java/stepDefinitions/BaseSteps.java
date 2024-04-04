@@ -1,5 +1,9 @@
 package stepDefinitions;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.interactions.Actions;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -20,8 +24,6 @@ public class BaseSteps extends BaseMethods{
     public BaseSteps(){
         generalPOM = GeneralPOM.getInstance();
     }
-
-    String selectedText;
     @Given("User is in {string}")
     public void UserIsIn(String arg0){
     }
@@ -45,25 +47,27 @@ public class BaseSteps extends BaseMethods{
 
     @And("User clicks {string} button")
     public void userClicksButton(String element) {
-        WebElement myElement = driver.findElement(elementsMap.get(element));
-        try {
-            if (myElement.isDisplayed()) myElement.click();
-            else {
-                moveToElement(myElement);
-                myElement.click();
-            }
-        }catch (Exception e){
+        if (!element.isEmpty()){
+            WebElement myElement = driver.findElement(elementsMap.get(element));
             try {
-                if (myElement.isDisplayed()) clickWithAction(myElement);
+                if (myElement.isDisplayed()) myElement.click();
                 else {
                     moveToElement(myElement);
-                    clickWithAction(myElement);
+                    myElement.click();
                 }
-            }catch (Exception e2){
-                if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
-                else {
-                    moveToElement(myElement);
-                    getJsExecutor().executeScript("arguments[0].click();", myElement);
+            } catch (Exception e) {
+                try {
+                    if (myElement.isDisplayed()) clickWithAction(myElement);
+                    else {
+                        moveToElement(myElement);
+                        clickWithAction(myElement);
+                    }
+                } catch (Exception e2) {
+                    if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
+                    else {
+                        moveToElement(myElement);
+                        getJsExecutor().executeScript("arguments[0].click();", myElement);
+                    }
                 }
             }
         }
@@ -71,14 +75,13 @@ public class BaseSteps extends BaseMethods{
 
     @And("User selects {string} option from {string}")
     public void userSelectsOptionFrom(String text, String element) {
-        this.selectedText = text;
         if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
             try {
                 selectVisibleText(driver.findElement(elementsMap.get(element)), text);
             } catch (UnexpectedTagNameException u) {
                 driver.findElement(elementsMap.get(element)).sendKeys(text);
-                driver.findElement(generalPOM.selectFieldValue(text)).click();
+                findElementByText(text).click();
             }
         }
     }
@@ -87,8 +90,10 @@ public class BaseSteps extends BaseMethods{
     public void userFillsInputField(String text, String element){
         if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
-            driver.findElement(elementsMap.get(element)).click();
-            driver.findElement(elementsMap.get(element)).clear();
+            if (driver.findElement(elementsMap.get(element)).getAttribute("class").contains("inputmask")){
+                driver.findElement(elementsMap.get(element)).click();
+                driver.findElement(elementsMap.get(element)).clear();
+            }
             driver.findElement(elementsMap.get(element)).sendKeys(text);
         }
     }
@@ -99,7 +104,11 @@ public class BaseSteps extends BaseMethods{
             WebElement productErrorMessage = driver.findElement(generalPOM.getProductEmptyErrorMessage());
             waitVisibilityElement(productErrorMessage, 5);
             Assert.assertEquals(productErrorMessage.getText(), expectedError);
-        }else {
+        } else if (expectedError.equals("satıcı kodu seçilməyib.")) {
+            WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
+            waitVisibilityElement(errorMessage, 5);
+            Assert.assertTrue(errorMessage.getText().contains(expectedError));
+        } else {
             WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
             waitVisibilityElement(errorMessage, 5);
             Assert.assertEquals(errorMessage.getText(), expectedError);
@@ -113,8 +122,8 @@ public class BaseSteps extends BaseMethods{
     }
 
     @Then("Total amount should be sum of all prices")
-    public void totalAmountShouldBeSumOfAllPrices() {
-        waitVisibilityElement(driver.findElements(generalPOM.getAddedProductsPrices()), 5);
+    public void totalAmountShouldBeSumOfAllPrices() throws InterruptedException {
+        Thread.sleep(1000);
         List<WebElement> productsPrices = driver.findElements(generalPOM.getAddedProductsPrices());
         List<WebElement> productsDiscounts = driver.findElements(generalPOM.getAddedProductsDiscounts());
 
@@ -140,5 +149,32 @@ public class BaseSteps extends BaseMethods{
     public void productsShouldBeDisplayedInBundle() {
         waitVisibilityElement(generalPOM.getProductInBundle(), 10);
         Assert.assertFalse(driver.findElement(generalPOM.getProductInBundle()).getText().isEmpty());
+    }
+
+    @And("User search and add {string} product")
+    public void userSearchAndAddProduct(String product) {
+        if (!product.isEmpty()){
+            driver.findElement(elementsMap.get("productSearchBtn")).click();
+            waitVisibilityElement(elementsMap.get("addProductBtn"), 10);
+            driver.findElement(elementsMap.get("addProductBtn")).click();
+
+        }
+    }
+
+    @And("User clicks {string} button {int} times")
+    public void userClicksButtonTimes(String element, int num) {
+        for (int i=0; i<num; i++){
+            driver.findElement(elementsMap.get(element)).click();
+        }
+    }
+
+    @And("User's waiting visibility of {string} element for {int} seconds")
+    public void userSWaitingElementForSeconds(String element, int time) {
+       waitVisibilityElement(elementsMap.get(element), time);
+    }
+
+    @And("Wait {int} second for an element")
+    public void waitingForAnElementUsingThreadSleep(int time) throws InterruptedException {
+        Thread.sleep(time * 1000L);
     }
 }

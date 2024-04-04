@@ -39,12 +39,29 @@ public class SalePOM {
         elementsMap.put("cancelSubject", By.id("KreditImtinaAna"));
         elementsMap.put("cancelReason", By.id("kreditImtinaSebeb"));
         elementsMap.put("creditCancelBtn", By.id("BtnKreditImtina"));
-
+        elementsMap.put("newCashSale", By.id("negdsatis_link"));
+        elementsMap.put("addPaymentBtn", By.xpath("//*[@onclick='odemeElaveEt()']"));
+        elementsMap.put("paymentTypeSelect", By.xpath("//*[@onchange='odemeNovuYukleNegd(this)']"));
+        elementsMap.put("paymentCodeSelect", By.xpath("//*[@onchange='taksitAylarYukle(this)']"));
+        elementsMap.put("completeCashSaleBtn", By.xpath("//*[@onclick='negdSatisTamamla()']"));
+        elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
+        elementsMap.put("paymentTaksitGroupSelect", By.xpath("//td[3]/select[@onchange='taksitAylarYukle(this)']"));
+        elementsMap.put("paymentTaksitMonthsSelect", By.xpath("//td[4]/select[@class='form-control']"));
+        elementsMap.put("productSellerBtn", By.xpath("//*[@class='far fa-user']"));
+        elementsMap.put("saleReturn", By.id("qaytarma_link"));
+        elementsMap.put("saleInvoice", By.id("fakturanomresi"));
+        elementsMap.put("invoiceSearchBtn", By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm"));
+        elementsMap.put("returnGroup", By.id("qaytarmastatusuqrup-selectized"));
+        elementsMap.put("returnReason", By.id("qaytarmastatusu"));
+        elementsMap.put("createdReturnReason", By.xpath("(//input[@id='sifaris_cariad'])[3]"));
+        elementsMap.put("returnCompleteBtn", By.xpath("//*[@onclick='qaytarmaTamalma()']"));
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");
     private final By productBrandNameField = By.id("stokMarka-selectized");
-    private final By invoiceNumber = By.xpath("//*[text()='Faktura Nömrəsi :']");
-    private final By productSellerBtn = By.xpath("//*[@class='far fa-user']");
     private final By selectSellerBtn = By.xpath("//*[@id='tableSatici']//tr[1]/td[3]/button");
+    private final By selectProductCheckBox = By.className("custom-control-input");
+    private final By invoiceNumber = By.id("sifaris_seriya");
+    private final By returnProductsPrices = By.xpath("//*[@id='urunler']//tbody/tr/td[7]");
+    private final By returnProductsPricesTotal = By.xpath("//*[@class='table-custom table-bordered table-form-custom']//tbody/tr[1]/td[2]");
 }

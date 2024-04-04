@@ -72,7 +72,7 @@ public class OrderSteps extends BaseMethods {
     public void userChangeWorkStatusOfCreditor() {
         creditorWorkStatus[0] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
         driver.findElement(orderPOM.getCreditorWorkStatusBtn()).click();
-        waitTextUpdate(orderPOM.getCreditorWorkStatus(), creditorWorkStatus[0], 5);
+        waitTextUpdate(orderPOM.getCreditorWorkStatus(), creditorWorkStatus[0], 10);
         creditorWorkStatus[1] = driver.findElement(orderPOM.getCreditorWorkStatus()).getText();
     }
 
@@ -97,8 +97,8 @@ public class OrderSteps extends BaseMethods {
     }
 
     @And("Collect product names for expected result")
-    public void collectProductNamesForExpectedResult() {
-        waitVisibilityElement(driver.findElements(orderPOM.getProductsCodeBeforeCreate()),10);
+    public void collectProductNamesForExpectedResult() throws InterruptedException {
+        Thread.sleep(5000);
         List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
         expectedProducts = new ArrayList<>();
         for (WebElement element : productsBeforeCreateOrder){

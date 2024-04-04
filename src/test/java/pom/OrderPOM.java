@@ -45,7 +45,6 @@ public class OrderPOM {
         elementsMap.put("submitOrder", By.cssSelector("button[class='btn btn-primary float-right']"));
         elementsMap.put("customerName", By.id("sif_musteri_adi"));
         elementsMap.put("saleType", By.id("sif_satis_novu"));
-        elementsMap.put("productDeliveryType", By.id("teslimnovu_0"));
         elementsMap.put("customerBirthDate", By.id("customerBirthDate"));
     }
 

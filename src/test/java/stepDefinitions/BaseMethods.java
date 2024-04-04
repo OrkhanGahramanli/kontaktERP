@@ -51,6 +51,11 @@ public class BaseMethods {
         wait.until(ExpectedConditions.textToBePresentInElement(element, message));
     }
 
+    protected void waitPresenceElements(By locator, int time){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+    }
+
     protected void waitTextUpdate(By locator, String value, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(locator, value)));
@@ -75,4 +80,7 @@ public class BaseMethods {
         actions.moveToElement(element).perform();
     }
 
+    protected WebElement findElementByText(String text) {
+        return driver.findElement(By.xpath("//*[@class='selectize-dropdown-content']//*[text()='" + text + "']"));
+    }
 }
