@@ -60,8 +60,8 @@ public class SalePOM {
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");
     private final By productBrandNameField = By.id("stokMarka-selectized");
     private final By selectSellerBtn = By.xpath("//*[@id='tableSatici']//tr[1]/td[3]/button");
-    private final By selectProductCheckBox = By.className("custom-control-label");
+    private final By selectProductCheckBox = By.className("custom-control-input");
     private final By invoiceNumber = By.id("sifaris_seriya");
     private final By returnProductsPrices = By.xpath("//*[@id='urunler']//tbody/tr/td[7]");
-    private final By returnProductsPricesTotal = By.id("qaytarma_meblegi");
+    private final By returnProductsPricesTotal = By.xpath("//*[@class='table-custom table-bordered table-form-custom']//tbody/tr[1]/td[2]");
 }

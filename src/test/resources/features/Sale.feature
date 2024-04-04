@@ -47,6 +47,7 @@ Feature: Sale
     And User selects "<taksitMonths>" option from "paymentTaksitMonthsSelect"
     And User clicks "completeCashSaleBtn" button
     And User clicks "printEdvBtn" button
+    And Wait 1 second for an element
     Then New sale should be created
     And User clicks "confirmBtn" button
     Then Invoice number should be displayed
@@ -80,6 +81,7 @@ Feature: Sale
 #    And User clicks "confirmBtn" button
 #    And User fills "123456" in "SMSCode" input field
     And User clicks "completeSaleBtn" button
+    And Wait 1 second for an element
     Then New sale should be created
     And User clicks "confirmBtn" button
     Then Invoice number should be displayed
@@ -104,6 +106,7 @@ Feature: Sale
     And User selects "<taksitMonths>" option from "paymentTaksitMonthsSelect"
     And User clicks "completeCashSaleBtn" button
     And User clicks "printEdvBtn" button
+    And Wait 1 second for an element
     Then New sale should be created
     And User clicks "confirmBtn" button
     Then Invoice number should be displayed
@@ -317,6 +320,7 @@ Feature: Sale
     And User selects "<taksitMonths>" option from "paymentTaksitMonthsSelect"
     And User clicks "completeCashSaleBtn" button
     And User clicks "printEdvBtn" button
+    And Wait 1 second for an element
     Then New sale should be created
     And User clicks "confirmBtn" button
     Then Invoice number should be displayed
@@ -433,7 +437,7 @@ Feature: Sale
     And User selects "Nəğd" option from "paymentTypeSelect"
     And User clicks "completeCashSaleBtn" button
     And User clicks "printEdvBtn" button
-    And Waiting for an element using thread sleep
+    And Wait 1 second for an element
     And User clicks "confirmBtn" button
     And User takes sale invoice number
     And User clicks "saleModule" page link
@@ -460,31 +464,33 @@ Feature: Sale
         | Unselected product | Baha başa gəldi   | Qaytarılacaq məhsul seçilməyib |
         | Empty returnReason |                   | Qaytarma statusu seçilməyib.   |
 
-#      @CheckReturnAmount
-#      Scenario: Check return amount of products
-#        When User clicks "newCashSale" page link
-#        And User clicks "productAreaExpandBtn" button
-#        And User fills "14MTL73RU" in "productName" input field
-#        And User clicks "productSearchBtn" button
-#        And User clicks "addProductBtn" button 2 times
-#        And User clicks "expandCustomerSectionBtn" button
-#        And User fills "1000517597" in "customerCode" input field
-#        And User clicks "customerSearchBtn" button
-#        And User selects "1000517597" customer
-#        And User add sellers to the products
-#        And User clicks "addPaymentBtn" button
-#        And User selects "Nəğd" option from "paymentTypeSelect"
-#        And User clicks "completeCashSaleBtn" button
-#        And User clicks "printEdvBtn" button
-#        And User's waiting visibility of "confirmBtn" element for 20 seconds
-#        And User clicks "confirmBtn" button
-#        And User takes sale invoice number
-#        And User clicks "saleModule" page link
-#        And User clicks "saleReturn" page link
-#        And User fills sale invoice number in "saleInvoice" input field
-#        And User clicks "invoiceSearchBtn" button
-#        And User selects all products
-#        Then Total return amount should equals sum of products' amount
-#        And User selects "Baha başa gəldi" option from "returnGroup"
-#        And User selects "Kampaniya şərtlərilə dəyiş." option from "returnReason"
-#        And User clicks "returnCompleteBtn" button
+      @CheckReturnAmount
+      Scenario: Check return amount of products
+        When User clicks "newCashSale" page link
+        And User clicks "productAreaExpandBtn" button
+        And User fills "14MTL73RU" in "productName" input field
+        And User clicks "productSearchBtn" button
+        And User clicks "addProductBtn" button 2 times
+        And User clicks "expandCustomerSectionBtn" button
+        And User fills "1000517597" in "customerCode" input field
+        And User clicks "customerSearchBtn" button
+        And User selects "1000517597" customer
+        And User add sellers to the products
+        And User clicks "addPaymentBtn" button
+        And User selects "Nəğd" option from "paymentTypeSelect"
+        And User clicks "completeCashSaleBtn" button
+        And User clicks "printEdvBtn" button
+        And Wait 1 second for an element
+        And User clicks "confirmBtn" button
+        And User takes sale invoice number
+        And User clicks "saleModule" page link
+        And User clicks "saleReturn" page link
+        And User fills sale invoice number in "saleInvoice" input field
+        And User clicks "invoiceSearchBtn" button
+        And User selects all products
+        And Sum prices of the products
+        And Wait 1 second for an element
+        And User selects "Digər" option from "returnGroup"
+        And User selects "Müştəriyə zəng çatmadı" option from "returnReason"
+        And User clicks "returnCompleteBtn" button
+        Then Total return amount should equals sum of products' amount

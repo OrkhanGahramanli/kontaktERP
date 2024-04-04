@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.List;
 
 import static pom.ElementsMap.elementsMap;
@@ -20,6 +21,7 @@ public class SaleSteps extends BaseMethods{
 
     int productStock;
     private static String saleInvoiceNumber;
+    private double returnedProductPricesSum;
 
     @And("User selects {string} customer")
     public void userSelectsCustomer(String customerCode) {
@@ -101,23 +103,18 @@ public class SaleSteps extends BaseMethods{
     @And("User selects all products")
     public void userSelectsAllProducts() throws InterruptedException {
         List<WebElement> productsForReturn = driver.findElements(salePOM.getSelectProductCheckBox());
-        for (WebElement element : productsForReturn){
-            clickWithAction(element);
-            Thread.sleep(10000);
+        for (int i = 0; i < productsForReturn.size(); i++){
+            clickWithAction(productsForReturn.get(i));
+            if (i != productsForReturn.size()-1) {
+            Thread.sleep(1000);
+            }
         }
     }
 
     @Then("Total return amount should equals sum of products' amount")
     public void totalReturnAmountShouldEqualsSumOfProductsAmount() {
-        waitVisibilityElement(salePOM.getReturnProductsPricesTotal(), 10);
-        double productPrices = 0;
-        List<WebElement> productPricesElements = driver.findElements(salePOM.getReturnProductsPrices());
-        for (WebElement element : productPricesElements){
-            productPrices+=Double.parseDouble(element.getText());
-        }
-
         Assert.assertEquals(Double.parseDouble(driver.findElement(salePOM.getReturnProductsPricesTotal()).getText()),
-                                productPrices);
+                                returnedProductPricesSum);
     }
 
     @And("User add sellers to the products")
@@ -127,6 +124,14 @@ public class SaleSteps extends BaseMethods{
             element.click();
             waitVisibilityElement(salePOM.getSelectSellerBtn(), 10);
             clickWithAction(driver.findElement(salePOM.getSelectSellerBtn()));
+        }
+    }
+
+    @And("Sum prices of the products")
+    public void sumPricesOfTheProducts() {
+        List<WebElement> productPricesElements = driver.findElements(salePOM.getReturnProductsPrices());
+        for (WebElement element : productPricesElements){
+            returnedProductPricesSum+=Double.parseDouble(element.getText());
         }
     }
 }

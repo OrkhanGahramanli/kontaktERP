@@ -19,7 +19,7 @@ import java.util.List;
 @CucumberOptions(
         features = {"classpath:features/Sale.feature"},
         plugin = {"pretty", "json:target/cucumber.json"},
-        tags = "@ReturnCashSale"
+        tags = "@CheckReturnAmount"
 )
 
 

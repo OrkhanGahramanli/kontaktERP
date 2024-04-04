@@ -1,5 +1,9 @@
 package stepDefinitions;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.interactions.Actions;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -169,8 +173,8 @@ public class BaseSteps extends BaseMethods{
        waitVisibilityElement(elementsMap.get(element), time);
     }
 
-    @And("Waiting for an element using thread sleep")
-    public void waitingForAnElementUsingThreadSleep() throws InterruptedException {
-        Thread.sleep(1000);
+    @And("Wait {int} second for an element")
+    public void waitingForAnElementUsingThreadSleep(int time) throws InterruptedException {
+        Thread.sleep(time * 1000L);
     }
 }
