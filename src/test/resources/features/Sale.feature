@@ -494,3 +494,78 @@ Feature: Sale
         And User selects "Müştəriyə zəng çatmadı" option from "returnReason"
         And User clicks "returnCompleteBtn" button
         Then Total return amount should equals sum of products' amount
+
+        @ServiceCreditSale
+        Scenario Outline: Successful create new service credit sale/ "<serviceType>"
+          When User clicks "serviceCreditSaleLink" page link
+          And User clicks "expandCustomerSectionBtn" button
+          And User fills "1000517597" in "customerCode" input field
+          And User clicks "customerSearchBtn" button
+          And User selects "1000517597" customer
+          And User clicks "stockActionsExpandBtn" button
+          And User fills "apple" in "stockActionProductSearch" input field
+          And Wait 5 second for an element
+          And User chooses first product and clicks "stockActionProductSelectBtn" button
+          And User selects "<serviceType>" option from "serviceTypeList"
+          And User fills "12" in "creditMonths" input field
+          And User clicks "selectServiceBtn" button
+          And User add "<service>" service
+          And User clicks "windowCloseBtn" button
+          And User clicks "saveServiceCreditSaleBtn" button
+          And User clicks "confirmBtn" button
+          And Wait 1 second for an element
+          And User clicks "acceptSuccessMessageBtn" button
+          Then "<service>" service name should be displayed
+
+          Examples:
+            | serviceType   | service         |
+            | Qızıl Zəmanət | Zəmanət + 1 il  |
+            | Xidmət        | MEHSULUN TEMIRI |
+
+  @ModifyServiceCreditSalePrice
+  Scenario Outline: Modify service credit sale price/ "<serviceType>"
+    When User clicks "serviceCreditSaleLink" page link
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "1000517597" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User selects "1000517597" customer
+    And User clicks "stockActionsExpandBtn" button
+    And User fills "apple" in "stockActionProductSearch" input field
+    And Wait 5 second for an element
+    And User chooses first product and clicks "stockActionProductSelectBtn" button
+    And User selects "<serviceType>" option from "serviceTypeList"
+    And User fills "12" in "creditMonths" input field
+    And User clicks "selectServiceBtn" button
+    And User add "<service>" service
+    And User clicks "windowCloseBtn" button
+    And User clear "serviceCreditSalePrice" input field
+    And User fills "<newPrice>" in "serviceCreditSalePrice" input field
+    And User clicks "saveServiceCreditSaleBtn" button
+    And User clicks "confirmBtn" button
+    And Wait 1 second for an element
+    And User clicks "acceptSuccessMessageBtn" button
+    Then "<newPrice>" service price should be displayed
+
+    Examples:
+      | serviceType   | service         | newPrice |
+      | Qızıl Zəmanət | Zəmanət + 1 il  | 200      |
+      | Xidmət        | MEHSULUN TEMIRI | 150      |
+
+  @DeleteServiceCredit
+  Scenario: Delete service credit sale
+    When User clicks "serviceCreditSaleLink" page link
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "1000517597" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User selects "1000517597" customer
+    And User clicks "stockActionsExpandBtn" button
+    And User fills "apple" in "stockActionProductSearch" input field
+    And Wait 5 second for an element
+    And User chooses first product and clicks "stockActionProductSelectBtn" button
+    And User selects "Xidmət" option from "serviceTypeList"
+    And User fills "12" in "creditMonths" input field
+    And User clicks "selectServiceBtn" button
+    And User add "MEHSULUN TEMIRI" service
+    And User clicks "windowCloseBtn" button
+    And User clicks "deleteServiceBtn" button
+    Then Services should be deleted from table

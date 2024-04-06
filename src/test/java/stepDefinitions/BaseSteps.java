@@ -177,4 +177,9 @@ public class BaseSteps extends BaseMethods{
     public void waitingForAnElementUsingThreadSleep(int time) throws InterruptedException {
         Thread.sleep(time * 1000L);
     }
+
+    @And("User clear {string} input field")
+    public void userClearInputField(String element) {
+        driver.findElement(elementsMap.get(element)).clear();
+    }
 }

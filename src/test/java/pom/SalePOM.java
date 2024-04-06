@@ -7,13 +7,13 @@ import static pom.ElementsMap.elementsMap;
 @Data
 public class SalePOM {
 
-    private SalePOM(){
+    private SalePOM() {
     }
 
     private static SalePOM INSTANCE;
 
-    public static SalePOM getInstance(){
-        if (INSTANCE == null){
+    public static SalePOM getInstance() {
+        if (INSTANCE == null) {
             INSTANCE = new SalePOM();
             return INSTANCE;
         }
@@ -55,6 +55,15 @@ public class SalePOM {
         elementsMap.put("returnReason", By.id("qaytarmastatusu"));
         elementsMap.put("createdReturnReason", By.xpath("(//input[@id='sifaris_cariad'])[3]"));
         elementsMap.put("returnCompleteBtn", By.xpath("//*[@onclick='qaytarmaTamalma()']"));
+        elementsMap.put("serviceCreditSaleLink", By.id("xidmetkreditsatisi_link"));
+        elementsMap.put("stockActionsExpandBtn", By.xpath("//*[@data-target='#stokhereketleri-card']"));
+        elementsMap.put("stockActionProductSearch", By.xpath("//*[@id='stokHereketTable_filter']//*[@type='search']"));
+        elementsMap.put("stockActionProductSelectBtn", By.xpath("//*[@id='stokHereketTable']//button[text()='Seç']"));
+        elementsMap.put("serviceTypeList", By.id("xidmetSecim"));
+        elementsMap.put("selectServiceBtn", By.id("btnxidmet"));
+        elementsMap.put("saveServiceCreditSaleBtn", By.xpath("//*[@onclick='birlesmeQeydEt()']"));
+        elementsMap.put("serviceCreditSalePrice", By.id("targetValue"));
+        elementsMap.put("deleteServiceBtn", By.xpath("//*[@onclick='stokXidmetBirlesmeSetrSil(this)']"));
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");
@@ -64,4 +73,8 @@ public class SalePOM {
     private final By invoiceNumber = By.id("sifaris_seriya");
     private final By returnProductsPrices = By.xpath("//*[@id='urunler']//tbody/tr/td[7]");
     private final By returnProductsPricesTotal = By.xpath("//*[@class='table-custom table-bordered table-form-custom']//tbody/tr[1]/td[2]");
+    private final By serviceCreditSaleCode = By.xpath("(//*[@id='urunler'])[1]//td[3]");
+    private final By serviceCreditSalePrice = By.xpath("(//*[@id='urunler'])[1]//td[5]");
+    private final By servicesTable = By.id("tblBodyXidmetler");
+
 }

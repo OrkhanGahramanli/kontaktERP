@@ -55,6 +55,7 @@ public class GeneralPOM {
         elementsMap.put("otherStoresBtn", By.xpath("//*[@data-target='#stokDigerModal']"));
         elementsMap.put("addProductOtherStoreBtn", By.xpath("//*[@id='tableOrderOtherProducts']//*[@type='button']"));
         elementsMap.put("productDeliveryType", By.id("teslimnovu_0"));
+        elementsMap.put("acceptSuccessMessageBtn", By.className("swal2-confirm"));
     }
 
 

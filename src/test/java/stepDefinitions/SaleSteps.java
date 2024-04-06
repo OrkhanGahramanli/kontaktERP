@@ -134,4 +134,24 @@ public class SaleSteps extends BaseMethods{
             returnedProductPricesSum+=Double.parseDouble(element.getText());
         }
     }
+
+    @And("User chooses first product and clicks {string} button")
+    public void userChoosesFirstProductAndClicksButton(String element) {
+        driver.findElement(elementsMap.get(element)).click();
+    }
+
+    @Then("{string} service name should be displayed")
+    public void serviceCodeShouldBeDisplayed(String serviceCode) {
+        Assert.assertTrue(driver.findElement(salePOM.getServiceCreditSaleCode()).getText().equalsIgnoreCase(serviceCode));
+    }
+
+    @Then("{string} service price should be displayed")
+    public void servicePriceShouldBeDisplayed(String servicePrice) {
+        Assert.assertEquals(driver.findElement(salePOM.getServiceCreditSalePrice()).getText(), servicePrice);
+    }
+
+    @Then("Services should be deleted from table")
+    public void servicesShouldBeDeletedFromTable() {
+        Assert.assertFalse(driver.findElement(salePOM.getServicesTable()).isDisplayed());
+    }
 }
