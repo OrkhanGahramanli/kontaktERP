@@ -24,7 +24,6 @@ public class SalePOM {
         elementsMap.put("saleModule", By.id("satis_menu"));
         elementsMap.put("newCreditSale", By.id("kreditsatis_link"));
         elementsMap.put("orderSearchBtn", By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm"));
-        elementsMap.put("customerSearchBtn", By.cssSelector(".btn.btn-primary.mt-3"));
         elementsMap.put("calculateCreditBtn", By.xpath("//*[@onclick='satisKreditHesabla(2,1)']"));
         elementsMap.put("orderCode", By.id("sifaris_No"));
         elementsMap.put("regionCode", By.id("caribolge-selectized"));
@@ -41,12 +40,7 @@ public class SalePOM {
         elementsMap.put("creditCancelBtn", By.id("BtnKreditImtina"));
         elementsMap.put("newCashSale", By.id("negdsatis_link"));
         elementsMap.put("addPaymentBtn", By.xpath("//*[@onclick='odemeElaveEt()']"));
-        elementsMap.put("paymentTypeSelect", By.xpath("//*[@onchange='odemeNovuYukleNegd(this)']"));
-        elementsMap.put("paymentCodeSelect", By.xpath("//*[@onchange='taksitAylarYukle(this)']"));
         elementsMap.put("completeCashSaleBtn", By.xpath("//*[@onclick='negdSatisTamamla()']"));
-        elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
-        elementsMap.put("paymentTaksitGroupSelect", By.xpath("//td[3]/select[@onchange='taksitAylarYukle(this)']"));
-        elementsMap.put("paymentTaksitMonthsSelect", By.xpath("//td[4]/select[@class='form-control']"));
         elementsMap.put("productSellerBtn", By.xpath("//*[@class='far fa-user']"));
         elementsMap.put("saleReturn", By.id("qaytarma_link"));
         elementsMap.put("saleInvoice", By.id("fakturanomresi"));

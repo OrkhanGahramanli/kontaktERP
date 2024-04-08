@@ -56,6 +56,12 @@ public class GeneralPOM {
         elementsMap.put("addProductOtherStoreBtn", By.xpath("//*[@id='tableOrderOtherProducts']//*[@type='button']"));
         elementsMap.put("productDeliveryType", By.id("teslimnovu_0"));
         elementsMap.put("acceptSuccessMessageBtn", By.className("swal2-confirm"));
+        elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
+        elementsMap.put("customerSearchBtn", By.cssSelector(".btn.btn-primary.mt-3"));
+        elementsMap.put("paymentTypeSelect", By.xpath("//*[@onchange='odemeNovuYukleNegd(this)']"));
+        elementsMap.put("paymentCodeSelect", By.xpath("//*[@onchange='taksitAylarYukle(this)']"));
+        elementsMap.put("paymentTaksitGroupSelect", By.xpath("//td[3]/select[@onchange='taksitAylarYukle(this)']"));
+        elementsMap.put("paymentTaksitMonthsSelect", By.xpath("//td[4]/select[@class='form-control']"));
     }
 
 
