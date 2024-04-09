@@ -1,18 +1,17 @@
 package stepDefinitions;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.ElementNotInteractableException;
+import lombok.Getter;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.testng.Assert;
+import pom.SalePOM;
 
 import java.util.List;
 
@@ -24,6 +23,9 @@ public class BaseSteps extends BaseMethods{
     public BaseSteps(){
         generalPOM = GeneralPOM.getInstance();
     }
+    @Getter
+    private static String saleInvoiceNumber;
+
     @Given("User is in {string}")
     public void UserIsIn(String arg0){
     }
@@ -81,7 +83,7 @@ public class BaseSteps extends BaseMethods{
                 selectVisibleText(driver.findElement(elementsMap.get(element)), text);
             } catch (UnexpectedTagNameException u) {
                 driver.findElement(elementsMap.get(element)).sendKeys(text);
-                findElementByText(text).click();
+                selectElementByText(text).click();
             }
         }
     }
@@ -99,19 +101,19 @@ public class BaseSteps extends BaseMethods{
     }
 
     @Then("User should get {string} message")
-    public void userShouldGetMessageInNewOrderPage(String expectedError) {
-        if (expectedError.equals("Məhsul seçilməyib.")){
+    public void userShouldGetMessageInNewOrderPage(String message) {;
+        if (message.equals("Məhsul seçilməyib.")){
             WebElement productErrorMessage = driver.findElement(generalPOM.getProductEmptyErrorMessage());
             waitVisibilityElement(productErrorMessage, 5);
-            Assert.assertEquals(productErrorMessage.getText(), expectedError);
-        } else if (expectedError.equals("satıcı kodu seçilməyib.")) {
-            WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
+            Assert.assertEquals(productErrorMessage.getText(), message);
+        } else if (message.equals("satıcı kodu seçilməyib.")) {
+            WebElement errorMessage = driver.findElement(generalPOM.getPopUpMessage());
             waitVisibilityElement(errorMessage, 5);
-            Assert.assertTrue(errorMessage.getText().contains(expectedError));
+            Assert.assertTrue(errorMessage.getText().contains(message));
         } else {
-            WebElement errorMessage = driver.findElement(generalPOM.getErrorMessage());
-            waitVisibilityElement(errorMessage, 5);
-            Assert.assertEquals(errorMessage.getText(), expectedError);
+            WebElement messageElement = driver.findElement(generalPOM.getPopUpMessage());
+            waitVisibilityElement(messageElement, 5);
+            Assert.assertEquals(messageElement.getText(), message);
         }
     }
 
@@ -181,5 +183,16 @@ public class BaseSteps extends BaseMethods{
     @And("User clear {string} input field")
     public void userClearInputField(String element) {
         driver.findElement(elementsMap.get(element)).clear();
+    }
+
+    @And("User's waiting {int} seconds for visibility {string} message")
+    public void userSWaitingSecondsForVisibilityText(int time, String text) {
+        waitTextMessage(generalPOM.getPopUpMessage(), text, time);
+    }
+
+    @And("User takes sale invoice number")
+    public void userTakes() {
+        saleInvoiceNumber = driver.findElement(generalPOM.getInvoiceNumber()).getAttribute("value");
+        System.out.println(this.getSaleInvoiceNumber());
     }
 }

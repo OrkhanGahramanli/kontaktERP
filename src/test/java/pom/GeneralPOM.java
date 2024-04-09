@@ -27,7 +27,7 @@ public class GeneralPOM {
     private final By sellerSearchField = By.id("sif_satici_kodu_axtar");
     private final By sellerSearchBtn = By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm");
     private final By successIcon = By.className("swal2-success-ring");
-    private final By errorMessage = By.className("noty_type__error");
+    private final By popUpMessage = By.className("noty_bar");
     private final By productEmptyErrorMessage = By.id("recipeitemAlert");
     private final By serviceSearchField = By.xpath("//input[@aria-controls='tableHizmet']");
     private final By addServiceBtn = By.xpath("//*[@id='tableHizmet_wrapper']//*[@type='button']");
@@ -38,6 +38,7 @@ public class GeneralPOM {
     private final By productsTotalAmount = By.id("yekunMebleg");
     private final By productInBundle = By.xpath("//*[@id='faqs-row-0']/td[2]");
     private final By completeNotificationText = By.className("swal2-title");
+    private final By invoiceNumber = By.id("sifaris_seriya");
 
     static {
         elementsMap.put("productSearchBtn", By.cssSelector("button[class='btn btn-primary']"));
@@ -58,10 +59,6 @@ public class GeneralPOM {
         elementsMap.put("acceptSuccessMessageBtn", By.className("swal2-confirm"));
         elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
         elementsMap.put("customerSearchBtn", By.cssSelector(".btn.btn-primary.mt-3"));
-        elementsMap.put("paymentTypeSelect", By.xpath("//*[@onchange='odemeNovuYukleNegd(this)']"));
-        elementsMap.put("paymentCodeSelect", By.xpath("//*[@onchange='taksitAylarYukle(this)']"));
-        elementsMap.put("paymentTaksitGroupSelect", By.xpath("//td[3]/select[@onchange='taksitAylarYukle(this)']"));
-        elementsMap.put("paymentTaksitMonthsSelect", By.xpath("//td[4]/select[@class='form-control']"));
     }
 
 

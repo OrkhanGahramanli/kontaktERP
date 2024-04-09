@@ -23,9 +23,9 @@ Feature: Sale
       And User clicks "calculateCreditBtn" button
       And User selects "Xeyr" option from "Akb"
       And User selects "Xeyr" option from "asanFinance"
-#      And User clicks "sendSMSBtn" button
-#      And User clicks "confirmBtn" button
-#      And User fills "123456" in "SMSCode" input field
+      And User clicks "sendSMSBtn" button
+      And User clicks "confirmBtn" button
+      And User fills "123456" in "SMSCode" input field
       And User clicks "completeSaleBtn" button
       Then New sale should be created
       And User clicks "confirmBtn" button

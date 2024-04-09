@@ -20,8 +20,8 @@ public class SaleSteps extends BaseMethods{
     SalePOM salePOM = SalePOM.getInstance();
 
     int productStock;
-    private static String saleInvoiceNumber;
     private double returnedProductPricesSum;
+
 
     @And("User selects {string} customer")
     public void userSelectsCustomer(String customerCode) {
@@ -31,7 +31,7 @@ public class SaleSteps extends BaseMethods{
 
     @Then("Invoice number should be displayed")
     public void invoiceNumberShouldBeDisplayed() {
-        Assert.assertFalse(driver.findElement(salePOM.getInvoiceNumber()).getAttribute("value").isEmpty());
+        Assert.assertFalse(driver.findElement(generalPOM.getInvoiceNumber()).getAttribute("value").isEmpty());
     }
 
     @And("User add seller to the product")
@@ -90,14 +90,9 @@ public class SaleSteps extends BaseMethods{
         Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
     }
 
-    @And("User takes sale invoice number")
-    public void userTakes() {
-        saleInvoiceNumber = driver.findElement(salePOM.getInvoiceNumber()).getAttribute("value");
-    }
-
     @And("User fills sale invoice number in {string} input field")
     public void userFillsSaleInvoiceNumberInInputField(String element) {
-        driver.findElement(elementsMap.get(element)).sendKeys(saleInvoiceNumber);
+        driver.findElement(elementsMap.get(element)).sendKeys(BaseSteps.getSaleInvoiceNumber());
     }
 
     @And("User selects all products")
