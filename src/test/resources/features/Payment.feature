@@ -34,22 +34,23 @@ Feature: Payment
       Then New sale should be created
       And User clicks "confirmBtn" button
       And User takes sale invoice number
-#      And User clicks "paymentModule" module link
-#      And User clicks "cashInflowPageLink" page link
-#      And Wait 1 second for an element
-#      And User fills "1000517597" in "customerCode" input field
-#      And User clicks "customerSearchBtn" button
-#      And User selects "1000517597" customer
-#      And User selects the sale invoice and clicks "Ödə" button
-#      And User selects "<paymentType>" option from "paymentType"
-#      And User selects "<paymentCode>" option from "paymentCode"
-#      And User fills invoice remaining amount in payment
-#      And User clicks "completePaymentBtn" button
-#      And User clicks "printEdvBtn" button
-#      Then Cash inflow should be completed
+      And User clicks "paymentModule" module link
+      And User clicks "cashInflowPageLink" page link
+      And Wait 1 second for an element
+      And User fills "1000517597" in "customerCode" input field
+      And User clicks "customerSearchBtn" button
+      And User selects "1000517597" customer
+      And User selects the sale invoice and clicks "Ödə" button
+      And User selects "<paymentType>" option from "paymentType"
+      And User selects "<paymentCode>" option from "paymentCode"
+      And User fills invoice remaining amount in payment
+      And User clicks "completePaymentBtn" button
+      And User clicks "printEdvBtn" button
+      Then Cash inflow should be completed
 
       Examples:
         | paymentType | paymentCode                    |
         | Nağd        |                                |
         | Kart        | PAŞA BANK (NAĞD)               |
-#        | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK |
+        | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK |
+

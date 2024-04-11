@@ -24,7 +24,7 @@ public class BaseSteps extends BaseMethods{
         generalPOM = GeneralPOM.getInstance();
     }
     @Getter
-    private static String saleInvoiceNumber;
+    private static ThreadLocal<String> saleInvoiceNumber = new ThreadLocal<>();
 
     @Given("User is in {string}")
     public void UserIsIn(String arg0){
@@ -192,7 +192,6 @@ public class BaseSteps extends BaseMethods{
 
     @And("User takes sale invoice number")
     public void userTakes() {
-        saleInvoiceNumber = driver.findElement(generalPOM.getInvoiceNumber()).getAttribute("value");
-        System.out.println(this.getSaleInvoiceNumber());
+        saleInvoiceNumber.set(driver.findElement(generalPOM.getInvoiceNumber()).getAttribute("value"));
     }
 }

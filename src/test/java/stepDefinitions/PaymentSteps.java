@@ -2,6 +2,7 @@ package stepDefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -24,12 +25,13 @@ public class PaymentSteps extends BaseMethods{
         List<WebElement> invoiceNums = driver.findElements(paymentPOM.getInvoiceNum());
         List<WebElement> payButtons = findElementsByText("Ödə");
         for (int i = 0; i < invoiceSerialNums.size(); i++) {
-            if ((invoiceSerialNums.get(i).getText() + invoiceNums.get(i).getText()).equals(BaseSteps.getSaleInvoiceNumber())) {
+            if ((invoiceSerialNums.get(i).getText() + invoiceNums.get(i).getText()).equals(BaseSteps.getSaleInvoiceNumber().get())) {
                 payButtons.get(i).click();
                 break;
             }
         }
     }
+    System.out.println(BaseSteps.getSaleInvoiceNumber().get());
 }
 
     @And("User fills invoice remaining amount in payment")
