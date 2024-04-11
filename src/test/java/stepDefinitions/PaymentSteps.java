@@ -31,7 +31,6 @@ public class PaymentSteps extends BaseMethods{
             }
         }
     }
-    System.out.println(BaseSteps.getSaleInvoiceNumber().get());
 }
 
     @And("User fills invoice remaining amount in payment")
