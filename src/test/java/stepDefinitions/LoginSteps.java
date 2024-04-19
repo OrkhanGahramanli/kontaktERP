@@ -12,7 +12,6 @@ public class LoginSteps extends BaseMethods{
 
     LoginPOM loginPOM = LoginPOM.getInstance();
 
-
     @When("User fills input username field with {string}")
     public void userFillsInputUsernameFieldWith(String username) {
         driver.findElement(loginPOM.getUsername()).sendKeys(username);

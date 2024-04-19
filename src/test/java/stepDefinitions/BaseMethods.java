@@ -1,10 +1,8 @@
 package stepDefinitions;
 
 import driverSession.CucumberHook;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.cucumber.java.en_old.Ac;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -46,9 +44,9 @@ public class BaseMethods {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    protected void waitTextMessage(WebElement element, String message, int time){
+    protected void waitTextMessage(By locator, String message, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
-        wait.until(ExpectedConditions.textToBePresentInElement(element, message));
+        wait.until(ExpectedConditions.textToBe(locator, message));
     }
 
     protected void waitPresenceElements(By locator, int time){
@@ -80,7 +78,27 @@ public class BaseMethods {
         actions.moveToElement(element).perform();
     }
 
-    protected WebElement findElementByText(String text) {
+    protected WebElement selectElementByText(String text) {
         return driver.findElement(By.xpath("//*[@class='selectize-dropdown-content']//*[text()='" + text + "']"));
+    }
+
+    protected WebElement findElementByText(String text) {
+        return driver.findElement(By.xpath("//*[text()='" + text + "']"));
+    }
+    protected List<WebElement> findElementsByText(String text) {
+        return driver.findElements(By.xpath("//*[text()='" + text + "']"));
+    }
+
+
+    protected void clearFieldWithAction(By locator){
+        driver.findElement(locator).click();
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.CONTROL + "a");
+        actions.sendKeys(Keys.DELETE);
+    }
+
+    protected  void doubleClickAction(WebElement element){
+        Actions actions = new Actions(driver);
+        actions.doubleClick(element).build().perform();
     }
 }

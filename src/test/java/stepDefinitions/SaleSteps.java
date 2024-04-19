@@ -20,8 +20,8 @@ public class SaleSteps extends BaseMethods{
     SalePOM salePOM = SalePOM.getInstance();
 
     int productStock;
-    private static String saleInvoiceNumber;
     private double returnedProductPricesSum;
+
 
     @And("User selects {string} customer")
     public void userSelectsCustomer(String customerCode) {
@@ -31,7 +31,7 @@ public class SaleSteps extends BaseMethods{
 
     @Then("Invoice number should be displayed")
     public void invoiceNumberShouldBeDisplayed() {
-        Assert.assertFalse(driver.findElement(salePOM.getInvoiceNumber()).getAttribute("value").isEmpty());
+        Assert.assertFalse(driver.findElement(generalPOM.getInvoiceNumber()).getAttribute("value").isEmpty());
     }
 
     @And("User add seller to the product")
@@ -90,16 +90,6 @@ public class SaleSteps extends BaseMethods{
         Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
     }
 
-    @And("User takes sale invoice number")
-    public void userTakes() {
-        saleInvoiceNumber = driver.findElement(salePOM.getInvoiceNumber()).getAttribute("value");
-    }
-
-    @And("User fills sale invoice number in {string} input field")
-    public void userFillsSaleInvoiceNumberInInputField(String element) {
-        driver.findElement(elementsMap.get(element)).sendKeys(saleInvoiceNumber);
-    }
-
     @And("User selects all products")
     public void userSelectsAllProducts() throws InterruptedException {
         List<WebElement> productsForReturn = driver.findElements(salePOM.getSelectProductCheckBox());
@@ -133,5 +123,25 @@ public class SaleSteps extends BaseMethods{
         for (WebElement element : productPricesElements){
             returnedProductPricesSum+=Double.parseDouble(element.getText());
         }
+    }
+
+    @And("User chooses first product and clicks {string} button")
+    public void userChoosesFirstProductAndClicksButton(String element) {
+        driver.findElement(elementsMap.get(element)).click();
+    }
+
+    @Then("{string} service name should be displayed")
+    public void serviceCodeShouldBeDisplayed(String serviceCode) {
+        Assert.assertTrue(driver.findElement(salePOM.getServiceCreditSaleCode()).getText().equalsIgnoreCase(serviceCode));
+    }
+
+    @Then("{string} service price should be displayed")
+    public void servicePriceShouldBeDisplayed(String servicePrice) {
+        Assert.assertEquals(driver.findElement(salePOM.getServiceCreditSalePrice()).getText(), servicePrice);
+    }
+
+    @Then("Services should be deleted from table")
+    public void servicesShouldBeDeletedFromTable() {
+        Assert.assertFalse(driver.findElement(salePOM.getServicesTable()).isDisplayed());
     }
 }

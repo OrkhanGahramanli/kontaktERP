@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CucumberOptions(
-        features = {"classpath:features/Sale.feature"},
+        features = {"classpath:features/Payment.feature"},
         plugin = {"pretty", "json:target/cucumber.json"},
-        tags = "@CheckReturnAmount"
+        tags = "@InvalidCashOutflow"
 )
 
 
