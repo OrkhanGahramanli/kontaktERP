@@ -99,6 +99,6 @@ public class BaseMethods {
 
     protected  void doubleClickAction(WebElement element){
         Actions actions = new Actions(driver);
-        actions.doubleClick(element).perform();
+        actions.doubleClick(element).build().perform();
     }
 }

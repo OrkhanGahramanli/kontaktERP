@@ -28,7 +28,7 @@ public class GeneralPOM {
     private final By sellerSearchBtn = By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm");
     private final By successIcon = By.className("swal2-success-ring");
     private final By popUpMessage = By.className("noty_bar");
-    private final By productEmptyErrorMessage = By.id("recipeitemAlert");
+    private final By errorAlert = By.id("recipeitemAlert");
     private final By serviceSearchField = By.xpath("//input[@aria-controls='tableHizmet']");
     private final By addServiceBtn = By.xpath("//*[@id='tableHizmet_wrapper']//*[@type='button']");
     private final By addedProductsPrices = By.xpath("//*[@id='tableProd']/tr/td[4]/input");
@@ -39,6 +39,7 @@ public class GeneralPOM {
     private final By productInBundle = By.xpath("//*[@id='faqs-row-0']/td[2]");
     private final By completeNotificationText = By.className("swal2-title");
     private final By invoiceNumber = By.id("sifaris_seriya");
+    private final By emptyPaymentReasonErrorMessage = By.id("odenis_sebebi-error");
 
     static {
         elementsMap.put("productSearchBtn", By.cssSelector("button[class='btn btn-primary']"));

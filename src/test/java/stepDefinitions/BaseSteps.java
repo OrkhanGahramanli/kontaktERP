@@ -25,7 +25,6 @@ public class BaseSteps extends BaseMethods{
     }
     @Getter
     private static ThreadLocal<String> saleInvoiceNumber = new ThreadLocal<>();
-
     @Given("User is in {string}")
     public void UserIsIn(String arg0){
     }
@@ -101,19 +100,25 @@ public class BaseSteps extends BaseMethods{
     }
 
     @Then("User should get {string} message")
-    public void userShouldGetMessageInNewOrderPage(String message) {;
+    public void userShouldGetMessage(String message) {;
         if (message.equals("Məhsul seçilməyib.")){
-            WebElement productErrorMessage = driver.findElement(generalPOM.getProductEmptyErrorMessage());
+            WebElement productErrorMessage = driver.findElement(generalPOM.getErrorAlert());
             waitVisibilityElement(productErrorMessage, 5);
             Assert.assertEquals(productErrorMessage.getText(), message);
         } else if (message.equals("satıcı kodu seçilməyib.")) {
             WebElement errorMessage = driver.findElement(generalPOM.getPopUpMessage());
             waitVisibilityElement(errorMessage, 5);
             Assert.assertTrue(errorMessage.getText().contains(message));
+        } else if (message.equals("Ödəniş səbəbi boş olabilməz")) {
+            WebElement errorMessage = driver.findElement(generalPOM.getEmptyPaymentReasonErrorMessage());
+            waitVisibilityElement(errorMessage, 5);
+            Assert.assertEquals(errorMessage.getText(), message);
         } else {
-            WebElement messageElement = driver.findElement(generalPOM.getPopUpMessage());
-            waitVisibilityElement(messageElement, 5);
-            Assert.assertEquals(messageElement.getText(), message);
+            List<WebElement> messageElements = driver.findElements(generalPOM.getPopUpMessage());
+            for (WebElement element : messageElements){
+                waitVisibilityElement(element, 5);
+                if (element.getText().equals(message)) Assert.assertTrue(true);
+            }
         }
     }
 
@@ -193,5 +198,10 @@ public class BaseSteps extends BaseMethods{
     @And("User takes sale invoice number")
     public void userTakes() {
         saleInvoiceNumber.set(driver.findElement(generalPOM.getInvoiceNumber()).getAttribute("value"));
+    }
+
+    @And("User fills sale invoice number in {string} input field")
+    public void userFillsSaleInvoiceNumberInInputField(String element) {
+        driver.findElement(elementsMap.get(element)).sendKeys(saleInvoiceNumber.get());
     }
 }

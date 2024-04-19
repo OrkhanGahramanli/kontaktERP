@@ -90,11 +90,6 @@ public class SaleSteps extends BaseMethods{
         Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
     }
 
-    @And("User fills sale invoice number in {string} input field")
-    public void userFillsSaleInvoiceNumberInInputField(String element) {
-        driver.findElement(elementsMap.get(element)).sendKeys(BaseSteps.getSaleInvoiceNumber().get());
-    }
-
     @And("User selects all products")
     public void userSelectsAllProducts() throws InterruptedException {
         List<WebElement> productsForReturn = driver.findElements(salePOM.getSelectProductCheckBox());

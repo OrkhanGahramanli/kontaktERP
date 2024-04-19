@@ -18,7 +18,8 @@ import java.util.List;
 
 @CucumberOptions(
         features = {"classpath:features/Payment.feature"},
-        plugin = {"pretty", "json:target/cucumber.json"}
+        plugin = {"pretty", "json:target/cucumber.json"},
+        tags = "@InvalidCashOutflow"
 )
 
 
