@@ -16,7 +16,7 @@ public class BaseMethods {
     public WebDriver driver = CucumberHook.driver.get();
 
     public BaseMethods(){
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
     protected void waitVisibilityElement(By locator, int time){
@@ -100,5 +100,10 @@ public class BaseMethods {
     protected  void doubleClickAction(WebElement element){
         Actions actions = new Actions(driver);
         actions.doubleClick(element).build().perform();
+    }
+
+    protected WebElement getSelectedOption(WebElement element){
+        Select select = new Select(element);
+        return select.getFirstSelectedOption();
     }
 }
