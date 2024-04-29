@@ -17,8 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CucumberOptions(
-        features = {"classpath:features/Product.feature"},
-        plugin = {"pretty", "json:target/cucumber.json"}
+        features = {"classpath:features/Sale.feature"},
+        plugin = {"pretty", "json:target/cucumber.json"},
+        tags = "@InvoiceCorrection"
 )
 
 

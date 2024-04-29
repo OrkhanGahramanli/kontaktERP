@@ -105,7 +105,7 @@ public class BaseSteps extends BaseMethods {
 
     @Then("User should get {string} message")
     public void userShouldGetMessage(String message) {
-        ;
+
         if (message.equals("Məhsul seçilməyib.")) {
             WebElement productErrorMessage = driver.findElement(generalPOM.getErrorAlert());
             waitVisibilityElement(productErrorMessage, 5);
@@ -237,5 +237,10 @@ public class BaseSteps extends BaseMethods {
                 }
             }
         }
+    }
+
+    @And("User's waiting presence of {string} element for {int} seconds")
+    public void userSWaitingPresenceOfElementForSeconds(String element, int time) {
+        waitPresenceElements(elementsMap.get(element), time);
     }
 }
