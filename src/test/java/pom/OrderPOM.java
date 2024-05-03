@@ -40,8 +40,6 @@ public class OrderPOM {
         elementsMap.put("newOrder", By.id("order_link"));
         elementsMap.put("productsInfo", By.id("stockinfo_link"));
         elementsMap.put("creditors", By.id("creditorView_link"));
-        elementsMap.put("onlineOrder", By.id("websifaris_menu"));
-        elementsMap.put("webOrdersLink", By.id("allweborders_link"));
         elementsMap.put("submitOrder", By.cssSelector("button[class='btn btn-primary float-right']"));
         elementsMap.put("customerName", By.id("sif_musteri_adi"));
         elementsMap.put("saleType", By.id("sif_satis_novu"));

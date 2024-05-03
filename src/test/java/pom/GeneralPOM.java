@@ -60,6 +60,8 @@ public class GeneralPOM {
         elementsMap.put("acceptSuccessMessageBtn", By.className("swal2-confirm"));
         elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
         elementsMap.put("customerSearchBtn", By.cssSelector(".btn.btn-primary.mt-3"));
+        elementsMap.put("onlineOrder", By.id("websifaris_menu"));
+        elementsMap.put("webOrdersLink", By.id("allweborders_link"));
     }
 
 

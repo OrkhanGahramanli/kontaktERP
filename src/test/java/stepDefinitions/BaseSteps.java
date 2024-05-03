@@ -14,7 +14,6 @@ import org.testng.Assert;
 import pom.SalePOM;
 
 import java.util.List;
-
 import static pom.ElementsMap.elementsMap;
 
 public class BaseSteps extends BaseMethods {
@@ -242,5 +241,15 @@ public class BaseSteps extends BaseMethods {
     @And("User's waiting presence of {string} element for {int} seconds")
     public void userSWaitingPresenceOfElementForSeconds(String element, int time) {
         waitPresenceElements(elementsMap.get(element), time);
+    }
+
+    @And("User press enter button")
+    public void userPressEnterButton() {
+        enterAction();
+    }
+
+    @And("User clicks button with {string} text")
+    public void userClicksButtonWithText(String text) {
+        findElementByText(text).click();
     }
 }

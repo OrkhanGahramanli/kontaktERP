@@ -106,4 +106,9 @@ public class BaseMethods {
         Select select = new Select(element);
         return select.getFirstSelectedOption();
     }
+
+    protected void enterAction(){
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.ENTER).build().perform();
+    }
 }

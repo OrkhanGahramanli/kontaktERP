@@ -1,6 +1,7 @@
 Feature: Order
 
     Background:
+      Given User is in "Login Page"
       When User fills input username field with "orkhan.gahramanli"
       And User fills input password field with "test123"
       And User clicks on submit button
