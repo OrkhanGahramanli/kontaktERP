@@ -33,6 +33,8 @@ public class OnlineOrderPOM {
         elementsMap.put("productSelectBtn", By.id("btnStok"));
         elementsMap.put("productSearchByName", By.name("axtarisAdiNew"));
         elementsMap.put("completeOnlineOrderBtn", By.xpath("//*[@onclick='webSifarisEkle()']"));
+        elementsMap.put("onlineOrderInfoBtn", By.xpath("(//a[@title='Bax'])[2]"));
+        elementsMap.put("orderNumField", By.id("sifaris_no"));
     }
 
     private final By cashRadioBtn = By.id("nagdCheckBox");

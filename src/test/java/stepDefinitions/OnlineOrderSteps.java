@@ -7,6 +7,8 @@ import org.testng.Assert;
 import pom.GeneralPOM;
 import pom.OnlineOrderPOM;
 
+import static pom.ElementsMap.elementsMap;
+
 public class OnlineOrderSteps extends BaseMethods{
 
     OnlineOrderPOM onlineOrderPOM = OnlineOrderPOM.getInstance();
@@ -29,6 +31,10 @@ public class OnlineOrderSteps extends BaseMethods{
     public void newOnlineOrderShouldBeCreate() {
         WebElement orderCreated = driver.findElement(generalPOM.getSuccessIcon());
         Assert.assertTrue(orderCreated.isDisplayed());
+    }
+
+    @And("User takes online order number")
+    public void userTakesOnlineOrderNumber() {
         String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
         String[] createdOrderNum = createdOrderMessage.split(" ");
         onlineOrderNum = createdOrderNum[(createdOrderNum.length) - 1];
@@ -42,5 +48,10 @@ public class OnlineOrderSteps extends BaseMethods{
     @Then("Created online order should be displayed")
     public void createdOnlineOrderShouldBeDisplayed() {
         Assert.assertEquals(driver.findElement(onlineOrderPOM.getOnlineOrderNumColumn()).getText(), onlineOrderNum);
+    }
+
+    @Then("Online order number should be visible in {string}")
+    public void onlineOrderNumberShouldBeVisibleIn(String orderNum) {
+        Assert.assertEquals(driver.findElement(elementsMap.get(orderNum)).getAttribute("value"), onlineOrderNum);
     }
 }

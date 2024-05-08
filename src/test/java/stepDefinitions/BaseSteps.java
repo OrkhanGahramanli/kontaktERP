@@ -252,4 +252,9 @@ public class BaseSteps extends BaseMethods {
     public void userClicksButtonWithText(String text) {
         findElementByText(text).click();
     }
+
+    @Then("{string} should equals {string}")
+    public void shouldEquals(String element, String text) {
+        Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
+    }
 }
