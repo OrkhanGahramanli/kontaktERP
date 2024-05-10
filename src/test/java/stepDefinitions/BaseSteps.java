@@ -257,4 +257,9 @@ public class BaseSteps extends BaseMethods {
     public void shouldEquals(String element, String text) {
         Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
     }
+
+    @Then("{string} should be selected in {string}")
+    public void shouldBeSelectedIn(String text, String element) {
+        Assert.assertEquals(getSelectedOption(driver.findElement(elementsMap.get(element))).getText(), text);
+    }
 }

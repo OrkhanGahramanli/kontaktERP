@@ -7,6 +7,8 @@ import org.testng.Assert;
 import pom.GeneralPOM;
 import pom.OnlineOrderPOM;
 
+import java.util.List;
+
 import static pom.ElementsMap.elementsMap;
 
 public class OnlineOrderSteps extends BaseMethods{
@@ -53,5 +55,23 @@ public class OnlineOrderSteps extends BaseMethods{
     @Then("Online order number should be visible in {string}")
     public void onlineOrderNumberShouldBeVisibleIn(String orderNum) {
         Assert.assertEquals(driver.findElement(elementsMap.get(orderNum)).getAttribute("value"), onlineOrderNum);
+    }
+
+    @Then("{string} and {string} should be displayed in {string}")
+    public void andShouldBeDisplayedIn(String product1, String product2, String element) {
+        List<WebElement> productElements = driver.findElements(elementsMap.get(element));
+        for (WebElement productElement : productElements) {
+            if (productElement.getAttribute("value").equals(product1)) {
+                Assert.assertTrue(true);
+            } else if (productElement.getAttribute("value").equals(product2)) {
+                Assert.assertTrue(true);
+            } else Assert.fail();
+        }
+
+    }
+
+    @Then("{string} should be displayed in {string}")
+    public void shouldBeDisplayedIn(String text, String element) {
+        Assert.assertEquals(driver.findElement(elementsMap.get(element)).getText(), text);
     }
 }
