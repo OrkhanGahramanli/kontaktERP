@@ -48,10 +48,22 @@ public class OnlineOrderPOM {
         elementsMap.put("selectProductInOnlineOrder", By.xpath("//*[@onclick='openMehsulModal()']"));
         elementsMap.put("addProductInOnlineOrder", By.xpath("//*[@id='tableProductsChange']//*[text()='Əlavə et']"));
         elementsMap.put("onlineOrderStatusColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[9]"));
+        elementsMap.put("creditSaleBtn", By.xpath("//*[@onclick='kreditSatis()']"));
+        elementsMap.put("cashSaleBtn", By.xpath("//*[@onclick='nagdSatisAc()']"));
+        elementsMap.put("customerAnalysisBtn", By.xpath("//*[@onclick='musteriAnalizAc()']"));
+        elementsMap.put("newCustomerBtn", By.xpath("//*[@onclick='yeniMusterAc()']"));
+        elementsMap.put("addToBasketBtn", By.xpath("(//a[@title='Səbətə at'])[2]"));
+        elementsMap.put("basketBtn", By.id("sebetBtn"));
+        elementsMap.put("reassignOrderBtn", By.xpath("(//a[@title='Əməkdaş dəyiş'])[2]"));
+        elementsMap.put("employeeSelectField", By.id("userList"));
+        elementsMap.put("completeAssignBtn", By.xpath("//*[@onclick='changeViewer()']"));
+        elementsMap.put("onlineOrderViewerColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[5]"));
     }
 
     private final By cashRadioBtn = By.id("nagdCheckBox");
     private final By creditRadioBtn = By.id("kreditCheckBox");
     private final By onlineOrderSearchField = By.xpath("//*[@aria-label='Search in the data grid']");
     private final By onlineOrderNumColumn = By.xpath("(//*[@class='dx-datagrid-search-text'])[2]");
+    private final By onlineOrderNumInBasket = By.className("sorting_1");
+    private final By reassignOrderCompleteMessage = By.id("swal2-content");
 }

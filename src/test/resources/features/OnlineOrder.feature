@@ -129,3 +129,96 @@ Feature: OnlineOrder
       Then "customerFinCodeEditOrder" should equals "55LRF4T_update"
       Then "customerAddressEditOrder" should equals "Xudu Mammadov_update"
       Then "OLMAYAN STOK" and "TESTTT" should be displayed in "productNameInOrder"
+
+    @OnlineOrderQuickActions
+      Scenario Outline: Navigate to "<pageName>" page within online order
+        When User clicks "onlineOrderPageLink" page link
+        And User clicks "newOrderBtn" button
+        And User selects "Nağd" radioButton
+        And User fills "Orxan" in "customerName" input field
+        And User fills "Gahramanli" in "customerSurname" input field
+        And User fills "0551111111" in "customerMobile" input field
+        And User fills "55LRF4T" in "customerFinCode" input field
+        And User fills "Xudu Mammadov" in "customerAddress" input field
+        And User fills "Baku" in "customerCity" input field
+        And User clicks "productSelectBtn" button
+        And User fills "OLMAYAN STOK" in "productSearchByName" input field
+        And User press enter button
+        And User clicks button with "Əlavə et" text
+        And User clicks "completeOnlineOrderBtn" button
+        And User clicks "confirmBtn" button
+        And Wait 1 second for an element
+        And User takes online order number
+        And User clicks "confirmBtn" button
+        And User fills online order number in search field
+        And User's waiting visibility of "onlineOrderInfoBtn" element for 5 seconds
+        And User clicks "onlineOrderInfoBtn" button
+        And User's waiting visibility of "creditSaleBtn" element for 5 seconds
+        And User clicks "<pageBtn>" button
+        Then User should be navigated to "<pageName>" page in new tab
+
+      Examples:
+        | pageBtn             | pageName       |
+        | creditSaleBtn       | Kredit Satış   |
+        | cashSaleBtn         | Online Satış   |
+        | customerAnalysisBtn | Müştəri Analiz |
+        | newCustomerBtn      | Yeni Müştəri   |
+
+  @OnlineOrderBasket
+    Scenario: Add online order in basket
+      When User clicks "onlineOrderPageLink" page link
+      And User clicks "newOrderBtn" button
+      And User selects "Nağd" radioButton
+      And User fills "Orxan" in "customerName" input field
+      And User fills "Gahramanli" in "customerSurname" input field
+      And User fills "0551111111" in "customerMobile" input field
+      And User fills "55LRF4T" in "customerFinCode" input field
+      And User fills "Xudu Mammadov" in "customerAddress" input field
+      And User fills "Baku" in "customerCity" input field
+      And User clicks "productSelectBtn" button
+      And User fills "OLMAYAN STOK" in "productSearchByName" input field
+      And User press enter button
+      And User clicks button with "Əlavə et" text
+      And User clicks "completeOnlineOrderBtn" button
+      And User clicks "confirmBtn" button
+      And Wait 1 second for an element
+      And User takes online order number
+      And User clicks "confirmBtn" button
+      And User fills online order number in search field
+      And User's waiting visibility of "addToBasketBtn" element for 5 seconds
+      And User clicks "addToBasketBtn" button
+      Then User should get "Səbətə əlavə edildi." message
+      Then 1 order should be displayed in "basketBtn"
+      And User clicks "basketBtn" button
+      Then Online order should be displayed in basket
+
+  @OnlineOrderAssign
+    Scenario: Reassign online order to employee
+      When User clicks "onlineOrderPageLink" page link
+      And User clicks "newOrderBtn" button
+      And User selects "Nağd" radioButton
+      And User fills "Orxan" in "customerName" input field
+      And User fills "Gahramanli" in "customerSurname" input field
+      And User fills "0551111111" in "customerMobile" input field
+      And User fills "55LRF4T" in "customerFinCode" input field
+      And User fills "Xudu Mammadov" in "customerAddress" input field
+      And User fills "Baku" in "customerCity" input field
+      And User clicks "productSelectBtn" button
+      And User fills "OLMAYAN STOK" in "productSearchByName" input field
+      And User press enter button
+      And User clicks button with "Əlavə et" text
+      And User clicks "completeOnlineOrderBtn" button
+      And User clicks "confirmBtn" button
+      And Wait 1 second for an element
+      And User takes online order number
+      And User clicks "confirmBtn" button
+      And User fills online order number in search field
+      And User's waiting visibility of "reassignOrderBtn" element for 5 seconds
+      And User clicks "reassignOrderBtn" button
+      And User's waiting visibility of "employeeSelectField" element for 5 seconds
+      And User selects "Ramil.Mammadzada" option from "employeeSelectField"
+      And User clicks "completeAssignBtn" button
+      Then User should get "nömrəli sifariş Ramil.Mammadzada yönəldildi." message after reassign complete
+      And User clicks "confirmBtn" button
+      Then "Ramil.Mammadzada" should be displayed in "onlineOrderViewerColumn"
+

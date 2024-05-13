@@ -40,6 +40,7 @@ public class GeneralPOM {
     private final By completeNotificationText = By.className("swal2-title");
     private final By invoiceNumber = By.id("sifaris_seriya");
     private final By emptyPaymentReasonErrorMessage = By.id("odenis_sebebi-error");
+    private final By pageTitle = By.xpath("(//h5)[1]");
 
     static {
         elementsMap.put("productSearchBtn", By.cssSelector("button[class='btn btn-primary']"));

@@ -8,6 +8,7 @@ import pom.GeneralPOM;
 import pom.OnlineOrderPOM;
 
 import java.util.List;
+import java.util.Set;
 
 import static pom.ElementsMap.elementsMap;
 
@@ -73,5 +74,29 @@ public class OnlineOrderSteps extends BaseMethods{
     @Then("{string} should be displayed in {string}")
     public void shouldBeDisplayedIn(String text, String element) {
         Assert.assertEquals(driver.findElement(elementsMap.get(element)).getText(), text);
+    }
+
+    @Then("User should be navigated to {string} page in new tab")
+    public void userShouldBeNavigatedToInNewTab(String text) {
+        Set<String> tabs = driver.getWindowHandles();
+        driver.switchTo().window(tabs.toArray()[1].toString());
+        Assert.assertEquals(driver.findElement(generalPOM.getPageTitle()).getText(), text);
+    }
+
+    @Then("{int} order should be displayed in {string}")
+    public void orderShouldBeDisplayedInBasket(int num, String element) {
+        Assert.assertEquals(driver.findElement(elementsMap.get(element)).getText(),"Səbət (" + num + ")");
+    }
+
+    @Then("Online order should be displayed in basket")
+    public void onlineOrderShouldBeDisplayedInBasket() {
+        waitVisibilityElement(onlineOrderPOM.getOnlineOrderNumInBasket(), 5);
+        Assert.assertEquals(driver.findElement(onlineOrderPOM.getOnlineOrderNumInBasket()).getText(), onlineOrderNum);
+    }
+
+    @Then("User should get {string} message after reassign complete")
+    public void userShouldGetMessageAfterReassignComplete(String text) {
+        Assert.assertEquals(driver.findElement(onlineOrderPOM.getReassignOrderCompleteMessage()).getText()
+                                        , onlineOrderNum + " " + text);
     }
 }
