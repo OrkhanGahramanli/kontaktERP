@@ -58,6 +58,10 @@ public class OnlineOrderPOM {
         elementsMap.put("employeeSelectField", By.id("userList"));
         elementsMap.put("completeAssignBtn", By.xpath("//*[@onclick='changeViewer()']"));
         elementsMap.put("onlineOrderViewerColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[5]"));
+        elementsMap.put("forwardOrderBtn", By.xpath("(//a[@title='Yönəlt'])[2]"));
+        elementsMap.put("refreshBtn", By.cssSelector(".dx-icon.dx-icon-refresh"));
+        elementsMap.put("forwardDateColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[15]"));
+        elementsMap.put("forwardByUserNameColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[16]"));
     }
 
     private final By cashRadioBtn = By.id("nagdCheckBox");
@@ -66,4 +70,5 @@ public class OnlineOrderPOM {
     private final By onlineOrderNumColumn = By.xpath("(//*[@class='dx-datagrid-search-text'])[2]");
     private final By onlineOrderNumInBasket = By.className("sorting_1");
     private final By reassignOrderCompleteMessage = By.id("swal2-content");
+    private final By emptyDataGrid = By.className("dx-datagrid-nodata");
 }

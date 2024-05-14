@@ -7,6 +7,8 @@ import org.testng.Assert;
 import pom.GeneralPOM;
 import pom.OnlineOrderPOM;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -94,9 +96,26 @@ public class OnlineOrderSteps extends BaseMethods{
         Assert.assertEquals(driver.findElement(onlineOrderPOM.getOnlineOrderNumInBasket()).getText(), onlineOrderNum);
     }
 
-    @Then("User should get {string} message after reassign complete")
-    public void userShouldGetMessageAfterReassignComplete(String text) {
+    @Then("OrderNum {string} message should be displayed")
+    public void userShouldGetMessage(String text) {
         Assert.assertEquals(driver.findElement(onlineOrderPOM.getReassignOrderCompleteMessage()).getText()
                                         , onlineOrderNum + " " + text);
+    }
+
+    @Then("Online order datagrid should be empty")
+    public void onlineOrderDatagridShouldBeEmpty() {
+        Assert.assertTrue(driver.findElement(onlineOrderPOM.getEmptyDataGrid()).isDisplayed());
+    }
+
+    @Then("Forward date should be visible in {string}")
+    public void forwardDateShouldBeVisibleIn(String element) {
+        String[] forwardDate = driver.findElement(elementsMap.get(element)).getAttribute("innerText").split(" ");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        Assert.assertEquals(forwardDate[0], LocalDate.now().format(formatter));
+    }
+
+    @Then("Forward by user name should be visible in {string}")
+    public void forwardByUserNameShouldBeVisibleIn(String element) {
+        Assert.assertTrue(driver.findElement(elementsMap.get(element)).getAttribute("innerText").equalsIgnoreCase(LoginSteps.getUserName()));
     }
 }

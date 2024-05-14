@@ -218,7 +218,38 @@ Feature: OnlineOrder
       And User's waiting visibility of "employeeSelectField" element for 5 seconds
       And User selects "Ramil.Mammadzada" option from "employeeSelectField"
       And User clicks "completeAssignBtn" button
-      Then User should get "nömrəli sifariş Ramil.Mammadzada yönəldildi." message after reassign complete
+      Then OrderNum "nömrəli sifariş Ramil.Mammadzada yönəldildi." message should be displayed
       And User clicks "confirmBtn" button
       Then "Ramil.Mammadzada" should be displayed in "onlineOrderViewerColumn"
+
+  @OnlineOrderForward
+    Scenario: Forward online order to creditor
+      When User clicks "onlineOrderPageLink" page link
+      And User clicks "newOrderBtn" button
+      And User selects "Nağd" radioButton
+      And User fills "Orxan" in "customerName" input field
+      And User fills "Gahramanli" in "customerSurname" input field
+      And User fills "0551111111" in "customerMobile" input field
+      And User fills "55LRF4T" in "customerFinCode" input field
+      And User fills "Xudu Mammadov" in "customerAddress" input field
+      And User fills "Baku" in "customerCity" input field
+      And User clicks "productSelectBtn" button
+      And User fills "OLMAYAN STOK" in "productSearchByName" input field
+      And User press enter button
+      And User clicks button with "Əlavə et" text
+      And User clicks "completeOnlineOrderBtn" button
+      And User clicks "confirmBtn" button
+      And Wait 1 second for an element
+      And User takes online order number
+      And User clicks "confirmBtn" button
+      And User fills online order number in search field
+      And User's waiting visibility of "forwardOrderBtn" element for 5 seconds
+      And User clicks "forwardOrderBtn" button
+      Then OrderNum "nömrəli sifariş kreditora yönəldildi." message should be displayed
+      And User clicks "confirmBtn" button
+      Then Online order datagrid should be empty
+      And User clicks "webOrdersLink" page link
+      And User clicks "refreshBtn" button
+      Then Forward date should be visible in "forwardDateColumn"
+      Then Forward by user name should be visible in "forwardByUserNameColumn"
 

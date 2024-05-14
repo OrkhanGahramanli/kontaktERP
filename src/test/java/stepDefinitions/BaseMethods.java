@@ -51,7 +51,7 @@ public class BaseMethods {
 
     protected void waitPresenceElements(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     protected void waitTextUpdate(By locator, String value, int time){

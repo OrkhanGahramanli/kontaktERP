@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import lombok.Getter;
 import pom.LoginPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -11,9 +12,12 @@ import org.testng.Assert;
 public class LoginSteps extends BaseMethods{
 
     LoginPOM loginPOM = LoginPOM.getInstance();
+    @Getter
+    private static String userName;
 
     @When("User fills input username field with {string}")
     public void userFillsInputUsernameFieldWith(String username) {
+        userName = username;
         driver.findElement(loginPOM.getUsername()).sendKeys(username);
     }
 
