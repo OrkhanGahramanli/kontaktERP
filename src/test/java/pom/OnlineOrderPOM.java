@@ -62,6 +62,22 @@ public class OnlineOrderPOM {
         elementsMap.put("refreshBtn", By.cssSelector(".dx-icon.dx-icon-refresh"));
         elementsMap.put("forwardDateColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[15]"));
         elementsMap.put("forwardByUserNameColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[16]"));
+        elementsMap.put("videoCallOrders", By.id("websifaris_whatsapp_link"));
+        elementsMap.put("callMeOrders", By.id("websifaris_callme_link"));
+        elementsMap.put("addOrderBtn", By.cssSelector(".dx-icon.dx-icon-edit-button-addrow"));
+        elementsMap.put("customerField", By.xpath("//*[contains(@id, \"customer_name\")]"));
+        elementsMap.put("customerNumberField", By.xpath("//*[contains(@id, \"customer_number\")]"));
+        elementsMap.put("productField", By.xpath("//input[contains(@id, \"product\")]"));
+        elementsMap.put("idColumnHeader", By.xpath("//*[text()='Id']"));
+        elementsMap.put("editOrderBtn", By.xpath("(//td/a[@title='Edit'])[1]"));
+        elementsMap.put("orderCreateDateField", By.xpath("//input[contains(@id, \"createdAt\")]"));
+        elementsMap.put("oderCreateUserField", By.xpath("//input[contains(@id, \"createdBy\")]"));
+        elementsMap.put("customerMailField", By.xpath("//input[contains(@id, \"customer_mail\")]"));
+        elementsMap.put("orderStatusSelectField", By.xpath("//input[contains(@id, 'status')][@aria-haspopup='listbox']"));
+        elementsMap.put("noteField", By.xpath("//*[contains(@id, 'comment')]"));
+        elementsMap.put("statusChangeDate", By.xpath("//input[contains(@id, 'status_date')]"));
+        elementsMap.put("statusChangeUserVideoCallOrder", By.xpath("//input[contains(@id, 'status_user')]"));
+        elementsMap.put("statusChangeUserCallMeOrder", By.xpath("//input[contains(@id, 'status_setBy')]"));
     }
 
     private final By cashRadioBtn = By.id("nagdCheckBox");

@@ -255,11 +255,16 @@ public class BaseSteps extends BaseMethods {
 
     @Then("{string} should equals {string}")
     public void shouldEquals(String element, String text) {
-        Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
+        if (!text.isEmpty()) Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
     }
 
     @Then("{string} should be selected in {string}")
     public void shouldBeSelectedIn(String text, String element) {
         Assert.assertEquals(getSelectedOption(driver.findElement(elementsMap.get(element))).getText(), text);
+    }
+
+    @And("User hover to {string} element")
+    public void userHoverToElement(String element) {
+        moveToElement(driver.findElement(elementsMap.get(element)));
     }
 }

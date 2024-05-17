@@ -82,6 +82,10 @@ public class BaseMethods {
         return driver.findElement(By.xpath("//*[@class='selectize-dropdown-content']//*[text()='" + text + "']"));
     }
 
+    protected WebElement selectElementByText2(String text) {
+        return driver.findElement(By.xpath("//*[contains(@class, 'dx-list-item-content')][text()='" + text + "']"));
+    }
+
     protected WebElement findElementByText(String text) {
         return driver.findElement(By.xpath("//*[text()='" + text + "']"));
     }
@@ -110,5 +114,11 @@ public class BaseMethods {
     protected void enterAction(){
         Actions actions = new Actions(driver);
         actions.sendKeys(Keys.ENTER).build().perform();
+    }
+
+    protected void fillWithAction(WebElement element, String text){
+        Actions actions = new Actions(driver);
+        actions.click(element).perform();
+        actions.sendKeys(text).perform();
     }
 }

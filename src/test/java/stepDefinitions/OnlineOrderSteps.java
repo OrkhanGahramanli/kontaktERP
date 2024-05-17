@@ -107,15 +107,65 @@ public class OnlineOrderSteps extends BaseMethods{
         Assert.assertTrue(driver.findElement(onlineOrderPOM.getEmptyDataGrid()).isDisplayed());
     }
 
-    @Then("Forward date should be visible in {string}")
+    @Then("Current date should be displayed in {string}")
     public void forwardDateShouldBeVisibleIn(String element) {
-        String[] forwardDate = driver.findElement(elementsMap.get(element)).getAttribute("innerText").split(" ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        Assert.assertEquals(forwardDate[0], LocalDate.now().format(formatter));
+        WebElement date = driver.findElement(elementsMap.get(element));
+        if (!date.getAttribute("innerText").isEmpty()){
+            String[] forwardDate = date.getAttribute("innerText").split(" ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            Assert.assertEquals(forwardDate[0], LocalDate.now().format(formatter));
+        }
+        else {
+            String[] forwardDate = date.getAttribute("value").split(" ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            Assert.assertEquals(forwardDate[0], LocalDate.now().format(formatter));
+        }
     }
 
-    @Then("Forward by user name should be visible in {string}")
+    @Then("Logged in user name should be displayed in {string}")
     public void forwardByUserNameShouldBeVisibleIn(String element) {
-        Assert.assertTrue(driver.findElement(elementsMap.get(element)).getAttribute("innerText").equalsIgnoreCase(LoginSteps.getUserName()));
+        WebElement userName = driver.findElement(elementsMap.get(element));
+        if (!userName.getAttribute("innerText").isEmpty()){
+            Assert.assertTrue(userName.getAttribute("innerText").equalsIgnoreCase(LoginSteps.getUserName()));
+        }
+        else {
+            Assert.assertTrue(userName.getAttribute("value").equalsIgnoreCase(LoginSteps.getUserName()));
+        }
+    }
+
+    @And("User add {string} product in online order")
+    public void userAddProductInOnlineOrder(String productName) {
+        if (!productName.isEmpty()){
+            driver.findElement(elementsMap.get("productSelectBtn")).click();
+            driver.findElement(elementsMap.get("productSearchByName")).sendKeys(productName);
+            enterAction();
+            findElementByText("Əlavə et").click();
+        }
+    }
+
+    @And("User double clicks {string} element")
+    public void userDoubleClicksElement(String element) {
+        doubleClickAction(driver.findElement(elementsMap.get(element)));
+    }
+
+    @Then("Success icon should be displayed")
+    public void successIconShouldBeDisplayed() {
+        Assert.assertTrue(driver.findElement(generalPOM.getSuccessIcon()).isDisplayed());
+    }
+
+    @And("User selects {string} status from {string}")
+    public void userSelectsStatusFrom(String text, String element) {
+        driver.findElement(elementsMap.get(element)).click();
+        driver.findElement(elementsMap.get(element)).sendKeys(text);
+        selectElementByText2(text).click();
+    }
+
+    @And("{string} status should be selected in {string}")
+    public void statusShouldBeSelected(String text, String element) {
+        driver.findElement(elementsMap.get(element)).click();
+        WebElement status = selectElementByText2(text);
+        WebElement statusParentNode = (WebElement) getJsExecutor().executeScript(
+                "return arguments[0].parentNode;", status);
+        Assert.assertTrue(statusParentNode.getAttribute("class").contains("selected"));
     }
 }

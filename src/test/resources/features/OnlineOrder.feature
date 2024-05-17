@@ -54,7 +54,33 @@ Feature: OnlineOrder
     And User fills online order number in search field
     Then Created online order should be displayed
 
-    @OnlineOrderInfo
+  @OnlineOrderFailCase
+    Scenario Outline: Unsuccessful create "<orderType>" online order/ "<caseName>"
+    When User clicks "onlineOrderPageLink" page link
+    And User clicks "newOrderBtn" button
+    And User selects "<orderType>" radioButton
+    And User fills "<name>" in "customerName" input field
+    And User fills "<surName>" in "customerSurname" input field
+    And User fills "<mobile>" in "customerMobile" input field
+    And User fills "<address>" in "customerAddress" input field
+    And User add "<productName>" product in online order
+    And User clicks "completeOnlineOrderBtn" button
+    Then User should get "<error>" message
+
+    Examples:
+      | caseName               | orderType | name  | surName    | mobile     | address       | productName  | error                                 |
+      | Empty customer name    | Nağd      |       | Gahramanli | 0551111111 | Xudu Mammadov | OLMAYAN STOK | Müştəri adı boş ola bilməz!           |
+      | Empty customer surname | Nağd      | Orxan |            | 0551111111 | Xudu Mammadov | OLMAYAN STOK | Müştəri soyadı boş ola bilməz!        |
+      | Empty customer mobile  | Nağd      | Orxan | Gahramanli |            | Xudu Mammadov | OLMAYAN STOK | Müştəri əlaqə nömrəsi boş ola bilməz! |
+      | Empty customer address | Nağd      | Orxan | Gahramanli | 0551111111 |               | OLMAYAN STOK | Müştəri ünvanı boş ola bilməz!        |
+      | Empty product          | Nağd      | Orxan | Gahramanli | 0551111111 | Xudu Mammadov |              | Sifarişdə ən azı 1 məhsul olmalıdır!  |
+      | Empty customer name    | Kredit    |       | Gahramanli | 0551111111 | Xudu Mammadov | OLMAYAN STOK | Müştəri adı boş ola bilməz!           |
+      | Empty customer surname | Kredit    | Orxan |            | 0551111111 | Xudu Mammadov | OLMAYAN STOK | Müştəri soyadı boş ola bilməz!        |
+      | Empty customer mobile  | Kredit    | Orxan | Gahramanli |            | Xudu Mammadov | OLMAYAN STOK | Müştəri əlaqə nömrəsi boş ola bilməz! |
+      | Empty customer address | Kredit    | Orxan | Gahramanli | 0551111111 |               | OLMAYAN STOK | Müştəri ünvanı boş ola bilməz!        |
+      | Empty product          | Kredit    | Orxan | Gahramanli | 0551111111 | Xudu Mammadov |              | Sifarişdə ən azı 1 məhsul olmalıdır!  |
+
+  @OnlineOrderInfo
     Scenario: Check online order details
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
@@ -250,6 +276,61 @@ Feature: OnlineOrder
       Then Online order datagrid should be empty
       And User clicks "webOrdersLink" page link
       And User clicks "refreshBtn" button
-      Then Forward date should be visible in "forwardDateColumn"
-      Then Forward by user name should be visible in "forwardByUserNameColumn"
+      Then Current date should be displayed in "forwardDateColumn"
+      Then Logged in user name should be displayed in "forwardByUserNameColumn"
 
+    @OnlineOrderCall
+      Scenario Outline: Successful create "<orderType>" order
+        When User clicks "<orderType>" page link
+        And User clicks "addOrderBtn" button
+        And User fills "Orxan" in "customerField" input field
+        And User fills "0551111111" in "customerNumberField" input field
+        And User fills "<productName>" in "productField" input field
+        And User fills "<customerMail>" in "customerMailField" input field
+        And User clicks button with "Save" text
+        And User double clicks "idColumnHeader" element
+        And Wait 1 second for an element
+        And User clicks "editOrderBtn" button
+        Then "customerField" should equals "Orxan"
+        Then "customerNumberField" should equals "994551111111"
+        Then "productField" should equals "<productName>"
+        Then "customerMailField" should equals "<customerMail>"
+        Then Current date should be displayed in "orderCreateDateField"
+        Then Logged in user name should be displayed in "oderCreateUserField"
+
+
+      Examples:
+        | orderType       | productName  | customerMail                     |
+        | videoCallOrders | Test_Product |                                  |
+        | callMeOrders    |              | orkhan.gahramanli@abc-telecom.az |
+
+    @OnlineOrderCallEdit
+      Scenario Outline: Edit and change status of "<orderType>" order
+        When User clicks "<orderType>" page link
+        And User clicks "addOrderBtn" button
+        And User fills "Orxan" in "customerField" input field
+        And User fills "0551111111" in "customerNumberField" input field
+        And User fills "<productName>" in "productField" input field
+        And User fills "<customerMail>" in "customerMailField" input field
+        And Wait 1 second for an element
+        And User clicks button with "Save" text
+        And User double clicks "idColumnHeader" element
+        And Wait 1 second for an element
+        And User clicks "editOrderBtn" button
+        And User selects "Sifariş baxılmadadır" status from "orderStatusSelectField"
+        And User hover to "noteField" element
+        And User fills "testNote" in "noteField" input field
+        And User clicks button with "Save" text
+        Then Success icon should be displayed
+        And User clicks "confirmBtn" button
+        And User clicks "editOrderBtn" button
+        And Wait 1 second for an element
+        And "Sifariş baxılmadadır" status should be selected in "orderStatusSelectField"
+        Then Current date should be displayed in "statusChangeDate"
+        Then Logged in user name should be displayed in "<statusChangeUser>"
+
+
+      Examples:
+        | orderType       | productName  | customerMail                     | statusChangeUser               |
+        | videoCallOrders | Test_Product |                                  | statusChangeUserVideoCallOrder |
+        | callMeOrders    |              | orkhan.gahramanli@abc-telecom.az | statusChangeUserCallMeOrder    |
