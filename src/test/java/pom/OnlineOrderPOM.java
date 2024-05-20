@@ -46,7 +46,7 @@ public class OnlineOrderPOM {
         elementsMap.put("customerAddressEditOrder", By.id("sifaris_unvan"));
         elementsMap.put("customerCityEditOrder", By.id("sifaris_seher"));
         elementsMap.put("selectProductInOnlineOrder", By.xpath("//*[@onclick='openMehsulModal()']"));
-        elementsMap.put("addProductInOnlineOrder", By.xpath("//*[@id='tableProductsChange']//*[text()='Əlavə et']"));
+        elementsMap.put("addProductInOnlineOrder", By.xpath("(//*[@id='tableProductsChange']//*[text()='Əlavə et'])[1]"));
         elementsMap.put("onlineOrderStatusColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[9]"));
         elementsMap.put("creditSaleBtn", By.xpath("//*[@onclick='kreditSatis()']"));
         elementsMap.put("cashSaleBtn", By.xpath("//*[@onclick='nagdSatisAc()']"));
@@ -78,6 +78,8 @@ public class OnlineOrderPOM {
         elementsMap.put("statusChangeDate", By.xpath("//input[contains(@id, 'status_date')]"));
         elementsMap.put("statusChangeUserVideoCallOrder", By.xpath("//input[contains(@id, 'status_user')]"));
         elementsMap.put("statusChangeUserCallMeOrder", By.xpath("//input[contains(@id, 'status_setBy')]"));
+        elementsMap.put("webOrderNoteField", By.id("sifaris_qeyd"));
+        elementsMap.put("webOrderTypeColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[3]"));
     }
 
     private final By cashRadioBtn = By.id("nagdCheckBox");

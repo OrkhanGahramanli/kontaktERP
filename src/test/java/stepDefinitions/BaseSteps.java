@@ -267,4 +267,9 @@ public class BaseSteps extends BaseMethods {
     public void userHoverToElement(String element) {
         moveToElement(driver.findElement(elementsMap.get(element)));
     }
+
+    @And("User accepts alert pop-up")
+    public void userAcceptsAlertPopUp() {
+        driver.switchTo().alert().accept();
+    }
 }
