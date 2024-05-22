@@ -1,6 +1,7 @@
 Feature: Sale
 
   Background:
+    Given User is in "Login Page"
     When User fills input username field with "orkhan.gahramanli"
     And User fills input password field with "test123"
     And User clicks on submit button
@@ -569,3 +570,82 @@ Feature: Sale
     And User clicks "windowCloseBtn" button
     And User clicks "deleteServiceBtn" button
     Then Services should be deleted from table
+
+    @InvoiceCorrection
+      Scenario: Edit invoice details using invoice correction page
+      When User clicks "newCashSale" page link
+      And User clicks "productAreaExpandBtn" button
+      And User fills "14MTL73RU" in "productName" input field
+      And User clicks "productSearchBtn" button
+      And User clicks "addProductBtn" button
+      And User clicks "expandCustomerSectionBtn" button
+      And User fills "1000517597" in "customerCode" input field
+      And User clicks "customerSearchBtn" button
+      And User selects "1000517597" customer
+      And User clicks "productSellerBtn" button
+      And User add seller to the product
+      And User clicks "addPaymentBtn" button
+      And User selects "Nəğd" option from "paymentTypeSelect"
+      And User clicks "completeCashSaleBtn" button
+      And User clicks "printEdvBtn" button
+      And Wait 1 second for an element
+      Then New sale should be created
+      And User clicks "confirmBtn" button
+      And User takes sale invoice number
+      And User clicks "saleModule" module link
+      And User clicks "invoiceCorrectionPageLink" page link
+      And User fills sale invoice number in "saleInvoiceSearch" input field
+      And User clicks "invoiceSearchBtn" button
+      And User clicks "productSellerBtn" button
+      And User fills "IR-000045" in "sellerSearchField" input field
+      And User clicks "sellerSelectBtn" button
+      And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "invoiceProductDeliveryType"
+      And User clicks "customerAddressBtn" button
+      And User's waiting visibility of "customerAddressSelectBtn" element for 10 seconds
+      And User clicks "customerAddressSelectBtn" button
+      And User clicks on "installation" checkbox
+      And User selects "Yolda" option from "productDeliveryStatusOptions"
+      And User clicks "completeInvoiceCorrectionBtn" button
+      And User clicks "confirmBtn" button
+      Then User should get "Qeyd tamamlandı" message
+      And User clicks "confirmBtn" button
+      And User fills sale invoice number in "saleInvoiceSearch" input field
+      And User clicks "invoiceSearchBtn" button
+      Then "sellerCode" should equals "IR-000045"
+      Then "Basqa Magaza veya Anbardan Satis Magazasina Teslim" should be selected in "invoiceProductDeliveryType"
+      Then "customerAddress" should equals "Xudu Məmmədov, 174"
+      Then "installation" should be checked
+      Then "Yolda" should be selected in "productDeliveryStatusOptions"
+
+   @OnlineSaleSuccessCreate
+    Scenario Outline: User want to create online sale invoice with correct inputs / "<saleType>"/"<paymentType>"
+      When User clicks "onlineOrder" module link
+      When User clicks "onlineSale" page link
+      And User clicks "productAreaExpandBtn" button
+      And User fills "14MTL73RU" in "productName" input field
+      And User clicks "productSearchBtn" button
+      And User clicks "addProductBtn" button
+      And User clicks "expandCustomerSectionBtn" button
+      And User fills "1000517597" in "customerCode" input field
+      And User clicks "customerSearchBtn" button
+      And User selects "1000517597" customer
+      And User clicks "productSellerBtn" button
+      And User add seller to the product
+      And User selects "<saleType>" option from "saleTypeFieldOnlineSale"
+      And User selects "<paymentType>" option from "paymentTypeFieldOnlineSale"
+      And User fills "<taksitMonths>" in "taksitMonthsField" input field
+      And User clicks "completeOnlineSaleBtn" button
+      And User clicks "printEdvBtn" button
+      And Wait 1 second for an element
+      Then New sale should be created
+      And User clicks "confirmBtn" button
+      Then Invoice number should be displayed
+
+      Examples:
+        | saleType     | paymentType   | taksitMonths |
+        | Nəğd Satış   | Nəğd          |              |
+        | Nəğd Satış   | Kart          |              |
+        | Nəğd Satış   | Taksit        | 12           |
+        | Nəğd Satış   | Hədiyyə Kartı |              |
+        | Nəğd Satış   | Bonus Kart    |              |
+        | Taksit Satış | Taksit        | 12           |

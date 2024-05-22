@@ -40,6 +40,7 @@ public class GeneralPOM {
     private final By completeNotificationText = By.className("swal2-title");
     private final By invoiceNumber = By.id("sifaris_seriya");
     private final By emptyPaymentReasonErrorMessage = By.id("odenis_sebebi-error");
+    private final By pageTitle = By.xpath("(//h5)[1]");
 
     static {
         elementsMap.put("productSearchBtn", By.cssSelector("button[class='btn btn-primary']"));
@@ -60,6 +61,8 @@ public class GeneralPOM {
         elementsMap.put("acceptSuccessMessageBtn", By.className("swal2-confirm"));
         elementsMap.put("printEdvBtn", By.className("swal2-confirm"));
         elementsMap.put("customerSearchBtn", By.cssSelector(".btn.btn-primary.mt-3"));
+        elementsMap.put("onlineOrder", By.id("websifaris_menu"));
+        elementsMap.put("webOrdersLink", By.id("allweborders_link"));
     }
 
 

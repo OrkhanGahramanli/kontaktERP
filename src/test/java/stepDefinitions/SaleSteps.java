@@ -144,4 +144,9 @@ public class SaleSteps extends BaseMethods{
     public void servicesShouldBeDeletedFromTable() {
         Assert.assertFalse(driver.findElement(salePOM.getServicesTable()).isDisplayed());
     }
+
+    @Then("{string} should be checked")
+    public void shouldBeChecked(String element) {
+        Assert.assertTrue(driver.findElement(elementsMap.get(element)).isSelected());
+    }
 }

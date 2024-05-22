@@ -44,7 +44,7 @@ public class SalePOM {
         elementsMap.put("productSellerBtn", By.xpath("//*[@class='far fa-user']"));
         elementsMap.put("saleReturn", By.id("qaytarma_link"));
         elementsMap.put("saleInvoice", By.id("fakturanomresi"));
-        elementsMap.put("invoiceSearchBtn", By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm"));
+        elementsMap.put("invoiceSearchBtn", By.cssSelector(".fa.fa-search"));
         elementsMap.put("returnGroup", By.id("qaytarmastatusuqrup-selectized"));
         elementsMap.put("returnReason", By.id("qaytarmastatusu"));
         elementsMap.put("createdReturnReason", By.xpath("(//input[@id='sifaris_cariad'])[3]"));
@@ -62,6 +62,23 @@ public class SalePOM {
         elementsMap.put("paymentCodeSelect", By.xpath("//*[@onchange='taksitAylarYukle(this)']"));
         elementsMap.put("paymentTaksitGroupSelect", By.xpath("//td[3]/select[@onchange='taksitAylarYukle(this)']"));
         elementsMap.put("paymentTaksitMonthsSelect", By.xpath("//td[4]/select[@class='form-control']"));
+        elementsMap.put("invoiceCorrectionPageLink", By.id("fakturaduzelis_link"));
+        elementsMap.put("saleInvoiceSearch", By.id("faktura_No"));
+        elementsMap.put("sellerSearchField", By.xpath("//*[@aria-controls='tableSatici'][@type='search']"));
+        elementsMap.put("sellerSelectBtn", By.xpath("//*[@id='tableSatici']//*[text()='Seç']"));
+        elementsMap.put("invoiceProductDeliveryType", By.id("item_stok_tehvil_novu"));
+        elementsMap.put("customerAddressBtn", By.cssSelector(".fas.fa-map-marker-alt"));
+        elementsMap.put("customerAddressSelectBtn", By.xpath("//*[@id='tableAddress']//*[text()='Seç']"));
+        elementsMap.put("installation", By.id("checkQurasd_0"));
+        elementsMap.put("productDeliveryStatusOptions", By.id("item_stok_tehvil_id"));
+        elementsMap.put("completeInvoiceCorrectionBtn", By.xpath("//*[text()='Qeyd Et']"));
+        elementsMap.put("sellerCode", By.xpath("//*[@id='tableProd']//td[10]//input"));
+        elementsMap.put("customerAddress", By.xpath("//*[@id='tableProd']//td[12]//input"));
+        elementsMap.put("onlineSale", By.id("online_satis_link"));
+        elementsMap.put("saleTypeFieldOnlineSale", By.id("satisNovu-selectized"));
+        elementsMap.put("paymentTypeFieldOnlineSale", By.id("paymentType"));
+        elementsMap.put("taksitMonthsField", By.id("taksit_count"));
+        elementsMap.put("completeOnlineSaleBtn", By.xpath("//*[@onclick='onlineSatisTamamla()']"));
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");

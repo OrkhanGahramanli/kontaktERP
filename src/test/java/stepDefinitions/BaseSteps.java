@@ -14,29 +14,32 @@ import org.testng.Assert;
 import pom.SalePOM;
 
 import java.util.List;
-
 import static pom.ElementsMap.elementsMap;
 
-public class BaseSteps extends BaseMethods{
+public class BaseSteps extends BaseMethods {
     GeneralPOM generalPOM;
 
-    public BaseSteps(){
+    public BaseSteps() {
         generalPOM = GeneralPOM.getInstance();
     }
+
     @Getter
     private static ThreadLocal<String> saleInvoiceNumber = new ThreadLocal<>();
+
     @Given("User is in {string}")
-    public void UserIsIn(String arg0){
+    public void UserIsIn(String arg0) {
     }
+
     @When("User selects {string} store")
     public void userSelectsStore(String storeName) {
         WebElement store = driver.findElement(generalPOM.getStoreSelect());
         Select select = new Select(store);
         select.selectByVisibleText(storeName);
     }
+
     @And("User clicks {string} module link")
     public void UserClicksMenu(String element) {
-        waitVisibilityElement(elementsMap.get(element),10);
+        waitVisibilityElement(elementsMap.get(element), 10);
         driver.findElement(elementsMap.get(element)).click();
     }
 
@@ -48,7 +51,7 @@ public class BaseSteps extends BaseMethods{
 
     @And("User clicks {string} button")
     public void userClicksButton(String element) {
-        if (!element.isEmpty()){
+        if (!element.isEmpty()) {
             WebElement myElement = driver.findElement(elementsMap.get(element));
             try {
                 if (myElement.isDisplayed()) myElement.click();
@@ -88,10 +91,10 @@ public class BaseSteps extends BaseMethods{
     }
 
     @When("User fills {string} in {string} input field")
-    public void userFillsInputField(String text, String element){
+    public void userFillsInputField(String text, String element) {
         if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
-            if (driver.findElement(elementsMap.get(element)).getAttribute("class").contains("inputmask")){
+            if (driver.findElement(elementsMap.get(element)).getAttribute("class").contains("inputmask")) {
                 driver.findElement(elementsMap.get(element)).click();
                 driver.findElement(elementsMap.get(element)).clear();
             }
@@ -100,8 +103,9 @@ public class BaseSteps extends BaseMethods{
     }
 
     @Then("User should get {string} message")
-    public void userShouldGetMessage(String message) {;
-        if (message.equals("Məhsul seçilməyib.")){
+    public void userShouldGetMessage(String message) {
+
+        if (message.equals("Məhsul seçilməyib.")) {
             WebElement productErrorMessage = driver.findElement(generalPOM.getErrorAlert());
             waitVisibilityElement(productErrorMessage, 5);
             Assert.assertEquals(productErrorMessage.getText(), message);
@@ -115,7 +119,7 @@ public class BaseSteps extends BaseMethods{
             Assert.assertEquals(errorMessage.getText(), message);
         } else {
             List<WebElement> messageElements = driver.findElements(generalPOM.getPopUpMessage());
-            for (WebElement element : messageElements){
+            for (WebElement element : messageElements) {
                 waitVisibilityElement(element, 5);
                 if (element.getText().equals(message)) Assert.assertTrue(true);
             }
@@ -135,21 +139,22 @@ public class BaseSteps extends BaseMethods{
         List<WebElement> productsDiscounts = driver.findElements(generalPOM.getAddedProductsDiscounts());
 
         double productsPricesSum = 0.00d;
-        for (WebElement element : productsPrices){
+        for (WebElement element : productsPrices) {
             productsPricesSum += Double.parseDouble(element.getAttribute("value"));
         }
         double productsDiscountsSum = 0.00d;
-        for (WebElement element : productsDiscounts){
-            if (!element.getAttribute("value").isEmpty()) productsDiscountsSum += Double.parseDouble(element.getAttribute("value"));
+        for (WebElement element : productsDiscounts) {
+            if (!element.getAttribute("value").isEmpty())
+                productsDiscountsSum += Double.parseDouble(element.getAttribute("value"));
         }
 
         WebElement productsAmount = driver.findElement(generalPOM.getProductsAmount());
         WebElement productsDiscount = driver.findElement(generalPOM.getProductsDiscount());
         WebElement productsTotalAmount = driver.findElement(generalPOM.getProductsTotalAmount());
 
-        Assert.assertEquals(Double.parseDouble(productsAmount.getText()), Math.round(productsPricesSum*100.0)/100.0);
-        Assert.assertEquals(Double.parseDouble(productsDiscount.getText()), Math.round(productsDiscountsSum*100.0)/100.0);
-        Assert.assertEquals(Double.parseDouble(productsTotalAmount.getText()), Math.round((productsPricesSum-productsDiscountsSum)*100.0)/100.0);
+        Assert.assertEquals(Double.parseDouble(productsAmount.getText()), Math.round(productsPricesSum * 100.0) / 100.0);
+        Assert.assertEquals(Double.parseDouble(productsDiscount.getText()), Math.round(productsDiscountsSum * 100.0) / 100.0);
+        Assert.assertEquals(Double.parseDouble(productsTotalAmount.getText()), Math.round((productsPricesSum - productsDiscountsSum) * 100.0) / 100.0);
     }
 
     @Then("Products should be displayed in bundle")
@@ -160,7 +165,7 @@ public class BaseSteps extends BaseMethods{
 
     @And("User search and add {string} product")
     public void userSearchAndAddProduct(String product) {
-        if (!product.isEmpty()){
+        if (!product.isEmpty()) {
             driver.findElement(elementsMap.get("productSearchBtn")).click();
             waitVisibilityElement(elementsMap.get("addProductBtn"), 10);
             driver.findElement(elementsMap.get("addProductBtn")).click();
@@ -170,14 +175,14 @@ public class BaseSteps extends BaseMethods{
 
     @And("User clicks {string} button {int} times")
     public void userClicksButtonTimes(String element, int num) {
-        for (int i=0; i<num; i++){
+        for (int i = 0; i < num; i++) {
             driver.findElement(elementsMap.get(element)).click();
         }
     }
 
     @And("User's waiting visibility of {string} element for {int} seconds")
     public void userSWaitingElementForSeconds(String element, int time) {
-       waitVisibilityElement(elementsMap.get(element), time);
+        waitVisibilityElement(elementsMap.get(element), time);
     }
 
     @And("Wait {int} second for an element")
@@ -203,5 +208,68 @@ public class BaseSteps extends BaseMethods{
     @And("User fills sale invoice number in {string} input field")
     public void userFillsSaleInvoiceNumberInInputField(String element) {
         driver.findElement(elementsMap.get(element)).sendKeys(saleInvoiceNumber.get());
+    }
+
+    @And("User clicks on {string} checkbox")
+    public void userClicksOnCheckbox(String element) {
+        if (!element.isEmpty()) {
+            WebElement myElement = driver.findElement(elementsMap.get(element));
+            try {
+                if (myElement.isDisplayed()) myElement.click();
+                else {
+                    moveToElement(myElement);
+                    myElement.click();
+                }
+            } catch (Exception e) {
+                try {
+                    if (myElement.isDisplayed()) clickWithAction(myElement);
+                    else {
+                        moveToElement(myElement);
+                        clickWithAction(myElement);
+                    }
+                } catch (Exception e2) {
+                    if (myElement.isDisplayed()) getJsExecutor().executeScript("arguments[0].click();", myElement);
+                    else {
+                        moveToElement(myElement);
+                        getJsExecutor().executeScript("arguments[0].click();", myElement);
+                    }
+                }
+            }
+        }
+    }
+
+    @And("User's waiting presence of {string} element for {int} seconds")
+    public void userSWaitingPresenceOfElementForSeconds(String element, int time) {
+        waitPresenceElements(elementsMap.get(element), time);
+    }
+
+    @And("User press enter button")
+    public void userPressEnterButton() {
+        enterAction();
+    }
+
+    @And("User clicks button with {string} text")
+    public void userClicksButtonWithText(String text) {
+        findElementByText(text).click();
+    }
+
+    @Then("{string} should equals {string}")
+    public void shouldEquals(String element, String text) {
+        if (!text.isEmpty()) Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
+    }
+
+    @Then("{string} should be selected in {string}")
+    public void shouldBeSelectedIn(String text, String element) {
+        Assert.assertEquals(getSelectedOption(driver.findElement(elementsMap.get(element))).getText(), text);
+    }
+
+    @And("User hover to {string} element")
+    public void userHoverToElement(String element) {
+        moveToElement(driver.findElement(elementsMap.get(element)));
+    }
+
+    @And("User accepts alert pop-up")
+    public void userAcceptsAlertPopUp() {
+        driver.switchTo().alert().accept();
     }
 }

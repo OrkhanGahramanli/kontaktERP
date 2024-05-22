@@ -16,7 +16,7 @@ public class BaseMethods {
     public WebDriver driver = CucumberHook.driver.get();
 
     public BaseMethods(){
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
     protected void waitVisibilityElement(By locator, int time){
@@ -51,7 +51,7 @@ public class BaseMethods {
 
     protected void waitPresenceElements(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     protected void waitTextUpdate(By locator, String value, int time){
@@ -82,6 +82,10 @@ public class BaseMethods {
         return driver.findElement(By.xpath("//*[@class='selectize-dropdown-content']//*[text()='" + text + "']"));
     }
 
+    protected WebElement selectElementByText2(String text) {
+        return driver.findElement(By.xpath("//*[contains(@class, 'dx-list-item-content')][text()='" + text + "']"));
+    }
+
     protected WebElement findElementByText(String text) {
         return driver.findElement(By.xpath("//*[text()='" + text + "']"));
     }
@@ -100,5 +104,21 @@ public class BaseMethods {
     protected  void doubleClickAction(WebElement element){
         Actions actions = new Actions(driver);
         actions.doubleClick(element).build().perform();
+    }
+
+    protected WebElement getSelectedOption(WebElement element){
+        Select select = new Select(element);
+        return select.getFirstSelectedOption();
+    }
+
+    protected void enterAction(){
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.ENTER).build().perform();
+    }
+
+    protected void fillWithAction(WebElement element, String text){
+        Actions actions = new Actions(driver);
+        actions.click(element).perform();
+        actions.sendKeys(text).perform();
     }
 }
