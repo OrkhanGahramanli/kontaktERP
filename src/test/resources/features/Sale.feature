@@ -616,3 +616,36 @@ Feature: Sale
       Then "customerAddress" should equals "Xudu Məmmədov, 174"
       Then "installation" should be checked
       Then "Yolda" should be selected in "productDeliveryStatusOptions"
+
+   @OnlineSaleSuccessCreate
+    Scenario Outline: User want to create online sale invoice with correct inputs / "<saleType>"/"<paymentType>"
+      When User clicks "onlineOrder" module link
+      When User clicks "onlineSale" page link
+      And User clicks "productAreaExpandBtn" button
+      And User fills "14MTL73RU" in "productName" input field
+      And User clicks "productSearchBtn" button
+      And User clicks "addProductBtn" button
+      And User clicks "expandCustomerSectionBtn" button
+      And User fills "1000517597" in "customerCode" input field
+      And User clicks "customerSearchBtn" button
+      And User selects "1000517597" customer
+      And User clicks "productSellerBtn" button
+      And User add seller to the product
+      And User selects "<saleType>" option from "saleTypeFieldOnlineSale"
+      And User selects "<paymentType>" option from "paymentTypeFieldOnlineSale"
+      And User fills "<taksitMonths>" in "taksitMonthsField" input field
+      And User clicks "completeOnlineSaleBtn" button
+      And User clicks "printEdvBtn" button
+      And Wait 1 second for an element
+      Then New sale should be created
+      And User clicks "confirmBtn" button
+      Then Invoice number should be displayed
+
+      Examples:
+        | saleType     | paymentType   | taksitMonths |
+        | Nəğd Satış   | Nəğd          |              |
+        | Nəğd Satış   | Kart          |              |
+        | Nəğd Satış   | Taksit        | 12           |
+        | Nəğd Satış   | Hədiyyə Kartı |              |
+        | Nəğd Satış   | Bonus Kart    |              |
+        | Taksit Satış | Taksit        | 12           |

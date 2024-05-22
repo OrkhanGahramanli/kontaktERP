@@ -74,6 +74,11 @@ public class SalePOM {
         elementsMap.put("completeInvoiceCorrectionBtn", By.xpath("//*[text()='Qeyd Et']"));
         elementsMap.put("sellerCode", By.xpath("//*[@id='tableProd']//td[10]//input"));
         elementsMap.put("customerAddress", By.xpath("//*[@id='tableProd']//td[12]//input"));
+        elementsMap.put("onlineSale", By.id("online_satis_link"));
+        elementsMap.put("saleTypeFieldOnlineSale", By.id("satisNovu-selectized"));
+        elementsMap.put("paymentTypeFieldOnlineSale", By.id("paymentType"));
+        elementsMap.put("taksitMonthsField", By.id("taksit_count"));
+        elementsMap.put("completeOnlineSaleBtn", By.xpath("//*[@onclick='onlineSatisTamamla()']"));
     }
 
     private final By customerSelectBtn = By.xpath("//td/button[text()='Seç']");
