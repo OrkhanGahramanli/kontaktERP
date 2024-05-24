@@ -63,6 +63,12 @@ public class GeneralPOM {
         elementsMap.put("customerSearchBtn", By.cssSelector(".btn.btn-primary.mt-3"));
         elementsMap.put("onlineOrder", By.id("websifaris_menu"));
         elementsMap.put("webOrdersLink", By.id("allweborders_link"));
+        elementsMap.put("orderModule", By.id("sifaris_menu"));
+        elementsMap.put("newOrder", By.id("order_link"));
+        elementsMap.put("customerName", By.id("sif_musteri_adi"));
+        elementsMap.put("saleType", By.id("sif_satis_novu"));
+        elementsMap.put("customerBirthDate", By.id("customerBirthDate"));
+        elementsMap.put("submitOrder", By.cssSelector("button[class='btn btn-primary float-right']"));
     }
 
 

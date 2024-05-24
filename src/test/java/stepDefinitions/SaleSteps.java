@@ -149,4 +149,9 @@ public class SaleSteps extends BaseMethods{
     public void shouldBeChecked(String element) {
         Assert.assertTrue(driver.findElement(elementsMap.get(element)).isSelected());
     }
+
+    @And("User fills order code in {string} input field")
+    public void userFillsOrderCodeInInputField(String orderNumInput) {
+        driver.findElement(elementsMap.get(orderNumInput)).sendKeys(OrderSteps.getOrderNum());
+    }
 }

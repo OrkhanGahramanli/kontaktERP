@@ -101,6 +101,12 @@ public class BaseMethods {
         actions.sendKeys(Keys.DELETE);
     }
 
+    protected void clearFieldWithBackspace(WebElement element){
+        element.click();
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.BACK_SPACE).perform();
+    }
+
     protected  void doubleClickAction(WebElement element){
         Actions actions = new Actions(driver);
         actions.doubleClick(element).build().perform();

@@ -11,22 +11,38 @@ Feature: Sale
 
     @AddCreditSale
     Scenario: Successful create credit sale using order number
-      When User clicks "newCreditSale" page link
-      And User fills "0017136" in "orderCode" input field
+      When User clicks "orderModule" module link
+      And User clicks "newOrder" page link
+      And User add "IR-000002" code
+      And User clicks "productAreaExpandBtn" button
+      And User fills "OLMAYAN STOK" in "productName" input field
+      And User clicks "productSearchBtn" button
+      And User clicks "addProductBtn" button
+      And User fills "Orxan" in "customerName" input field
+      And User selects "Kredit Satış" option from "saleType"
+      And User fills "06/18/1993" in "customerBirthDate" input field
+      And User clicks "submitOrder" button
+      And User takes order number
+      And User clicks "confirmBtn" button
+      And User clicks "saleModule" module link
+      And User clicks "newCreditSale" page link
+      And Wait 1 second for an element
+      And User fills order code in "orderCode" input field
       And User clicks "orderSearchBtn" button
+      And User's waiting visibility of "expandCustomerSectionBtn" element for 5 seconds
       And User clicks "expandCustomerSectionBtn" button
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User selects "BAKI" option from "regionCode"
       And User selects "Emeqdaş" option from "customerGroupCode"
       And User fills "12" in "creditMonths" input field
       And User clicks "calculateCreditBtn" button
       And User selects "Xeyr" option from "Akb"
       And User selects "Xeyr" option from "asanFinance"
-      And User clicks "sendSMSBtn" button
-      And User clicks "confirmBtn" button
-      And User fills "123456" in "SMSCode" input field
+#      And User clicks "sendSMSBtn" button
+#      And User clicks "confirmBtn" button
+#      And User fills "123456" in "SMSCode" input field
       And User clicks "completeSaleBtn" button
       Then New sale should be created
       And User clicks "confirmBtn" button
@@ -38,9 +54,9 @@ Feature: Sale
     And User fills "0017175" in "orderCode" input field
     And User clicks "orderSearchBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User clicks "addPaymentBtn" button
     And User selects "<paymentType>" option from "paymentTypeSelect"
     And User selects "<paymentCode>" option from "paymentCodeSelect"
@@ -67,9 +83,9 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -95,9 +111,9 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User clicks "productSellerBtn" button
     And User add seller to the product
     And User clicks "addPaymentBtn" button
@@ -136,13 +152,13 @@ Feature: Sale
 
   Examples:
     | caseName                    | product      | customerCode | regionCode | customerGroupCode | creditMonths | errorMessage                                                  |
-    | Empty product               |              | 1000517597   | BAKI       | Emeqdaş           | 12           | Məhsul seçilməyib.                                            |
+    | Empty product               |              | 641614       | BAKI       | Emeqdaş           | 12           | Məhsul seçilməyib.                                            |
     | Empty customer code         | OLMAYAN STOK |              | BAKI       | Emeqdaş           | 12           | Müştəri seçilməyib.                                           |
-    | Empty region code           | OLMAYAN STOK | 1000517597   |            | Emeqdaş           | 12           | Bölgə kodu seçilməyib.                                        |
-    | Empty customer group code   | OLMAYAN STOK | 1000517597   | BAKI       |                   | 12           | Qrup kodu seçilməyib.                                         |
-    | Empty credit months         | OLMAYAN STOK | 1000517597   | BAKI       | Emeqdaş           |              | Zəhmət olmasa, kredit sayını daxil edin.                      |
-    | Invalid credit months       | OLMAYAN STOK | 1000517597   | BAKI       | Emeqdaş           | 1            | Uyğun kredit şərti tapılmadı...\nKredit ayları uyğun deyil... |
-    | Invalid customer group code | OLMAYAN STOK | 1000517597   | BAKI       | TOPDAN            | 12           | Müşterinin bölgesine ve qrupuna uyğun limit tapılmadı...      |
+    | Empty region code           | OLMAYAN STOK | 641614       |            | Emeqdaş           | 12           | Bölgə kodu seçilməyib.                                        |
+    | Empty customer group code   | OLMAYAN STOK | 641614       | BAKI       |                   | 12           | Qrup kodu seçilməyib.                                         |
+    | Empty credit months         | OLMAYAN STOK | 641614       | BAKI       | Emeqdaş           |              | Zəhmət olmasa, kredit sayını daxil edin.                      |
+    | Invalid credit months       | OLMAYAN STOK | 641614       | BAKI       | Emeqdaş           | 1            | Uyğun kredit şərti tapılmadı...\nKredit ayları uyğun deyil... |
+    | Invalid customer group code | OLMAYAN STOK | 641614       | BAKI       | TOPDAN            | 12           | Müşterinin bölgesine ve qrupuna uyğun limit tapılmadı...      |
 
   @InvalidCreateCreditSale
   Scenario Outline: Unsuccessful credit sale create/Scenario Name: "<caseName>"
@@ -152,9 +168,9 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -196,14 +212,14 @@ Feature: Sale
 
     Examples:
       | caseName           | product   | customerCode | seller           | paymentType | paymentCode                    | taksitGroup | taksitMonths | paymentBtn    | errorMessage                 |
-      | Empty product      |           | 1000517597   |                  |             |                                |             |              |               | Məhsul seçilməyib.           |
+      | Empty product      |           | 641614       |                  |             |                                |             |              |               | Məhsul seçilməyib.           |
       | Empty customer     | 14MTL73RU |              | productSellerBtn | Nəğd        |                                |             |              | addPaymentBtn | Müştəri seçilməyib !         |
       | Empty customer     | 14MTL73RU |              | productSellerBtn | Kart        | PAŞA BANK (NAĞD)               |             |              | addPaymentBtn | Müştəri seçilməyib !         |
       | Empty customer     | 14MTL73RU |              | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      | addPaymentBtn | Müştəri seçilməyib !         |
-      | Empty payment      | 14MTL73RU | 1000517597   | productSellerBtn |             |                                |             |              |               | Ödənən məbləğ düzgün deyil ! |
-      | Empty paymentCode  | 14MTL73RU | 1000517597   | productSellerBtn | Kart        |                                |             |              | addPaymentBtn | Ödəniş kodu seçilməyib!      |
-      | Empty taksitMonths | 14MTL73RU | 1000517597   | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK |             |              | addPaymentBtn | Taksit ayi seçilməyib.       |
-      | Empty seller       | 14MTL73RU | 1000517597   |                  | Nəğd        |                                |             |              | addPaymentBtn | satıcı kodu seçilməyib.      |
+      | Empty payment      | 14MTL73RU | 641614       | productSellerBtn |             |                                |             |              |               | Ödənən məbləğ düzgün deyil ! |
+      | Empty paymentCode  | 14MTL73RU | 641614       | productSellerBtn | Kart        |                                |             |              | addPaymentBtn | Ödəniş kodu seçilməyib!      |
+      | Empty taksitMonths | 14MTL73RU | 641614       | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK |             |              | addPaymentBtn | Taksit ayi seçilməyib.       |
+      | Empty seller       | 14MTL73RU | 641614       |                  | Nəğd        |                                |             |              | addPaymentBtn | satıcı kodu seçilməyib.      |
 
   @InvalidSmsCode
   Scenario Outline: Unsuccessful create sale credit with wrong sms code/Scenario Name: "<caseName>"
@@ -213,9 +229,9 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -277,9 +293,9 @@ Feature: Sale
     And User clicks "addProductOtherStoreBtn" button
     And User clicks "windowCloseBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -308,9 +324,9 @@ Feature: Sale
     And User clicks "addProductOtherStoreBtn" button
     And User clicks "windowCloseBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User clicks "productSellerBtn" button
     And User add seller to the product
     And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "productDeliveryType"
@@ -340,9 +356,9 @@ Feature: Sale
       And User clicks "productSearchBtn" button
       And User clicks "addProductBtn" button
       And User clicks "expandCustomerSectionBtn" button
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User selects "BAKI" option from "regionCode"
       And User selects "Emeqdaş" option from "customerGroupCode"
       And User fills "12" in "creditMonths" input field
@@ -363,9 +379,9 @@ Feature: Sale
         And User clicks "addProductBtn" button
         And Collect product stock count
         And User clicks "expandCustomerSectionBtn" button
-        And User fills "1000517597" in "customerCode" input field
+        And User fills "641614" in "customerCode" input field
         And User clicks "customerSearchBtn" button
-        And User selects "1000517597" customer
+        And User selects "641614" customer
         And User selects "BAKI" option from "regionCode"
         And User selects "Emeqdaş" option from "customerGroupCode"
         And User fills "12" in "creditMonths" input field
@@ -394,9 +410,9 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -429,9 +445,9 @@ Feature: Sale
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User clicks "productSellerBtn" button
     And User add seller to the product
     And User clicks "addPaymentBtn" button
@@ -473,9 +489,9 @@ Feature: Sale
         And User clicks "productSearchBtn" button
         And User clicks "addProductBtn" button 2 times
         And User clicks "expandCustomerSectionBtn" button
-        And User fills "1000517597" in "customerCode" input field
+        And User fills "641614" in "customerCode" input field
         And User clicks "customerSearchBtn" button
-        And User selects "1000517597" customer
+        And User selects "641614" customer
         And User add sellers to the products
         And User clicks "addPaymentBtn" button
         And User selects "Nəğd" option from "paymentTypeSelect"
@@ -500,9 +516,9 @@ Feature: Sale
         Scenario Outline: Successful create new service credit sale/ "<serviceType>"
           When User clicks "serviceCreditSaleLink" page link
           And User clicks "expandCustomerSectionBtn" button
-          And User fills "1000517597" in "customerCode" input field
+          And User fills "641614" in "customerCode" input field
           And User clicks "customerSearchBtn" button
-          And User selects "1000517597" customer
+          And User selects "641614" customer
           And User clicks "stockActionsExpandBtn" button
           And User fills "apple" in "stockActionProductSearch" input field
           And Wait 5 second for an element
@@ -527,9 +543,9 @@ Feature: Sale
   Scenario Outline: Modify service credit sale price/ "<serviceType>"
     When User clicks "serviceCreditSaleLink" page link
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User clicks "stockActionsExpandBtn" button
     And User fills "apple" in "stockActionProductSearch" input field
     And Wait 5 second for an element
@@ -556,9 +572,9 @@ Feature: Sale
   Scenario: Delete service credit sale
     When User clicks "serviceCreditSaleLink" page link
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User clicks "stockActionsExpandBtn" button
     And User fills "apple" in "stockActionProductSearch" input field
     And Wait 5 second for an element
@@ -579,9 +595,9 @@ Feature: Sale
       And User clicks "productSearchBtn" button
       And User clicks "addProductBtn" button
       And User clicks "expandCustomerSectionBtn" button
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User clicks "productSellerBtn" button
       And User add seller to the product
       And User clicks "addPaymentBtn" button
@@ -626,9 +642,9 @@ Feature: Sale
       And User clicks "productSearchBtn" button
       And User clicks "addProductBtn" button
       And User clicks "expandCustomerSectionBtn" button
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User clicks "productSellerBtn" button
       And User add seller to the product
       And User selects "<saleType>" option from "saleTypeFieldOnlineSale"

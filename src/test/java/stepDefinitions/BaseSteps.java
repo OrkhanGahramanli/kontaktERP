@@ -2,7 +2,6 @@ package stepDefinitions;
 
 import lombok.Getter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,7 +10,6 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.testng.Assert;
-import pom.SalePOM;
 
 import java.util.List;
 import static pom.ElementsMap.elementsMap;
@@ -79,20 +77,22 @@ public class BaseSteps extends BaseMethods {
 
     @And("User selects {string} option from {string}")
     public void userSelectsOptionFrom(String text, String element) {
-        if (!text.isEmpty()) {
-            waitVisibilityElement(elementsMap.get(element), 10);
+            if (!element.equals("regionCode") && !element.equals("customerGroupCode"))  waitVisibilityElement(elementsMap.get(element), 10);
+
+            WebElement selectElement = driver.findElement(elementsMap.get(element));
             try {
-                selectVisibleText(driver.findElement(elementsMap.get(element)), text);
+                selectVisibleText(selectElement, text);
             } catch (UnexpectedTagNameException u) {
+                WebElement parent = (WebElement) ((JavascriptExecutor) driver).executeScript(
+                        "return arguments[0].parentNode;", selectElement);
+                if (element.equals("regionCode") || element.equals("customerGroupCode")) clearFieldWithBackspace(parent);
                 driver.findElement(elementsMap.get(element)).sendKeys(text);
-                selectElementByText(text).click();
+                if (!text.isEmpty()) selectElementByText(text).click();
             }
         }
-    }
 
     @When("User fills {string} in {string} input field")
     public void userFillsInputField(String text, String element) {
-        if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
             if (driver.findElement(elementsMap.get(element)).getAttribute("class").contains("inputmask")) {
                 driver.findElement(elementsMap.get(element)).click();
@@ -100,7 +100,6 @@ public class BaseSteps extends BaseMethods {
             }
             driver.findElement(elementsMap.get(element)).sendKeys(text);
         }
-    }
 
     @Then("User should get {string} message")
     public void userShouldGetMessage(String message) {
@@ -271,5 +270,19 @@ public class BaseSteps extends BaseMethods {
     @And("User accepts alert pop-up")
     public void userAcceptsAlertPopUp() {
         driver.switchTo().alert().accept();
+    }
+
+    @And("User add {string} code")
+    public void userSelectsSeller(String sellerCode) {
+        waitVisibilityElement(generalPOM.getSellerSearchField(), 5);
+        driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
+        if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
+    }
+
+    @And("User takes order number")
+    public void userTakesOrderNumber() {
+        String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
+        String[] createdOrderNum = createdOrderMessage.split(" ");
+        OrderSteps.setOrderNum(createdOrderNum[0]);
     }
 }

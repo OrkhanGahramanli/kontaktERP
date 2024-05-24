@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import lombok.Getter;
+import lombok.Setter;
 import pom.GeneralPOM;
 import pom.OrderPOM;
 import io.cucumber.java.en.And;
@@ -16,17 +18,14 @@ public class OrderSteps extends BaseMethods {
     OrderPOM orderPOM = OrderPOM.getInstance();
     GeneralPOM generalPOM = GeneralPOM.getInstance();
 
-    String orderNum;
-    String[] creditorWorkStatus = new String[2];
-    List<String> actualProducts;
-    List<String> expectedProducts;
+    @Getter@Setter
+    private static String orderNum;
 
-    @And("User add {string} code")
-    public void userSelectsSeller(String sellerCode) {
-        waitVisibilityElement(generalPOM.getSellerSearchField(), 5);
-        driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
-        if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
-    }
+    private String[] creditorWorkStatus = new String[2];
+    private List<String> actualProducts;
+    private List<String> expectedProducts;
+
+
 
     @Then("New order should be create")
     public void newOrderShouldBeCreate() {

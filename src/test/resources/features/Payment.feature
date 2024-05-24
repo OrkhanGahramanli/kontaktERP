@@ -17,9 +17,9 @@ Feature: Payment
       And User clicks "productSearchBtn" button
       And User clicks "addProductBtn" button
       And User clicks "expandCustomerSectionBtn" button
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User selects "BAKI" option from "regionCode"
       And User selects "Emeqdaş" option from "customerGroupCode"
       And User fills "12" in "creditMonths" input field
@@ -38,9 +38,9 @@ Feature: Payment
       And User clicks "paymentModule" module link
       And User clicks "cashInflowPageLink" page link
       And Wait 1 second for an element
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User selects the sale invoice and clicks "Ödə" button
       And User selects "<paymentType>" option from "paymentType"
       And User selects "<paymentCode>" option from "paymentCode"
@@ -63,9 +63,9 @@ Feature: Payment
         And User clicks "productSearchBtn" button
         And User clicks "addProductBtn" button
         And User clicks "expandCustomerSectionBtn" button
-        And User fills "1000517597" in "customerCode" input field
+        And User fills "641614" in "customerCode" input field
         And User clicks "customerSearchBtn" button
-        And User selects "1000517597" customer
+        And User selects "641614" customer
         And User selects "BAKI" option from "regionCode"
         And User selects "Emeqdaş" option from "customerGroupCode"
         And User fills "12" in "creditMonths" input field
@@ -84,9 +84,9 @@ Feature: Payment
         And User clicks "paymentModule" module link
         And User clicks "cashInflowPageLink" page link
         And Wait 1 second for an element
-        And User fills "1000517597" in "customerCode" input field
+        And User fills "641614" in "customerCode" input field
         And User clicks "customerSearchBtn" button
-        And User selects "1000517597" customer
+        And User selects "641614" customer
         And User selects the sale invoice and clicks "Ödə" button
         And User selects "<paymentType>" option from "paymentType"
         And User selects "<paymentCode>" option from "paymentCode"
@@ -112,9 +112,9 @@ Feature: Payment
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -133,9 +133,9 @@ Feature: Payment
     And User clicks "paymentModule" module link
     And User clicks "cashInflowPageLink" page link
     And Wait 1 second for an element
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects the sale invoice and clicks "Ödə" button
     And User fills invoice remaining amount in payment
     And User clicks "cashInflowCompletePaymentBtn" button
@@ -143,9 +143,9 @@ Feature: Payment
     And Wait 1 second for an element
     And User clicks "paymentModule" module link
     And User clicks "cashOutflowPageLink" page link
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User fills sale invoice number in "paymentSearchField" input field
     And Wait 1 second for an element
     And User clicks "selectCashInInvoiceBtn" button
@@ -163,9 +163,9 @@ Feature: Payment
     And User clicks "productSearchBtn" button
     And User clicks "addProductBtn" button
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects "BAKI" option from "regionCode"
     And User selects "Emeqdaş" option from "customerGroupCode"
     And User fills "12" in "creditMonths" input field
@@ -184,9 +184,9 @@ Feature: Payment
     And User clicks "paymentModule" module link
     And User clicks "cashInflowPageLink" page link
     And Wait 1 second for an element
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User selects the sale invoice and clicks "Ödə" button
     And User fills invoice remaining amount in payment
     And User clicks "cashInflowCompletePaymentBtn" button
@@ -194,9 +194,9 @@ Feature: Payment
     And Wait 1 second for an element
     And User clicks "paymentModule" module link
     And User clicks "cashOutflowPageLink" page link
-    And User fills "1000517597" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "1000517597" customer
+    And User selects "641614" customer
     And User fills sale invoice number in "paymentSearchField" input field
     And Wait 1 second for an element
     And User clicks "selectCashInInvoiceBtn" button
@@ -219,9 +219,9 @@ Feature: Payment
       And User clicks "productSearchBtn" button
       And User clicks "addProductBtn" button
       And User clicks "expandCustomerSectionBtn" button
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User selects "BAKI" option from "regionCode"
       And User selects "Emeqdaş" option from "customerGroupCode"
       And User fills "12" in "creditMonths" input field
@@ -240,9 +240,9 @@ Feature: Payment
       And User clicks "paymentModule" module link
       And User clicks "cashInflowPageLink" page link
       And Wait 1 second for an element
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User selects the sale invoice and clicks "Ödə" button
       And User fills invoice remaining amount in payment
       And User clicks "cashInflowCompletePaymentBtn" button
@@ -250,9 +250,9 @@ Feature: Payment
       And Wait 1 second for an element
       And User clicks "paymentModule" module link
       And User clicks "cashOutflowPageLink" page link
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User fills sale invoice number in "paymentSearchField" input field
       And Wait 1 second for an element
       And User clicks "selectCashInInvoiceBtn" button
@@ -264,9 +264,9 @@ Feature: Payment
       And User clicks "confirmBtn" button
       And User clicks "paymentModule" module link
       And User clicks "cashOutflowPageLink" page link
-      And User fills "1000517597" in "customerCode" input field
+      And User fills "641614" in "customerCode" input field
       And User clicks "customerSearchBtn" button
-      And User selects "1000517597" customer
+      And User selects "641614" customer
       And User fills sale invoice number in "paymentSearchField" input field
       And Wait 1 second for an element
       And User clicks "selectCashInInvoiceBtn" button
