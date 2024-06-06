@@ -1,7 +1,9 @@
 package stepDefinitions;
 
+import com.google.common.base.Verify;
 import io.cucumber.java.AfterStep;
 import org.openqa.selenium.WebElement;
+import org.testng.asserts.SoftAssert;
 import pom.GeneralPOM;
 import pom.SalePOM;
 import io.cucumber.java.en.And;

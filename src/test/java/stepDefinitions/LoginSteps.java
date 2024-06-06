@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import lombok.Getter;
+import org.testng.asserts.SoftAssert;
 import pom.LoginPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;

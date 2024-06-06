@@ -18,8 +18,15 @@ public class OrderSteps extends BaseMethods {
     OrderPOM orderPOM = OrderPOM.getInstance();
     GeneralPOM generalPOM = GeneralPOM.getInstance();
 
-    @Getter@Setter
-    private static String orderNum;
+    private static ThreadLocal<String> orderNum = new ThreadLocal<>();
+
+    public static String getOrderNum() {
+        return orderNum.get();
+    }
+
+    public static void setOrderNum(String orderNum) {
+        OrderSteps.orderNum.set(orderNum);
+    }
 
     private String[] creditorWorkStatus = new String[2];
     private List<String> actualProducts;
@@ -33,16 +40,17 @@ public class OrderSteps extends BaseMethods {
         Assert.assertTrue(orderCreated.isDisplayed());
         String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
         String[] createdOrderNum = createdOrderMessage.split(" ");
-        orderNum = createdOrderNum[0];
+        orderNum.set(createdOrderNum[0]);
     }
 
     @Then("New created order should be in Web Orders list")
     public void newCreatedOrderShouldBeOrdersList() throws InterruptedException {
-        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
+        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum.get());
         Thread.sleep(2000);
         WebElement webOrderNum = driver.findElement(orderPOM.getWebOrderNum());
 
-        Assert.assertEquals(webOrderNum.getText(), orderNum);
+        Assert.assertEquals(webOrderNum.getText(), orderNum.get());
+        System.out.println(orderNum);
     }
 
     @Then("Type of new created order should be as {string}")
@@ -53,7 +61,7 @@ public class OrderSteps extends BaseMethods {
 
     @Then("Products and services should be visible in new order")
     public void productsAndServicesShouldBeVisibleInNewOrder() throws InterruptedException {
-        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
+        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum.get());
         Thread.sleep(2000);
         driver.findElement(orderPOM.getCreatedOrderDetailsBtn()).click();
         waitVisibilityElement(orderPOM.getProductsCodeAfterCreate(),10);

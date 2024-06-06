@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import com.google.common.base.Verify;
 import lombok.Getter;
 import org.openqa.selenium.*;
 import pom.GeneralPOM;
@@ -93,6 +94,7 @@ public class BaseSteps extends BaseMethods {
 
     @When("User fills {string} in {string} input field")
     public void userFillsInputField(String text, String element) {
+        if (!text.isEmpty()) {
             waitVisibilityElement(elementsMap.get(element), 10);
             if (driver.findElement(elementsMap.get(element)).getAttribute("class").contains("inputmask")) {
                 driver.findElement(elementsMap.get(element)).click();
@@ -100,6 +102,7 @@ public class BaseSteps extends BaseMethods {
             }
             driver.findElement(elementsMap.get(element)).sendKeys(text);
         }
+    }
 
     @Then("User should get {string} message")
     public void userShouldGetMessage(String message) {
