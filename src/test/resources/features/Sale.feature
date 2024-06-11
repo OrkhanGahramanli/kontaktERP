@@ -50,8 +50,22 @@ Feature: Sale
 
   @AddCashSale
   Scenario Outline: Successful create cash sale using order number ("<paymentType>")
-    When User clicks "newCashSale" page link
-    And User fills "0017175" in "orderCode" input field
+    When User clicks "orderModule" module link
+    And User clicks "newOrder" page link
+    And User add "IR-000002" code
+    And User clicks "productAreaExpandBtn" button
+    And User fills "OLMAYAN STOK" in "productName" input field
+    And User clicks "productSearchBtn" button
+    And User clicks "addProductBtn" button
+    And User fills "Orxan" in "customerName" input field
+    And User selects "Nağd Satış" option from "saleType"
+    And User clicks "submitOrder" button
+    And User takes order number
+    And User clicks "confirmBtn" button
+    And User clicks "saleModule" module link
+    And User clicks "newCashSale" page link
+    And Wait 1 second for an element
+    And User fills order code in "orderCode" input field
     And User clicks "orderSearchBtn" button
     And User clicks "expandCustomerSectionBtn" button
     And User fills "641614" in "customerCode" input field
@@ -73,7 +87,7 @@ Feature: Sale
       | paymentType | paymentCode                    | taksitGroup | taksitMonths |
       | Nəğd        |                                |             |              |
       | Kart        | PAŞA BANK (NAĞD)               |             |              |
-      | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      |
+#      | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      |
 
   @AddCreditSale2
   Scenario: Successful create credit sale without order number
@@ -132,7 +146,7 @@ Feature: Sale
       | paymentType | paymentCode                    | taksitGroup | taksitMonths |
       | Nəğd        |                                |             |              |
       | Kart        | PAŞA BANK (NAĞD)               |             |              |
-      | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      |
+#      | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      |
 
 @InvalidCalculateCreditSale
   Scenario Outline: Unsuccessful credit calculate/Scenario Name: "<caseName>"

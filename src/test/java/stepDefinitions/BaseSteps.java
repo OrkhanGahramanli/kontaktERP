@@ -78,6 +78,7 @@ public class BaseSteps extends BaseMethods {
 
     @And("User selects {string} option from {string}")
     public void userSelectsOptionFrom(String text, String element) {
+        if (!text.isEmpty()) {
             if (!element.equals("regionCode") && !element.equals("customerGroupCode"))  waitVisibilityElement(elementsMap.get(element), 10);
 
             WebElement selectElement = driver.findElement(elementsMap.get(element));
@@ -88,9 +89,10 @@ public class BaseSteps extends BaseMethods {
                         "return arguments[0].parentNode;", selectElement);
                 if (element.equals("regionCode") || element.equals("customerGroupCode")) clearFieldWithBackspace(parent);
                 driver.findElement(elementsMap.get(element)).sendKeys(text);
-                if (!text.isEmpty()) selectElementByText(text).click();
+                selectElementByText(text).click();
             }
         }
+    }
 
     @When("User fills {string} in {string} input field")
     public void userFillsInputField(String text, String element) {
@@ -284,6 +286,7 @@ public class BaseSteps extends BaseMethods {
 
     @And("User takes order number")
     public void userTakesOrderNumber() {
+        waitPresenceElements(generalPOM.getCompleteNotificationText(), 5);
         String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
         String[] createdOrderNum = createdOrderMessage.split(" ");
         OrderSteps.setOrderNum(createdOrderNum[0]);

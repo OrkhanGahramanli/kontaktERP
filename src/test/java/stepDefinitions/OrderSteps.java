@@ -50,7 +50,6 @@ public class OrderSteps extends BaseMethods {
         WebElement webOrderNum = driver.findElement(orderPOM.getWebOrderNum());
 
         Assert.assertEquals(webOrderNum.getText(), orderNum.get());
-        System.out.println(orderNum);
     }
 
     @Then("Type of new created order should be as {string}")
