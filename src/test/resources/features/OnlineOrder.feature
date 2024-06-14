@@ -13,7 +13,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Nağd" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field
@@ -35,7 +35,7 @@ Feature: OnlineOrder
     When User clicks "onlineOrderPageLink" page link
     And User clicks "newOrderBtn" button
     And User selects "Kredit" radioButton
-    And User fills "Orxan" in "customerName" input field
+    And User fills "Orxan" in "customerNameOnlineOrder" input field
     And User fills "Gahramanli" in "customerSurname" input field
     And User fills "0551111111" in "customerMobile" input field
     And User fills "55LRF4T" in "customerFinCode" input field
@@ -59,7 +59,7 @@ Feature: OnlineOrder
     When User clicks "onlineOrderPageLink" page link
     And User clicks "newOrderBtn" button
     And User selects "<orderType>" radioButton
-    And User fills "<name>" in "customerName" input field
+    And User fills "<name>" in "customerNameOnlineOrder" input field
     And User fills "<surName>" in "customerSurname" input field
     And User fills "<mobile>" in "customerMobile" input field
     And User fills "<address>" in "customerAddress" input field
@@ -85,7 +85,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Nağd" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field
@@ -105,7 +105,7 @@ Feature: OnlineOrder
       And User clicks "onlineOrderInfoBtn" button
       And User's waiting visibility of "orderNumField" element for 5 seconds
       Then Online order number should be visible in "orderNumField"
-      Then "customerNameEditOrder" should equals "Orxan"
+      Then "customerNameEditOnlineOrder" should equals "Orxan"
       Then "customerSurnameEditOrder" should equals "Gahramanli"
       Then "customerMobileEditOrder" should equals "994551111111"
       Then "customerFinCodeEditOrder" should equals "55LRF4T"
@@ -118,7 +118,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Nağd" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field
@@ -136,8 +136,8 @@ Feature: OnlineOrder
       And User fills online order number in search field
       And User's waiting visibility of "onlineOrderInfoBtn" element for 5 seconds
       And User clicks "onlineOrderInfoBtn" button
-      And User's waiting visibility of "customerNameEditOrder" element for 5 seconds
-      And User fills "_update" in "customerNameEditOrder" input field
+      And User's waiting visibility of "customerNameEditOnlineOrder" element for 5 seconds
+      And User fills "_update" in "customerNameEditOnlineOrder" input field
       And User fills "_update" in "customerSurnameEditOrder" input field
       And User fills "_update" in "customerFinCodeEditOrder" input field
       And User fills "_update" in "customerAddressEditOrder" input field
@@ -150,7 +150,7 @@ Feature: OnlineOrder
       Then User should get "Qeyd edildi" message
       Then "Mağazadan aldı" should be displayed in "onlineOrderStatusColumn"
       And User clicks "onlineOrderInfoBtn" button
-      Then "customerNameEditOrder" should equals "Orxan_update"
+      Then "customerNameEditOnlineOrder" should equals "Orxan_update"
       Then "customerSurnameEditOrder" should equals "Gahramanli_update"
       Then "customerFinCodeEditOrder" should equals "55LRF4T_update"
       Then "customerAddressEditOrder" should equals "Xudu Mammadov_update"
@@ -161,7 +161,7 @@ Feature: OnlineOrder
         When User clicks "onlineOrderPageLink" page link
         And User clicks "newOrderBtn" button
         And User selects "Nağd" radioButton
-        And User fills "Orxan" in "customerName" input field
+        And User fills "Orxan" in "customerNameOnlineOrder" input field
         And User fills "Gahramanli" in "customerSurname" input field
         And User fills "0551111111" in "customerMobile" input field
         And User fills "55LRF4T" in "customerFinCode" input field
@@ -195,7 +195,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Nağd" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field
@@ -212,10 +212,12 @@ Feature: OnlineOrder
       And User clicks "confirmBtn" button
       And User fills online order number in search field
       And User's waiting visibility of "addToBasketBtn" element for 5 seconds
+      And User saves count of online orders displayed on "basketBtn"
       And User clicks "addToBasketBtn" button
       Then User should get "Səbətə əlavə edildi." message
-      Then 1 order should be displayed in "basketBtn"
+      Then 1 more order should be displayed in "basketBtn"
       And User clicks "basketBtn" button
+      And User fills online order number in "searchOnlineOrderInBasket"
       Then Online order should be displayed in basket
 
   @OnlineOrderAssign
@@ -223,7 +225,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Nağd" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field
@@ -253,7 +255,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Nağd" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field
@@ -308,6 +310,7 @@ Feature: OnlineOrder
       Scenario Outline: Edit and change status of "<orderType>" order
         When User clicks "<orderType>" page link
         And User clicks "addOrderBtn" button
+        And User's waiting presence of "customerField" element for 5 seconds
         And User fills "Orxan" in "customerField" input field
         And User fills "0551111111" in "customerNumberField" input field
         And User fills "<productName>" in "productField" input field
@@ -340,7 +343,7 @@ Feature: OnlineOrder
     When User clicks "onlineOrderPageLink" page link
     And User clicks "newOrderBtn" button
     And User selects "Kredit" radioButton
-    And User fills "Orxan" in "customerName" input field
+    And User fills "Orxan" in "customerNameOnlineOrder" input field
     And User fills "Gahramanli" in "customerSurname" input field
     And User fills "0551111111" in "customerMobile" input field
     And User fills "55LRF4T" in "customerFinCode" input field
@@ -359,8 +362,8 @@ Feature: OnlineOrder
     And User fills online order number in search field
     And User's waiting visibility of "onlineOrderInfoBtn" element for 5 seconds
     And User clicks "onlineOrderInfoBtn" button
-    And User's waiting visibility of "customerNameEditOrder" element for 5 seconds
-    And User fills "_update" in "customerNameEditOrder" input field
+    And User's waiting visibility of "customerNameEditOnlineOrder" element for 5 seconds
+    And User fills "_update" in "customerNameEditOnlineOrder" input field
     And User fills "_update" in "customerSurnameEditOrder" input field
     And User fills "_update" in "customerFinCodeEditOrder" input field
     And User fills "_update" in "customerAddressEditOrder" input field
@@ -373,7 +376,7 @@ Feature: OnlineOrder
     Then User should get "Qeyd edildi" message
     Then "Mağazadan aldı" should be displayed in "onlineOrderStatusColumn"
     And User clicks "onlineOrderInfoBtn" button
-    Then "customerNameEditOrder" should equals "Orxan_update"
+    Then "customerNameEditOnlineOrder" should equals "Orxan_update"
     Then "customerSurnameEditOrder" should equals "Gahramanli_update"
     Then "customerFinCodeEditOrder" should equals "55LRF4T_update"
     Then "customerAddressEditOrder" should equals "Xudu Mammadov_update"
@@ -384,7 +387,7 @@ Feature: OnlineOrder
     When User clicks "onlineOrderPageLink" page link
     And User clicks "newOrderBtn" button
     And User selects "Kredit" radioButton
-    And User fills "Orxan" in "customerName" input field
+    And User fills "Orxan" in "customerNameOnlineOrder" input field
     And User fills "Gahramanli" in "customerSurname" input field
     And User fills "0551111111" in "customerMobile" input field
     And User fills "55LRF4T" in "customerFinCode" input field
@@ -419,7 +422,7 @@ Feature: OnlineOrder
       When User clicks "onlineOrderPageLink" page link
       And User clicks "newOrderBtn" button
       And User selects "Kredit" radioButton
-      And User fills "Orxan" in "customerName" input field
+      And User fills "Orxan" in "customerNameOnlineOrder" input field
       And User fills "Gahramanli" in "customerSurname" input field
       And User fills "0551111111" in "customerMobile" input field
       And User fills "55LRF4T" in "customerFinCode" input field

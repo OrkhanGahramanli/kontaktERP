@@ -130,6 +130,7 @@ public class SaleSteps extends BaseMethods{
     @And("User chooses first product and clicks {string} button")
     public void userChoosesFirstProductAndClicksButton(String element) {
         driver.findElement(elementsMap.get(element)).click();
+
     }
 
     @Then("{string} service name should be displayed")

@@ -26,7 +26,7 @@ public class BaseSteps extends BaseMethods {
     private static ThreadLocal<String> saleInvoiceNumber = new ThreadLocal<>();
 
     @Given("User is in {string}")
-    public void UserIsIn(String arg0) {
+    public void UserIsIn(String args) {
     }
 
     @When("User selects {string} store")
@@ -110,21 +110,22 @@ public class BaseSteps extends BaseMethods {
     public void userShouldGetMessage(String message) {
 
         if (message.equals("Məhsul seçilməyib.")) {
-            WebElement productErrorMessage = driver.findElement(generalPOM.getErrorAlert());
+            WebElement productErrorMessage = driver.findElement(generalPOM.getEmptyProductErrorAlert());
             waitVisibilityElement(productErrorMessage, 5);
             Assert.assertEquals(productErrorMessage.getText(), message);
         } else if (message.equals("satıcı kodu seçilməyib.")) {
-            WebElement errorMessage = driver.findElement(generalPOM.getPopUpMessage());
+            WebElement errorMessage = driver.findElement(generalPOM.getPopUpErrorAlert());
             waitVisibilityElement(errorMessage, 5);
+            System.out.println(driver.findElement(generalPOM.getPopUpMessage()).getText());
             Assert.assertTrue(errorMessage.getText().contains(message));
         } else if (message.equals("Ödəniş səbəbi boş olabilməz")) {
             WebElement errorMessage = driver.findElement(generalPOM.getEmptyPaymentReasonErrorMessage());
             waitVisibilityElement(errorMessage, 5);
             Assert.assertEquals(errorMessage.getText(), message);
         } else {
+            waitTextMessage(generalPOM.getPopUpMessage(), message, 5);
             List<WebElement> messageElements = driver.findElements(generalPOM.getPopUpMessage());
             for (WebElement element : messageElements) {
-                waitVisibilityElement(element, 5);
                 if (element.getText().equals(message)) Assert.assertTrue(true);
             }
         }
@@ -244,7 +245,7 @@ public class BaseSteps extends BaseMethods {
 
     @And("User's waiting presence of {string} element for {int} seconds")
     public void userSWaitingPresenceOfElementForSeconds(String element, int time) {
-        waitPresenceElements(elementsMap.get(element), time);
+        waitPresenceElement(elementsMap.get(element), time);
     }
 
     @And("User press enter button")
@@ -286,7 +287,7 @@ public class BaseSteps extends BaseMethods {
 
     @And("User takes order number")
     public void userTakesOrderNumber() {
-        waitPresenceElements(generalPOM.getCompleteNotificationText(), 5);
+        waitPresenceElement(generalPOM.getCompleteNotificationText(), 5);
         String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
         String[] createdOrderNum = createdOrderMessage.split(" ");
         OrderSteps.setOrderNum(createdOrderNum[0]);

@@ -38,6 +38,7 @@ public class OrderPOM {
     static {
         elementsMap.put("productsInfo", By.id("stockinfo_link"));
         elementsMap.put("creditors", By.id("creditorView_link"));
+        elementsMap.put("bundleSearchField", By.xpath("//*[@id='tableBundle_filter']//*[@type='search']"));
     }
 
 

@@ -20,6 +20,7 @@ public class OnlineOrderSteps extends BaseMethods{
     GeneralPOM generalPOM = GeneralPOM.getInstance();
 
     String onlineOrderNum;
+    int onlineOrderCountInBasket;
 
     @And("User selects {string} radioButton")
     public void userSelectsRadioButton(String radioButton) {
@@ -85,9 +86,9 @@ public class OnlineOrderSteps extends BaseMethods{
         Assert.assertEquals(driver.findElement(generalPOM.getPageTitle()).getText(), text);
     }
 
-    @Then("{int} order should be displayed in {string}")
+    @Then("{int} more order should be displayed in {string}")
     public void orderShouldBeDisplayedInBasket(int num, String element) {
-        Assert.assertEquals(driver.findElement(elementsMap.get(element)).getText(),"Səbət (" + num + ")");
+        Assert.assertEquals(driver.findElement(elementsMap.get(element)).getText(),"Səbət (" + (onlineOrderCountInBasket + num) + ")");
     }
 
     @Then("Online order should be displayed in basket")
@@ -167,5 +168,16 @@ public class OnlineOrderSteps extends BaseMethods{
         WebElement statusParentNode = (WebElement) getJsExecutor().executeScript(
                 "return arguments[0].parentNode;", status);
         Assert.assertTrue(statusParentNode.getAttribute("class").contains("selected"));
+    }
+
+    @And("User saves count of online orders displayed on {string}")
+    public void userSavesCountOfOnlineOrdersInBasket(String element) {
+        String basketBtnText = driver.findElement(elementsMap.get(element)).getText();
+        onlineOrderCountInBasket = Integer.parseInt(basketBtnText.substring(basketBtnText.indexOf("(")+1, basketBtnText.indexOf(")")));
+    }
+
+    @And("User fills online order number in {string}")
+    public void userFillsOnlineOrderNumberIn(String element) {
+        driver.findElement(elementsMap.get(element)).sendKeys(onlineOrderNum);
     }
 }

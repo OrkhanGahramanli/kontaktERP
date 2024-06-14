@@ -60,10 +60,13 @@ public class OrderSteps extends BaseMethods {
 
     @Then("Products and services should be visible in new order")
     public void productsAndServicesShouldBeVisibleInNewOrder() throws InterruptedException {
+        // searching for order
         driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum.get());
         Thread.sleep(2000);
+        // click weborder info button
         driver.findElement(orderPOM.getCreatedOrderDetailsBtn()).click();
-        waitVisibilityElement(orderPOM.getProductsCodeAfterCreate(),10);
+        // wait for order details and adding to list
+        waitPresenceElements(orderPOM.getProductsCodeAfterCreate(),10);
         List<WebElement> productsAfterCreateOrder = driver.findElements(orderPOM.getProductsCodeAfterCreate());
         actualProducts = new ArrayList<>();
         for (WebElement element : productsAfterCreateOrder){
@@ -104,7 +107,7 @@ public class OrderSteps extends BaseMethods {
 
     @And("Collect product names for expected result")
     public void collectProductNamesForExpectedResult() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
         expectedProducts = new ArrayList<>();
         for (WebElement element : productsBeforeCreateOrder){

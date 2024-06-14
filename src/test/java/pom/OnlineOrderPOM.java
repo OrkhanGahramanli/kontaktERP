@@ -24,7 +24,7 @@ public class OnlineOrderPOM {
     static {
         elementsMap.put("onlineOrderPageLink", By.id("websifaris_link"));
         elementsMap.put("newOrderBtn", By.cssSelector(".btn.btn-sm.btn-primary"));
-        elementsMap.put("customerName", By.name("sifaris_musteri_adi"));
+        elementsMap.put("customerNameOnlineOrder", By.name("sifaris_musteri_adi"));
         elementsMap.put("customerSurname", By.name("sifaris_musteri_soyadi"));
         elementsMap.put("customerMobile", By.name("sifaris_mobil_tel_no"));
         elementsMap.put("customerFinCode", By.name("sifaris_fin_kodu"));
@@ -39,7 +39,7 @@ public class OnlineOrderPOM {
         elementsMap.put("onlineOrderStatusOptionsField", By.id("web_kassir_status"));
         elementsMap.put("updateOnlineOrderBtn", By.xpath("//*[@onclick='webSifarisStatusYenile()']"));
         elementsMap.put("productSearchByNameInOrderEdit", By.id("axtarisAdi"));
-        elementsMap.put("customerNameEditOrder", By.id("sifaris_musteri_adi"));
+        elementsMap.put("customerNameEditOnlineOrder", By.id("sifaris_musteri_adi"));
         elementsMap.put("customerSurnameEditOrder", By.id("sifaris_musteri_soyadi"));
         elementsMap.put("customerMobileEditOrder", By.id("sifaris_mobil_tel_no"));
         elementsMap.put("customerFinCodeEditOrder", By.id("sifaris_fin_kodu"));
@@ -80,6 +80,7 @@ public class OnlineOrderPOM {
         elementsMap.put("statusChangeUserCallMeOrder", By.xpath("//input[contains(@id, 'status_setBy')]"));
         elementsMap.put("webOrderNoteField", By.id("sifaris_qeyd"));
         elementsMap.put("webOrderTypeColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[3]"));
+        elementsMap.put("searchOnlineOrderInBasket", By.xpath("//*[@id='tblSebet_filter']//*[@type='search']"));
     }
 
     private final By cashRadioBtn = By.id("nagdCheckBox");

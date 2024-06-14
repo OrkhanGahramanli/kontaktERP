@@ -28,7 +28,8 @@ public class GeneralPOM {
     private final By sellerSearchBtn = By.cssSelector(".btn.btn-primary.btn-sm.form-control.form-control-sm");
     private final By successIcon = By.className("swal2-success-ring");
     private final By popUpMessage = By.className("noty_bar");
-    private final By errorAlert = By.id("recipeitemAlert");
+    private final By emptyProductErrorAlert = By.id("recipeitemAlert");
+    private final By popUpErrorAlert = By.className("noty_type__error");
     private final By serviceSearchField = By.xpath("//input[@aria-controls='tableHizmet']");
     private final By addServiceBtn = By.xpath("//*[@id='tableHizmet_wrapper']//*[@type='button']");
     private final By addedProductsPrices = By.xpath("//*[@id='tableProd']/tr/td[4]/input");
