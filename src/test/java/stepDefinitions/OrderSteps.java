@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import lombok.Getter;
+import lombok.Setter;
 import pom.GeneralPOM;
 import pom.OrderPOM;
 import io.cucumber.java.en.And;
@@ -16,17 +18,21 @@ public class OrderSteps extends BaseMethods {
     OrderPOM orderPOM = OrderPOM.getInstance();
     GeneralPOM generalPOM = GeneralPOM.getInstance();
 
-    String orderNum;
-    String[] creditorWorkStatus = new String[2];
-    List<String> actualProducts;
-    List<String> expectedProducts;
+    private static ThreadLocal<String> orderNum = new ThreadLocal<>();
 
-    @And("User add {string} code")
-    public void userSelectsSeller(String sellerCode) {
-        waitVisibilityElement(generalPOM.getSellerSearchField(), 5);
-        driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
-        if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
+    public static String getOrderNum() {
+        return orderNum.get();
     }
+
+    public static void setOrderNum(String orderNum) {
+        OrderSteps.orderNum.set(orderNum);
+    }
+
+    private String[] creditorWorkStatus = new String[2];
+    private List<String> actualProducts;
+    private List<String> expectedProducts;
+
+
 
     @Then("New order should be create")
     public void newOrderShouldBeCreate() {
@@ -34,16 +40,16 @@ public class OrderSteps extends BaseMethods {
         Assert.assertTrue(orderCreated.isDisplayed());
         String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
         String[] createdOrderNum = createdOrderMessage.split(" ");
-        orderNum = createdOrderNum[0];
+        orderNum.set(createdOrderNum[0]);
     }
 
     @Then("New created order should be in Web Orders list")
     public void newCreatedOrderShouldBeOrdersList() throws InterruptedException {
-        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
+        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum.get());
         Thread.sleep(2000);
         WebElement webOrderNum = driver.findElement(orderPOM.getWebOrderNum());
 
-        Assert.assertEquals(webOrderNum.getText(), orderNum);
+        Assert.assertEquals(webOrderNum.getText(), orderNum.get());
     }
 
     @Then("Type of new created order should be as {string}")
@@ -54,10 +60,13 @@ public class OrderSteps extends BaseMethods {
 
     @Then("Products and services should be visible in new order")
     public void productsAndServicesShouldBeVisibleInNewOrder() throws InterruptedException {
-        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum);
+        // searching for order
+        driver.findElement(orderPOM.getWebOrderNumSearchField()).sendKeys(orderNum.get());
         Thread.sleep(2000);
+        // click weborder info button
         driver.findElement(orderPOM.getCreatedOrderDetailsBtn()).click();
-        waitVisibilityElement(orderPOM.getProductsCodeAfterCreate(),10);
+        // wait for order details and adding to list
+        waitPresenceElements(orderPOM.getProductsCodeAfterCreate(),10);
         List<WebElement> productsAfterCreateOrder = driver.findElements(orderPOM.getProductsCodeAfterCreate());
         actualProducts = new ArrayList<>();
         for (WebElement element : productsAfterCreateOrder){
@@ -98,7 +107,7 @@ public class OrderSteps extends BaseMethods {
 
     @And("Collect product names for expected result")
     public void collectProductNamesForExpectedResult() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         List<WebElement> productsBeforeCreateOrder = driver.findElements(orderPOM.getProductsCodeBeforeCreate());
         expectedProducts = new ArrayList<>();
         for (WebElement element : productsBeforeCreateOrder){

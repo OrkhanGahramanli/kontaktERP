@@ -44,4 +44,5 @@ public class PaymentPOM {
     private final By cashInflowAmountValue = By.xpath("//*[@id='tableMexaricSenedleri']//td[6]");
     private final By cashOutflowPaymentInput = By.id("odeme_meblegi");
     private final By cashOutflowPaymentMaximumLimit = By.xpath("//*[@id='tableMexaricSenedleri']//td[6]");
+    private final By paymentRemainingAmount = By.xpath("//*[@id='tableFakturaListe']//td[11]");
 }

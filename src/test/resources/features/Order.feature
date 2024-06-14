@@ -76,6 +76,8 @@ Feature: Order
       And User clicks "windowCloseBtn" button
       And User clicks "bundleBtn" button
       And User's waiting visibility of "bundleAddBtn" element for 10 seconds
+      And User fills "lg" in "bundleSearchField" input field
+      And Wait 1 second for an element
       And User clicks "bundleAddBtn" button
       And Collect product names for expected result
       And User clicks "submitOrder" button
@@ -137,9 +139,9 @@ Feature: Order
       Then Type of new created order should be as "<sale type>"
 
       Examples:
-        | sale type    | product   | customer | seller    | birthdate  |
-        | Nağd Satış   | 14MTL73RU | Orxan    | IR-000002 |            |
-        | Kredit Satış | 14MTL73RU | Orxan    | IR-000002 | 06/18/1993 |
+        | sale type    | product      | customer | seller    | birthdate  |
+        | Nağd Satış   | OLMAYAN STOK |          | IR-000002 |            |
+        | Kredit Satış | LMAYAN STOK  |          | IR-000002 | 06/18/1993 |
 
   @Creditors
       Scenario: Set work status of creditor

@@ -29,9 +29,9 @@ public class BaseMethods {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    protected void waitVisibilityElement(List<WebElement> elements, int time){
+    protected void waitVisibilityElements(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
-        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
     protected void waitClickableElement(By locator, int time){
@@ -49,9 +49,14 @@ public class BaseMethods {
         wait.until(ExpectedConditions.textToBe(locator, message));
     }
 
-    protected void waitPresenceElements(By locator, int time){
+    protected void waitPresenceElement(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    protected void waitPresenceElements(By locator, int time){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
     protected void waitTextUpdate(By locator, String value, int time){
@@ -99,6 +104,12 @@ public class BaseMethods {
         Actions actions = new Actions(driver);
         actions.sendKeys(Keys.CONTROL + "a");
         actions.sendKeys(Keys.DELETE);
+    }
+
+    protected void clearFieldWithBackspace(WebElement element){
+        element.click();
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.BACK_SPACE).perform();
     }
 
     protected  void doubleClickAction(WebElement element){

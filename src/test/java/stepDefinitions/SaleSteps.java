@@ -1,7 +1,9 @@
 package stepDefinitions;
 
+import com.google.common.base.Verify;
 import io.cucumber.java.AfterStep;
 import org.openqa.selenium.WebElement;
+import org.testng.asserts.SoftAssert;
 import pom.GeneralPOM;
 import pom.SalePOM;
 import io.cucumber.java.en.And;
@@ -128,6 +130,7 @@ public class SaleSteps extends BaseMethods{
     @And("User chooses first product and clicks {string} button")
     public void userChoosesFirstProductAndClicksButton(String element) {
         driver.findElement(elementsMap.get(element)).click();
+
     }
 
     @Then("{string} service name should be displayed")
@@ -148,5 +151,10 @@ public class SaleSteps extends BaseMethods{
     @Then("{string} should be checked")
     public void shouldBeChecked(String element) {
         Assert.assertTrue(driver.findElement(elementsMap.get(element)).isSelected());
+    }
+
+    @And("User fills order code in {string} input field")
+    public void userFillsOrderCodeInInputField(String orderNumInput) {
+        driver.findElement(elementsMap.get(orderNumInput)).sendKeys(OrderSteps.getOrderNum());
     }
 }

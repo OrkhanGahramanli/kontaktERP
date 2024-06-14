@@ -18,18 +18,22 @@ public class PaymentSteps extends BaseMethods{
 
     PaymentPOM paymentPOM = PaymentPOM.getInstance();
 
+    String remainingAmount;
+
 @And("User selects the sale invoice and clicks {string} button")
-    public void userSelectsInvoice(String btnText) throws InterruptedException {
+    public void userSelectsInvoice(String btnText){
     if (!btnText.isEmpty()) {
-        Thread.sleep(2000);
+        waitPresenceElements(By.xpath("//*[text()='Ödə']"), 10);
         getJsExecutor().executeScript("arguments[0].click();", driver.findElement(paymentPOM.getInvoiceNumColumnHeader()));
         getJsExecutor().executeScript("arguments[0].click();", driver.findElement(paymentPOM.getInvoiceNumColumnHeader()));
         List<WebElement> invoiceSerialNums = driver.findElements(paymentPOM.getInvoiceSerialNum());
         List<WebElement> invoiceNums = driver.findElements(paymentPOM.getInvoiceNum());
         List<WebElement> payButtons = findElementsByText("Ödə");
+        List<WebElement> remainingAmounts = driver.findElements(paymentPOM.getPaymentRemainingAmount());
         for (int i = 0; i < invoiceSerialNums.size(); i++) {
             if ((invoiceSerialNums.get(i).getText() + invoiceNums.get(i).getText()).equals(BaseSteps.getSaleInvoiceNumber().get())) {
                 payButtons.get(i).click();
+                remainingAmount = remainingAmounts.get(i).getText();
                 break;
             }
         }
@@ -38,7 +42,6 @@ public class PaymentSteps extends BaseMethods{
 
     @And("User fills invoice remaining amount in payment")
     public void userFillsInvoiceRemainingAmountInPayment() {
-    String remainingAmount = driver.findElement(paymentPOM.getInvoiceRemainingAmount()).getText();
     clearFieldWithAction(paymentPOM.getCashInflowPaymentInput());
     driver.findElement(paymentPOM.getCashInflowPaymentInput()).sendKeys(remainingAmount);
     }
@@ -52,7 +55,7 @@ public class PaymentSteps extends BaseMethods{
     public void userFillsInvalid(String paymentAmount) {
     if (paymentAmount.equals("overload")) {
         String remainingAmount = driver.findElement(paymentPOM.getInvoiceRemainingAmount()).getText();
-        int invalidRemainingAmount = Integer.parseInt(remainingAmount) + 1;
+        Double invalidRemainingAmount = Double.parseDouble(remainingAmount) + 1;
         clearFieldWithAction(paymentPOM.getCashInflowPaymentInput());
         driver.findElement(paymentPOM.getCashInflowPaymentInput()).sendKeys(String.valueOf(invalidRemainingAmount));
         }

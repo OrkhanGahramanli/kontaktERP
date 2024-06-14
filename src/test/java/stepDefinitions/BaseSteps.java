@@ -1,8 +1,8 @@
 package stepDefinitions;
 
+import com.google.common.base.Verify;
 import lombok.Getter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,7 +11,6 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.testng.Assert;
-import pom.SalePOM;
 
 import java.util.List;
 import static pom.ElementsMap.elementsMap;
@@ -27,7 +26,7 @@ public class BaseSteps extends BaseMethods {
     private static ThreadLocal<String> saleInvoiceNumber = new ThreadLocal<>();
 
     @Given("User is in {string}")
-    public void UserIsIn(String arg0) {
+    public void UserIsIn(String args) {
     }
 
     @When("User selects {string} store")
@@ -80,10 +79,15 @@ public class BaseSteps extends BaseMethods {
     @And("User selects {string} option from {string}")
     public void userSelectsOptionFrom(String text, String element) {
         if (!text.isEmpty()) {
-            waitVisibilityElement(elementsMap.get(element), 10);
+            if (!element.equals("regionCode") && !element.equals("customerGroupCode"))  waitVisibilityElement(elementsMap.get(element), 10);
+
+            WebElement selectElement = driver.findElement(elementsMap.get(element));
             try {
-                selectVisibleText(driver.findElement(elementsMap.get(element)), text);
+                selectVisibleText(selectElement, text);
             } catch (UnexpectedTagNameException u) {
+                WebElement parent = (WebElement) ((JavascriptExecutor) driver).executeScript(
+                        "return arguments[0].parentNode;", selectElement);
+                if (element.equals("regionCode") || element.equals("customerGroupCode")) clearFieldWithBackspace(parent);
                 driver.findElement(elementsMap.get(element)).sendKeys(text);
                 selectElementByText(text).click();
             }
@@ -106,21 +110,22 @@ public class BaseSteps extends BaseMethods {
     public void userShouldGetMessage(String message) {
 
         if (message.equals("Məhsul seçilməyib.")) {
-            WebElement productErrorMessage = driver.findElement(generalPOM.getErrorAlert());
+            WebElement productErrorMessage = driver.findElement(generalPOM.getEmptyProductErrorAlert());
             waitVisibilityElement(productErrorMessage, 5);
             Assert.assertEquals(productErrorMessage.getText(), message);
         } else if (message.equals("satıcı kodu seçilməyib.")) {
-            WebElement errorMessage = driver.findElement(generalPOM.getPopUpMessage());
+            WebElement errorMessage = driver.findElement(generalPOM.getPopUpErrorAlert());
             waitVisibilityElement(errorMessage, 5);
+            System.out.println(driver.findElement(generalPOM.getPopUpMessage()).getText());
             Assert.assertTrue(errorMessage.getText().contains(message));
         } else if (message.equals("Ödəniş səbəbi boş olabilməz")) {
             WebElement errorMessage = driver.findElement(generalPOM.getEmptyPaymentReasonErrorMessage());
             waitVisibilityElement(errorMessage, 5);
             Assert.assertEquals(errorMessage.getText(), message);
         } else {
+            waitTextMessage(generalPOM.getPopUpMessage(), message, 5);
             List<WebElement> messageElements = driver.findElements(generalPOM.getPopUpMessage());
             for (WebElement element : messageElements) {
-                waitVisibilityElement(element, 5);
                 if (element.getText().equals(message)) Assert.assertTrue(true);
             }
         }
@@ -240,7 +245,7 @@ public class BaseSteps extends BaseMethods {
 
     @And("User's waiting presence of {string} element for {int} seconds")
     public void userSWaitingPresenceOfElementForSeconds(String element, int time) {
-        waitPresenceElements(elementsMap.get(element), time);
+        waitPresenceElement(elementsMap.get(element), time);
     }
 
     @And("User press enter button")
@@ -271,5 +276,20 @@ public class BaseSteps extends BaseMethods {
     @And("User accepts alert pop-up")
     public void userAcceptsAlertPopUp() {
         driver.switchTo().alert().accept();
+    }
+
+    @And("User add {string} code")
+    public void userSelectsSeller(String sellerCode) {
+        waitVisibilityElement(generalPOM.getSellerSearchField(), 5);
+        driver.findElement(generalPOM.getSellerSearchField()).sendKeys(sellerCode);
+        if (!sellerCode.isEmpty()) driver.findElement(generalPOM.getSellerSearchBtn()).click();
+    }
+
+    @And("User takes order number")
+    public void userTakesOrderNumber() {
+        waitPresenceElement(generalPOM.getCompleteNotificationText(), 5);
+        String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
+        String[] createdOrderNum = createdOrderMessage.split(" ");
+        OrderSteps.setOrderNum(createdOrderNum[0]);
     }
 }
