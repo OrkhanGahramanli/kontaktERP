@@ -15,10 +15,6 @@ public class BaseMethods {
 
     public WebDriver driver = CucumberHook.driver.get();
 
-    public BaseMethods(){
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-    }
-
     protected void waitVisibilityElement(By locator, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -131,5 +127,10 @@ public class BaseMethods {
         Actions actions = new Actions(driver);
         actions.click(element).perform();
         actions.sendKeys(text).perform();
+    }
+
+    protected void waitForElementsCount(By locator, int count, int time){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.numberOfElementsToBe(locator, count));
     }
 }

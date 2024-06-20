@@ -2,6 +2,7 @@ package driverSession;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
 import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.OutputType;
@@ -34,6 +35,7 @@ public class CucumberHook {
         driver.set(new ChromeDriver());
         driver.get().get("https://test.abc-telecom.az:5067/");
         driver.get().manage().window().maximize();
+        driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     @After

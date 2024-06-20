@@ -310,7 +310,7 @@ Feature: OnlineOrder
       Scenario Outline: Edit and change status of "<orderType>" order
         When User clicks "<orderType>" page link
         And User clicks "addOrderBtn" button
-        And User's waiting presence of "customerField" element for 5 seconds
+#        And User's waiting presence of "customerField" element for 5 seconds
         And User fills "Orxan" in "customerField" input field
         And User fills "0551111111" in "customerNumberField" input field
         And User fills "<productName>" in "productField" input field

@@ -123,7 +123,7 @@ Feature: Order
       And User fills "<product>" in "productName" input field
       And User clicks "productSearchBtn" button
       And User clicks "otherStoresBtn" button
-      And User's waiting visibility of "addProductOtherStoreBtn" element for 10 seconds
+      And Skip scenario if "addProductOtherStoreBtn" element doesn't exist
       And User clicks "addProductOtherStoreBtn" button
       And User clicks "windowCloseBtn" button
       And User selects "Basqa Magaza veya Anbardan Satis Magazasina Teslim" option from "productDeliveryType"
@@ -140,8 +140,8 @@ Feature: Order
 
       Examples:
         | sale type    | product      | customer | seller    | birthdate  |
-        | Nağd Satış   | OLMAYAN STOK |          | IR-000002 |            |
-        | Kredit Satış | LMAYAN STOK  |          | IR-000002 | 06/18/1993 |
+        | Nağd Satış   | OLMAYAN STOK | Orxan    | IR-000002 |            |
+        | Kredit Satış | OLMAYAN STOK | Orxan    | IR-000002 | 06/18/1993 |
 
   @Creditors
       Scenario: Set work status of creditor

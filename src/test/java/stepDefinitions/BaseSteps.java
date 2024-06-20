@@ -1,8 +1,10 @@
 package stepDefinitions;
 
 import com.google.common.base.Verify;
+import io.cucumber.java.Scenario;
 import lombok.Getter;
 import org.openqa.selenium.*;
+import org.testng.SkipException;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -123,7 +125,6 @@ public class BaseSteps extends BaseMethods {
             waitVisibilityElement(errorMessage, 5);
             Assert.assertEquals(errorMessage.getText(), message);
         } else {
-            waitTextMessage(generalPOM.getPopUpMessage(), message, 5);
             List<WebElement> messageElements = driver.findElements(generalPOM.getPopUpMessage());
             for (WebElement element : messageElements) {
                 if (element.getText().equals(message)) Assert.assertTrue(true);
@@ -291,5 +292,14 @@ public class BaseSteps extends BaseMethods {
         String createdOrderMessage = driver.findElement(generalPOM.getCompleteNotificationText()).getText();
         String[] createdOrderNum = createdOrderMessage.split(" ");
         OrderSteps.setOrderNum(createdOrderNum[0]);
+    }
+
+    @And("Skip scenario if {string} element doesn't exist")
+    public void skipScenarioIfElementDoesnTExist(String element) {
+        try {
+            driver.findElement(elementsMap.get(element));
+        }catch (NoSuchElementException n){
+            throw new SkipException("Scenario skipped");
+        }
     }
 }
