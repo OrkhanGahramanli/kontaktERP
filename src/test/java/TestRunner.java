@@ -17,28 +17,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CucumberOptions(
-//        features = {"classpath:features"},
-//        plugin = {"pretty", "json:target/cucumber.json"},
-//        tags = "@ServiceCreditSale"
-//)
-//
-//
-//public class TestRunner extends AbstractTestNGCucumberTests {
-//
-//    @Override
-//    @DataProvider(parallel = true)
-//    public Object[][] scenarios() {
-//        return super.scenarios();
-//    }
-//
-//    @AfterTest
-//    public void afterTest(){
-//        File reportOutputDirectory = new File("target");
-//        List<String> jsonFiles = new ArrayList<>();
-//        jsonFiles.add("target/cucumber.json");
-//        Configuration configuration = new Configuration(reportOutputDirectory, "KontaktERP");
-//        configuration.addPresentationModes(PresentationMode.EXPAND_ALL_STEPS);
-//        ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
-//        reportBuilder.generateReports();
-//    }
-//}
+        features = {"classpath:features"},
+        plugin = {"pretty", "json:target/cucumber.json"},
+        tags = "@ServiceCreditSal"
+)
+
+
+public class TestRunner extends AbstractTestNGCucumberTests {
+
+    @Override
+    @DataProvider(parallel = true)
+    public Object[][] scenarios() {
+        return super.scenarios();
+    }
+
+    @AfterTest
+    public void afterTest(){
+        File reportOutputDirectory = new File("target");
+        List<String> jsonFiles = new ArrayList<>();
+        jsonFiles.add("target/cucumber.json");
+        Configuration configuration = new Configuration(reportOutputDirectory, "KontaktERP");
+        configuration.addPresentationModes(PresentationMode.EXPAND_ALL_STEPS);
+        ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
+        reportBuilder.generateReports();
+    }
+}
