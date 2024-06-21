@@ -5,15 +5,14 @@
 
 # Prerequisites: pom.xml and appropriate project structure should exist in the repository.
 
-image: maven:latest
-
-cache:
-  paths:
-  - .m2/repository/
-  - target/
-  
- test:
-   stage: test
-   script:
-    - mvn clean test
+image: maven:3.6.3
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: Build and Test
+          caches:
+            - maven
+          script:
+            - mvn clean test
 
