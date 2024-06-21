@@ -31,14 +31,14 @@ public class TestRunner extends AbstractTestNGCucumberTests {
         return super.scenarios();
     }
 
-//    @AfterTest
-//    public void afterTest(){
-//        File reportOutputDirectory = new File("target");
-//        List<String> jsonFiles = new ArrayList<>();
-//        jsonFiles.add("target/cucumber.json");
-//        Configuration configuration = new Configuration(reportOutputDirectory, "KontaktERP");
-//        configuration.addPresentationModes(PresentationMode.EXPAND_ALL_STEPS);
-//        ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
-//        reportBuilder.generateReports();
-//    }
+    @AfterTest
+    public void afterTest(){
+        File reportOutputDirectory = new File("target");
+        List<String> jsonFiles = new ArrayList<>();
+        jsonFiles.add("target/cucumber.json");
+        Configuration configuration = new Configuration(reportOutputDirectory, "KontaktERP");
+        configuration.addPresentationModes(PresentationMode.EXPAND_ALL_STEPS);
+        ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
+        reportBuilder.generateReports();
+    }
 }

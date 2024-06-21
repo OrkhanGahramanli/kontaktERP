@@ -42,13 +42,13 @@ public class CucumberHook {
         driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
-//    @After
-//    public static void afterScenario(Scenario scenario) throws InterruptedException {
-//        if(scenario.isFailed()) {
-//            Thread.sleep(300);
-//            final byte[] screenshot = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.BYTES);
-//            scenario.attach(screenshot, "image/png", scenario.getName());
-//        }
-//        driver.get().quit();
-//    }
+    @After
+    public static void afterScenario(Scenario scenario) throws InterruptedException {
+        if(scenario.isFailed()) {
+            Thread.sleep(300);
+            final byte[] screenshot = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", scenario.getName());
+        }
+        driver.get().quit();
+    }
 }
