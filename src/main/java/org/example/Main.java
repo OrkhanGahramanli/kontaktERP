@@ -23,6 +23,6 @@ public class Main {
     public static WebDriver driver = new ChromeDriver();
 
     public static void main(String[] args) {
-
+            System.out.println("Test");
         }
     }
