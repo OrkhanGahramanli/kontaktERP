@@ -79,7 +79,7 @@ public class OnlineOrderPOM {
         elementsMap.put("statusChangeUserVideoCallOrder", By.xpath("//input[contains(@id, 'status_user')]"));
         elementsMap.put("statusChangeUserCallMeOrder", By.xpath("//input[contains(@id, 'status_setBy')]"));
         elementsMap.put("webOrderNoteField", By.id("sifaris_qeyd"));
-        elementsMap.put("webOrderTypeColumn", By.xpath("//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[3]"));
+        elementsMap.put("webOrderTypeColumn", By.xpath("(//*[@class='dx-row dx-data-row dx-row-lines dx-column-lines']//td[3])[1]"));
         elementsMap.put("searchOnlineOrderInBasket", By.xpath("//*[@id='tblSebet_filter']//*[@type='search']"));
     }
 

@@ -445,4 +445,5 @@ Feature: OnlineOrder
       And User clicks button with "Sifariş növünü dəyiş" text
       And User accepts alert pop-up
       Then User should get "Qeyd edildi" message
+      And User's waiting 5 seconds for visibility "Nağd" message in "webOrderTypeColumn" element
       Then "Nağd" should be displayed in "webOrderTypeColumn"

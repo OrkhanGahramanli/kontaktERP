@@ -201,9 +201,9 @@ public class BaseSteps extends BaseMethods {
         driver.findElement(elementsMap.get(element)).clear();
     }
 
-    @And("User's waiting {int} seconds for visibility {string} message")
-    public void userSWaitingSecondsForVisibilityText(int time, String text) {
-        waitTextMessage(generalPOM.getPopUpMessage(), text, time);
+    @And("User's waiting {int} seconds for visibility {string} message in {string} element")
+    public void userSWaitingSecondsForVisibilityText(int time, String text, String element) {
+        waitTextMessage(elementsMap.get(element), text, time);
     }
 
     @And("User takes sale invoice number")

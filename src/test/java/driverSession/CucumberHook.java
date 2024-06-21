@@ -1,21 +1,25 @@
 package driverSession;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
 import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 
 public class CucumberHook {
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     public static ThreadLocal<String>  pomName = new ThreadLocal<>();
+    static ChromeOptions options;
 
+    @BeforeAll
+    public static void setup() {
+        options = new ChromeOptions();
+        options.addArguments("--headless=new");
+    }
 
     @Before
     public static void beforeScenario(Scenario scenario){
@@ -32,7 +36,7 @@ public class CucumberHook {
         }catch (Exception ignored){
 
         }
-        driver.set(new ChromeDriver());
+        driver.set(new ChromeDriver(options));
         driver.get().get("https://test.abc-telecom.az:5067/");
         driver.get().manage().window().maximize();
         driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));

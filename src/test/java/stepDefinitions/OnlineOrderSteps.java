@@ -141,7 +141,7 @@ public class OnlineOrderSteps extends BaseMethods{
             driver.findElement(elementsMap.get("productSelectBtn")).click();
             driver.findElement(elementsMap.get("productSearchByName")).sendKeys(productName);
             enterAction();
-            waitForElementsCount(By.xpath("//*[text()='Əlavə et']"), 1, 5);
+            waitForElementsCount(By.xpath("//*[text()='Əlavə et']"), 1, 10);
             findElementByText("Əlavə et").click();
         }
     }
