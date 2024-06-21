@@ -13,9 +13,9 @@ Feature: Login
     Examples:
       | username          | password | language |
       | orkhan.gahramanli | test123  | az       |
-#      | orkhan.gahramanli | test123  | en       |
-#      | orkhan.gahramanli | test123  | ru       |
-#      | orkhan.gahramanli | test123  | ka       |
+      | orkhan.gahramanli | test123  | en       |
+      | orkhan.gahramanli | test123  | ru       |
+      | orkhan.gahramanli | test123  | ka       |
 @InvalidLogin
   Scenario Outline: User should login with "<name>"
     Given User is in "Login Page"

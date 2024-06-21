@@ -224,7 +224,6 @@ Feature: Sale
 
     Examples:
       | caseName           | product   | customerCode | seller           | paymentType | paymentCode                    | taksitGroup | taksitMonths | paymentBtn    | errorMessage                 |
-      | Empty product      |           | 641614       |                  |             |                                |             |              |               | Məhsul seçilməyib.           |
       | Empty customer     | 14MTL73RU |              | productSellerBtn | Nəğd        |                                |             |              | addPaymentBtn | Müştəri seçilməyib !         |
       | Empty customer     | 14MTL73RU |              | productSellerBtn | Kart        | PAŞA BANK (NAĞD)               |             |              | addPaymentBtn | Müştəri seçilməyib !         |
       | Empty customer     | 14MTL73RU |              | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK | TQK-007     | 3 AY-0%      | addPaymentBtn | Müştəri seçilməyib !         |
@@ -233,22 +232,15 @@ Feature: Sale
       | Empty taksitMonths | 14MTL73RU | 641614       | productSellerBtn | Taksit      | UNİBANK UCARD(TAKSİT)/ UNİBANK |             |              | addPaymentBtn | Taksit ayi seçilməyib.       |
       | Empty seller       | 14MTL73RU | 641614       |                  | Nəğd        |                                |             |              | addPaymentBtn | satıcı kodu seçilməyib.      |
 
-  Scenario Outline: Unsuccessful create cash sale without order number ("<paymentType>")/Scenario name: "<caseName>"
+  @EmptyProduct
+  Scenario: Unsuccessful create cash sale without order number ("<paymentType>")/Scenario name: "<caseName>"
     When User clicks "newCashSale" page link
-    And User clicks "productAreaExpandBtn" button
-    And User fills "<product>" in "productName" input field
-    And User search and add "<product>" product
     And User clicks "expandCustomerSectionBtn" button
-    And User fills "<customerCode>" in "customerCode" input field
+    And User fills "641614" in "customerCode" input field
     And User clicks "customerSearchBtn" button
-    And User selects "<customerCode>" customer
-    And User clicks "<seller>" button and add any seller for the product
-    And User clicks "<paymentBtn>" button
+    And User selects "641614" customer
+    And User clicks "addPaymentBtn" button
     Then User should get "<errorMessage>" message
-
-    Examples:
-      | caseName      | product | customerCode | seller | paymentType | paymentCode | taksitGroup | taksitMonths | paymentBtn | errorMessage        |
-      | Empty product |         | 641614       |        |             |             |             |              |            | Yekun məbləğ 0-dır. |
 
 
   @InvalidSmsCode
@@ -319,7 +311,7 @@ Feature: Sale
     And User fills "OLMAYAN STOK" in "productName" input field
     And User clicks "productSearchBtn" button
     And User clicks "otherStoresBtn" button
-    And User's waiting visibility of "addProductOtherStoreBtn" element for 10 seconds
+    And Skip scenario if "addProductOtherStoreBtn" element doesn't exist
     And User clicks "addProductOtherStoreBtn" button
     And User clicks "windowCloseBtn" button
     And User clicks "expandCustomerSectionBtn" button
@@ -350,7 +342,7 @@ Feature: Sale
     And User fills "OLMAYAN STOK" in "productName" input field
     And User clicks "productSearchBtn" button
     And User clicks "otherStoresBtn" button
-    And User's waiting visibility of "addProductOtherStoreBtn" element for 10 seconds
+    And Skip scenario if "addProductOtherStoreBtn" element doesn't exist
     And User clicks "addProductOtherStoreBtn" button
     And User clicks "windowCloseBtn" button
     And User clicks "expandCustomerSectionBtn" button

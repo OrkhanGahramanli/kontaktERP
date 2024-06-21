@@ -88,7 +88,7 @@ public class SaleSteps extends BaseMethods{
 
     @Then("{string} should be displayed in {string} text field")
     public void shouldBeDisplayedInTextField(String text, String element) {
-        waitVisibilityElement(elementsMap.get(element), 20);
+//        waitVisibilityElement(elementsMap.get(element), 20);
         Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
     }
 
