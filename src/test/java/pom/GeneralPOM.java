@@ -70,6 +70,8 @@ public class GeneralPOM {
         elementsMap.put("saleType", By.id("sif_satis_novu"));
         elementsMap.put("customerBirthDate", By.id("customerBirthDate"));
         elementsMap.put("submitOrder", By.cssSelector("button[class='btn btn-primary float-right']"));
+        elementsMap.put("addedProductsTable", By.id("faqs-row8"));
+        elementsMap.put("removeProductBtn", By.cssSelector(".fa.fa-trash"));
     }
 
 

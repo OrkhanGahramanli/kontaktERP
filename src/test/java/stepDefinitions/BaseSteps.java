@@ -4,7 +4,9 @@ import com.google.common.base.Verify;
 import io.cucumber.java.Scenario;
 import lombok.Getter;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.SkipException;
+import org.testng.asserts.Assertion;
 import pom.GeneralPOM;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -301,5 +303,20 @@ public class BaseSteps extends BaseMethods {
         }catch (NoSuchElementException n){
             throw new SkipException("Scenario skipped");
         }
+    }
+
+    @Then("{string} should be removed")
+    public void shouldBeRemoved(String element) {
+        turnOffImplicitWait();
+        try {
+            Assert.assertFalse(driver.findElement(elementsMap.get(element)).isDisplayed(), "Element is not removed");
+        }catch (NoSuchElementException ignored){
+        }
+
+    }
+
+    @And("User's waiting for invisibility of {string} element for {int} seconds")
+    public void waitForInvisibilityOfElementForSeconds(String element, int time) {
+        waitForInvisibilityElement(elementsMap.get(element), time);
     }
 }

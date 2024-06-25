@@ -677,7 +677,7 @@ Feature: Sale
    @OnlineSaleSuccessCreate
     Scenario Outline: User want to create online sale invoice with correct inputs / "<saleType>"/"<paymentType>"
       When User clicks "onlineOrder" module link
-      When User clicks "onlineSale" page link
+      And User clicks "onlineSale" page link
       And User clicks "productAreaExpandBtn" button
       And User fills "14MTL73RU" in "productName" input field
       And User clicks "productSearchBtn" button
@@ -706,3 +706,30 @@ Feature: Sale
         | Nəğd Satış   | Hədiyyə Kartı |              |
         | Nəğd Satış   | Bonus Kart    |              |
         | Taksit Satış | Taksit        | 12           |
+
+  @RemoveProduct
+  Scenario Outline: Remove product in new cash sale
+    When User clicks "<page>" page link
+    And User clicks "productAreaExpandBtn" button
+    And User fills "OLMAYAN STOK" in "productName" input field
+    And User clicks "productSearchBtn" button
+    And User clicks "addProductBtn" button
+    And User clicks "removeProductBtn" button
+    Then "addedProductsTable" should be removed
+
+    Examples:
+      | page          |
+      | newCashSale   |
+      | newCreditSale |
+
+  @RemoveProduct
+  Scenario: Remove product in new cash sale
+    When User clicks "onlineOrder" module link
+    And User clicks "onlineSale" page link
+    And User clicks "productAreaExpandBtn" button
+    And User fills "OLMAYAN STOK" in "productName" input field
+    And User clicks "productSearchBtn" button
+    And User clicks "addProductBtn" button
+    And User clicks "removeProductBtn" button
+    Then "addedProductsTable" should be removed
+

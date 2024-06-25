@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BaseMethods {
 
@@ -132,5 +133,14 @@ public class BaseMethods {
     protected void waitForElementsCount(By locator, int count, int time){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.numberOfElementsToBe(locator, count));
+    }
+
+    protected void waitForInvisibilityElement(By locator, int time){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    protected void turnOffImplicitWait(){
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
     }
 }

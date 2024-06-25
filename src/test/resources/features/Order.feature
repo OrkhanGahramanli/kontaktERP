@@ -165,3 +165,13 @@ Feature: Order
         | Barkodlar      | Məhsul barkodları               |
         | Digər Anbarlar | Məhsullar                       |
         | Bonus          | Məlumatlar                      |
+
+      @RemoveProduct
+      Scenario: Remove product in new order
+        When User clicks "newOrder" page link
+        And User clicks "productAreaExpandBtn" button
+        And User fills "OLMAYAN STOK" in "productName" input field
+        And User clicks "productSearchBtn" button
+        And User clicks "addProductBtn" button
+        And User clicks "removeProductBtn" button
+        Then "addedProductsTable" should be removed

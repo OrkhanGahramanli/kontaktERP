@@ -15,11 +15,11 @@ public class CucumberHook {
     public static ThreadLocal<String>  pomName = new ThreadLocal<>();
     static ChromeOptions options;
 
-    @BeforeAll
-    public static void setup() {
-        options = new ChromeOptions();
-        options.addArguments("--headless=new");
-    }
+//    @BeforeAll
+//    public static void setup() {
+//        options = new ChromeOptions();
+//        options.addArguments("--headless=new");
+//    }
 
     @Before
     public static void beforeScenario(Scenario scenario){
@@ -36,7 +36,7 @@ public class CucumberHook {
         }catch (Exception ignored){
 
         }
-        driver.set(new ChromeDriver(options));
+        driver.set(new ChromeDriver());
         driver.get().get("https://test.abc-telecom.az:5067/");
         driver.get().manage().window().maximize();
         driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
