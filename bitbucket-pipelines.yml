@@ -1,18 +1,9 @@
-#  Template maven-build
-
-#  This template allows you to test and build your Java project with Maven.
-#  The workflow allows running tests, code checkstyle and security scans on the default branch.
-
-# Prerequisites: pom.xml and appropriate project structure should exist in the repository.
-
-image: maven:latest
+image: maven:3.3.9
 pipelines:
   default:
-    - parallel:
-      - step:
-          name: Build and Test
-          caches:
-            - maven
-          script:
-            - mvn clean test
+    - step:
+        script:
+          - mvn clean
+          - mvn test # Your test runner command to run the tests
+
 

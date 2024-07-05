@@ -1,0 +1,3 @@
+browserstackLocal: true
+browserStackLocalOptions:
+  forceLocal: true

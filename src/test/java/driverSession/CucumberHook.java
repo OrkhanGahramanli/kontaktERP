@@ -26,9 +26,7 @@ public class CucumberHook {
         pomName.set(FilenameUtils.getBaseName(scenario.getUri().toString()));
         try {
             if (pomName.get().equals("Payment")){
-                Class<?> clazz = Class.forName("pom." + pomName.get() + "POM");
                 Class<?> saleClass = Class.forName("pom." + "SalePOM");
-                Object o = clazz.getDeclaredConstructor().newInstance();
                 Object saleObject = saleClass.getDeclaredConstructor().newInstance();
             }
             Class<?> clazz = Class.forName("pom." + pomName.get() + "POM");
