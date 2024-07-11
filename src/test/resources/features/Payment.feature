@@ -271,3 +271,19 @@ Feature: Payment
       And Wait 1 second for an element
       And User clicks "selectCashInInvoiceBtn" button
       Then User should get "Məxaric ediləcək mədaxil məbləği tapılmadı" message
+
+  @ViewCustomerDetails
+  Scenario Outline: View customer details / "<paymentType>"
+    When User clicks "paymentModule" module link
+    And User clicks "<paymentType>" page link
+    And Wait 1 second for an element
+    And User fills "641614" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User clicks "showCustomerDetailsBtn" button
+    And Switch to another tab
+    Then "customerCodeInCustomerAnalysis" should equals "641614"
+
+    Examples:
+      | paymentType         |
+      | cashInflowPageLink  |
+      | cashOutflowPageLink |

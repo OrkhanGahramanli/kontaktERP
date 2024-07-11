@@ -18,6 +18,8 @@ import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.testng.Assert;
 
 import java.util.List;
+import java.util.Set;
+
 import static pom.ElementsMap.elementsMap;
 
 public class BaseSteps extends BaseMethods {
@@ -264,7 +266,13 @@ public class BaseSteps extends BaseMethods {
 
     @Then("{string} should equals {string}")
     public void shouldEquals(String element, String text) {
-        if (!text.isEmpty()) Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
+        if (!text.isEmpty()) {
+            try {
+                Assert.assertEquals(driver.findElement(elementsMap.get(element)).getAttribute("value"), text);
+            } catch (AssertionError e) {
+                Assert.assertEquals(driver.findElement(elementsMap.get(element)).getText(), text);
+            }
+        }
     }
 
     @Then("{string} should be selected in {string}")
@@ -319,5 +327,11 @@ public class BaseSteps extends BaseMethods {
     @And("User's waiting for invisibility of {string} element for {int} seconds")
     public void waitForInvisibilityOfElementForSeconds(String element, int time) {
         waitForInvisibilityElement(elementsMap.get(element), time);
+    }
+
+    @And("Switch to another tab")
+    public void switchToAnotherTab() {
+        Set<String> tabs = driver.getWindowHandles();
+        driver.switchTo().window(tabs.toArray()[1].toString());
     }
 }

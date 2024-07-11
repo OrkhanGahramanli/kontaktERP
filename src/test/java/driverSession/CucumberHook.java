@@ -27,7 +27,9 @@ public class CucumberHook {
         try {
             if (pomName.get().equals("Payment")){
                 Class<?> saleClass = Class.forName("pom." + "SalePOM");
+                Class<?> clazz = Class.forName("pom." + pomName.get() + "POM");
                 Object saleObject = saleClass.getDeclaredConstructor().newInstance();
+                Object o = clazz.getDeclaredConstructor().newInstance();
             }
             Class<?> clazz = Class.forName("pom." + pomName.get() + "POM");
             Object o = clazz.getDeclaredConstructor().newInstance();

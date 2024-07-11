@@ -733,3 +733,17 @@ Feature: Sale
     And User clicks "removeProductBtn" button
     Then "addedProductsTable" should be removed
 
+  @ViewCustomerDetails
+  Scenario Outline: View customer details / "<saleType>"
+    When User clicks "<saleType>" page link
+    And User clicks "expandCustomerSectionBtn" button
+    And User fills "641614" in "customerCode" input field
+    And User clicks "customerSearchBtn" button
+    And User clicks "showCustomerDetailsBtn" button
+    And Switch to another tab
+    Then "customerCodeInCustomerAnalysis" should equals "641614"
+
+    Examples:
+      | saleType      |
+      | newCashSale   |
+      | newCreditSale |
