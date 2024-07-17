@@ -77,4 +77,10 @@ public class PaymentSteps extends BaseMethods{
             driver.findElement(paymentPOM.getCashOutflowPaymentInput()).sendKeys(String.valueOf(invalidAmount));
         }
     }
+
+    @Then("{string} window should be displayed")
+    public void windowShouldBeDisplayed(String text) {
+        waitVisibilityElement(findElementByText(text), 5);
+        Assert.assertTrue(findElementByText(text).isDisplayed(), text + " is not displayed");
+    }
 }

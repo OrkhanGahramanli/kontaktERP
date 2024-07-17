@@ -33,6 +33,8 @@ public class PaymentPOM {
         elementsMap.put("selectCashInInvoiceBtn", By.xpath("//*[@id='tableMexaricSenedleri']//td/button[text()='Seç']"));
         elementsMap.put("paymentReasonOptionsField", By.id("odenis_sebebi"));
         elementsMap.put("completeCashOutflowPaymentBtn", By.xpath("//*[@id='mexaric-form']//button[@class='btn btn-primary']"));
+        elementsMap.put("viewInvoiceDetailsBtn", By.cssSelector(".fas.fa-eye"));
+        elementsMap.put("viewInvoicePaymentsBtn", By.cssSelector(".fas.fa-search"));
     }
 
     private final By invoiceRemainingAmount = By.xpath("//*[@id='tableFakturaListe']//td[11]");

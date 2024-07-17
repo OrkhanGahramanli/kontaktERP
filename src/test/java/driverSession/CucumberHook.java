@@ -37,7 +37,7 @@ public class CucumberHook {
 
         }
         driver.set(new ChromeDriver());
-        driver.get().get("https://test.abc-telecom.az:5067/");
+        driver.get().get("https://test.abc-telecom.az:5085/");
         driver.get().manage().window().maximize();
         driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
